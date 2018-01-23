@@ -1,15 +1,3 @@
-GIT
-  remote: git://github.com/sinatra/sinatra.git
-  revision: e0ba389c7bf30a27b1be4ea0a82f19abebc20bc6
-  specs:
-    rack-protection (2.0.0)
-      rack
-    sinatra (2.0.0)
-      mustermann (~> 1.0)
-      rack (~> 2.0)
-      rack-protection (= 2.0.0)
-      tilt (~> 2.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -26,6 +14,8 @@ GEM
       ast (~> 2.3)
     powerpack (0.1.1)
     rack (2.0.3)
+    rack-protection (2.0.0)
+      rack
     rainbow (2.2.2)
       rake
     rake (12.3.0)
@@ -63,6 +53,11 @@ GEM
     scss_lint (0.56.0)
       rake (>= 0.9, < 13)
       sass (~> 3.5.3)
+    sinatra (2.0.0)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0)
+      tilt (~> 2.0)
     tilt (2.0.8)
     unicode-display_width (1.3.0)
 
@@ -72,7 +67,7 @@ PLATFORMS
 DEPENDENCIES
   govuk-lint
   rspec (~> 3.7.0)
-  sinatra!
+  sinatra
 
 BUNDLED WITH
    1.16.1
