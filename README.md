@@ -5,4 +5,13 @@
 
 ### Start the application
 
-`./startup.sh`
+`make serve`
+
+### Running tests
+
+`make test`
+
+### Running ruby linting
+
+`make lint`
+
