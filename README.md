@@ -5,13 +5,13 @@
 
 ### Start the application
 
-`make serve`
+`bundle exec rackup`
 
 ### Running tests
 
-`make test`
+`bundle exec rake`
 
 ### Running ruby linting
 
-`make lint`
+`bundle exec govuk-lint-ruby`
 
