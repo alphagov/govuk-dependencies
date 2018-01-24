@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.4.2'
+File.read('.ruby-version').chomp
 
 gem 'sinatra'
 
