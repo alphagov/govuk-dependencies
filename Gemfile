@@ -1,4 +1,7 @@
 source 'https://rubygems.org'
+
+File.read('.ruby-version').chomp
+
 gem 'sinatra'
 
 group :production, :staging do
