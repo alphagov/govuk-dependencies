@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 File.read('.ruby-version').chomp
 
+gem 'octokit', '~> 4.3'
 gem 'sinatra'
 
 group :production, :staging do
