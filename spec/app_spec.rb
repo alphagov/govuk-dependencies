@@ -10,7 +10,7 @@ xdescribe GovukDependencies do
 
   before do
     stub_request(:get, 'https://api.github.com/search/issues?q=is:pr+user:alphagov+state:open+author:app/dependabot')
-      .to_return(body: File.read('spec/fixtures/pull_requests.json'), headers: {'Content-Type' => 'application/json'})
+      .to_return(body: File.read('spec/fixtures/pull_requests.json'), headers: { 'Content-Type' => 'application/json' })
   end
 
   it 'should show both applications with the number of open pull requests' do
