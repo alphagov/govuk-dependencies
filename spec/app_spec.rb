@@ -4,7 +4,7 @@ require_relative '../app'
 
 ENV['RACK_ENV'] = 'test'
 
-xdescribe GovukDependencies do
+describe GovukDependencies do
   include Rack::Test::Methods
   def app() described_class end
 

@@ -7,7 +7,9 @@
       <% @pull_requests_by_application.each do |application| %>
         <li class="app">
           <h2>
-            <%= application.fetch(:application_name) %>
+            <a href="<%= application.fetch(:application_url) %>">
+              <%= application.fetch(:application_name) %> (<%= application.fetch(:pull_requests).count %>)
+            </a>
           </h2>
           <ul class="pulls">
             <% application.fetch(:pull_requests).each do |pull_request| %>
