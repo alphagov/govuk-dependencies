@@ -13,9 +13,19 @@ describe GovukDependencies do
       .to_return(body: File.read('spec/fixtures/pull_requests.json'), headers: { 'Content-Type' => 'application/json' })
   end
 
-  it 'should show both applications with the number of open pull requests' do
-    get '/'
-    expect(last_response.body).to include('frontend (1)')
-    expect(last_response.body).to include('publisher (2)')
+  context 'Pull request by application' do
+    it 'should show both applications with the number of open pull requests' do
+      get '/'
+      expect(last_response.body).to include('frontend (1)')
+      expect(last_response.body).to include('publisher (2)')
+    end
+  end
+
+  context 'Pull requests by gem' do
+    xit 'should show both gems with the number applications with pull requests' do
+      get '/gems'
+      expect(last_response.body).to include('gds-sso (2)')
+      expect(last_response.body).to include('gds-api-adapters (1)')
+    end
   end
 end
