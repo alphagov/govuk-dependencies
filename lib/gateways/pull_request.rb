@@ -18,7 +18,7 @@ module Gateways
         Domain::PullRequest.new(
           application_name: get_application_name(pr),
           title: pr.title,
-          url: pr.url,
+          url: pr.html_url,
           opened_at: Date.parse(pr.created_at.to_s)
         )
       end
