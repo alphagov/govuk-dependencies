@@ -26,19 +26,21 @@ describe Gateways::PullRequest do
     end
 
     it 'Returns a list of pull requests' do
-      ENV['GITHUB_TOKEN'] = 'some_token'
-      result = described_class.new.execute
+      Timecop.freeze(Date.parse('2018-01-25')) do
+        ENV['GITHUB_TOKEN'] = 'some_token'
+        result = described_class.new.execute
 
-      expect(result.count).to eq(3)
-      expect(result[0].title).to eq('Bump gds-sso from 13.5.0 to 13.5.1')
-      expect(result[0].application_name).to eq('publisher')
-      expect(result[0].url).to eq('https://github.com/alphagov/publisher/pull/761')
-      expect(result[0].opened_at).to eq(Date.parse('2018-01-24'))
+        expect(result.count).to eq(3)
+        expect(result[0].title).to eq('Bump gds-sso from 13.5.0 to 13.5.1')
+        expect(result[0].application_name).to eq('publisher')
+        expect(result[0].url).to eq('https://github.com/alphagov/publisher/pull/761')
+        expect(result[0].open_since).to eq('yesterday')
 
-      expect(result[1].title).to eq('Bump gds-sso from 13.5.0 to 13.5.1')
-      expect(result[1].application_name).to eq('frontend')
-      expect(result[1].url).to eq('https://github.com/alphagov/frontend/pull/1146')
-      expect(result[1].opened_at).to eq(Date.parse('2018-01-24'))
+        expect(result[1].title).to eq('Bump gds-sso from 13.5.0 to 13.5.1')
+        expect(result[1].application_name).to eq('frontend')
+        expect(result[1].url).to eq('https://github.com/alphagov/frontend/pull/1146')
+        expect(result[1].open_since).to eq('yesterday')
+      end
     end
   end
 end
