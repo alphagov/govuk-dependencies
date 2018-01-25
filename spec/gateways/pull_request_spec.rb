@@ -2,6 +2,7 @@ describe Gateways::PullRequest do
   context 'No open pull requests from Dependabot' do
     before do
       stub_request(:get, 'https://api.github.com/search/issues?q=is:pr+user:alphagov+state:open+author:app/dependabot')
+        .with(headers: { 'Authorization' => 'token some_token' })
         .to_return(
           body: '{ "total_count": 0, "incomplete_results": false, "items": [] }',
           headers: { 'Content-Type' => 'application/json' }
@@ -9,6 +10,7 @@ describe Gateways::PullRequest do
     end
 
     it 'Returns an empty array' do
+      ENV['GITHUB_TOKEN'] = 'some_token'
       expect(described_class.new.execute).to be_empty
     end
   end
@@ -16,6 +18,7 @@ describe Gateways::PullRequest do
   context 'There are open pull requests from Dependabot' do
     before do
       stub_request(:get, 'https://api.github.com/search/issues?q=is:pr+user:alphagov+state:open+author:app/dependabot')
+        .with(headers: { 'Authorization' => 'token some_token' })
         .to_return(
           body: File.read('spec/fixtures/pull_requests.json'),
           headers: { 'Content-Type' => 'application/json' }
@@ -23,6 +26,7 @@ describe Gateways::PullRequest do
     end
 
     it 'Returns a list of pull requests' do
+      ENV['GITHUB_TOKEN'] = 'some_token'
       result = described_class.new.execute
 
       expect(result.count).to eq(3)
