@@ -16,14 +16,16 @@ describe GovukDependencies do
   context 'Pull request by application' do
     it 'should show both applications with the number of open pull requests' do
       get '/'
+      expect(last_response).to be_ok
       expect(last_response.body).to include('frontend (1)')
       expect(last_response.body).to include('publisher (2)')
     end
   end
 
   context 'Pull requests by gem' do
-    xit 'should show both gems with the number applications with pull requests' do
-      get '/gems'
+    it 'should show both gems with the number applications with pull requests' do
+      get '/gem'
+      expect(last_response).to be_ok
       expect(last_response.body).to include('gds-sso (2)')
       expect(last_response.body).to include('gds-api-adapters (1)')
     end
