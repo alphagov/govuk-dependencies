@@ -15,7 +15,13 @@ describe Presenters::PullRequestsByApplication do
       )
 
       result = described_class.new.execute([pull_request])
-      expect(result).to eq([{ application_name: 'frontend', pull_requests: [pull_request] }])
+      expect(result).to eq([
+        {
+          application_name: 'frontend',
+          application_url: 'https://github.com/alphagov/frontend/pulls',
+          pull_requests: [pull_request]
+        }
+      ])
     end
   end
 
@@ -36,7 +42,15 @@ describe Presenters::PullRequestsByApplication do
         )
       ]
       result = described_class.new.execute(pull_requests)
-      expect(result).to eq([{ application_name: 'frontend', pull_requests: pull_requests }])
+      expect(result).to eq(
+        [
+          {
+            application_name: 'frontend',
+            application_url: 'https://github.com/alphagov/frontend/pulls',
+            pull_requests: pull_requests
+          }
+        ]
+      )
     end
   end
 
@@ -72,8 +86,16 @@ describe Presenters::PullRequestsByApplication do
       )
 
       expect(result).to eq([
-        { application_name: 'frontend', pull_requests: [frontend_pull_request] },
-        { application_name: 'publisher', pull_requests: [publisher_pull_request, publisher_pull_request2] }
+        {
+          application_name: 'frontend',
+          application_url: 'https://github.com/alphagov/frontend/pulls',
+          pull_requests: [frontend_pull_request]
+        },
+        {
+          application_name: 'publisher',
+          application_url: 'https://github.com/alphagov/publisher/pulls',
+          pull_requests: [publisher_pull_request, publisher_pull_request2]
+        }
       ])
     end
   end
