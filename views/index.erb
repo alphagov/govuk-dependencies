@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <link href="assets/application.css" type="text/css" rel="stylesheet">
+  </head>
+  <body>
+    <ul class="apps">
+      <% @pull_requests_by_application.each do |application| %>
+        <li class="app">
+          <h2>
+            <%= application.fetch(:application_name) %>
+          </h2>
+          <ul class="pulls">
+            <% application.fetch(:pull_requests).each do |pull_request| %>
+              <li class="pull">
+                <a href="<%= pull_request.url %>">
+                  <%= pull_request.title %>
+                </a>
+                <span class="time-elapsed"><%= pull_request.opened_at %></span>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  </body>
+</html>

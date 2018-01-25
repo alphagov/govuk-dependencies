@@ -1,6 +1,6 @@
 module UseCases
   class FetchPullRequests
-    def initialize(gateway:)
+    def initialize(gateway: Gateways::PullRequest.new)
       @gateway = gateway
     end
 
