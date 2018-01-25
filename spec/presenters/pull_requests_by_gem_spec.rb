@@ -1,4 +1,4 @@
-describe Presenters::PullRequestByGem do
+describe Presenters::PullRequestsByGem do
   context 'Given no pull requests' do
     it 'returns an empty array' do
       expect(described_class.new.execute([])).to eq([])
@@ -18,13 +18,7 @@ describe Presenters::PullRequestByGem do
       expect(result).to eq([
         {
           gem_name: 'gds-api-adapters',
-          pull_requests: [
-            {
-              application_name: 'frontend',
-              version: '4.5.6',
-              url: 'https://www.github.com/alphagov/frontend/pull/123'
-            }
-          ]
+          pull_requests: [pull_request]
         }
       ])
     end
@@ -50,18 +44,7 @@ describe Presenters::PullRequestByGem do
       expect(result).to eq([
         {
           gem_name: 'gds-api-adapters',
-          pull_requests: [
-            {
-              application_name: 'frontend',
-              version: '4.5.6',
-              url: 'https://www.github.com/alphagov/frontend/pull/123'
-            },
-            {
-              application_name: 'signon',
-              version: '4.5.6',
-              url: 'https://www.github.com/alphagov/frontend/pull/456'
-            }
-          ]
+          pull_requests: pull_requests
         }
       ])
     end
@@ -102,26 +85,12 @@ describe Presenters::PullRequestByGem do
         {
           gem_name: 'gds-api-adapters',
           pull_requests: [
-            {
-              application_name: 'frontend',
-              version: '4.5.6',
-              url: 'https://www.github.com/alphagov/frontend/pull/123',
-            },
-            {
-              application_name: 'publisher',
-              version: '7.8.9',
-              url: 'https://www.github.com/alphagov/frontend/pull/456',
-            },
+            gds_api_adapters_pull_request,
+            gds_api_adapters_pull_request2
           ]
         }, {
           gem_name: 'uglifier',
-          pull_requests: [
-            {
-              application_name: 'publisher',
-              version: '7.8.9',
-              url: 'https://www.github.com/alphagov/publisher/pull/456',
-            }
-          ]
+          pull_requests: [uglifier_pull_request]
         }
       ])
     end
