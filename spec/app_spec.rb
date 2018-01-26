@@ -30,4 +30,21 @@ describe GovukDependencies do
       expect(last_response.body).to include('gds-api-adapters (1)')
     end
   end
+
+  context 'Pull requests by team' do
+    before do
+      stub_request(:get, "https://docs.publishing.service.gov.uk/apps.json")
+      .to_return(
+        body: File.read('spec/fixtures/multiple_teams_with_multiple_applications.json'),
+        headers: { 'Content-Type' => 'application/json' }
+      )
+    end
+
+    it 'should show both teams with the number applications with pull requests' do
+      get '/team'
+      expect(last_response).to be_ok
+      expect(last_response.body).to include('#asset-management (2)')
+      expect(last_response.body).to include('#email (1)')
+    end
+  end
 end
