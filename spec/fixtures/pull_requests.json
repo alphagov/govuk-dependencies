@@ -129,7 +129,7 @@
       "html_url": "https://github.com/alphagov/publisher/pull/187",
       "id": 291111562,
       "number": 187,
-      "title": "Bump gds-sso from 13.0.0 to 13.5.1",
+      "title": "Bump gds-api-adapters from 13.0.0 to 13.5.1",
       "user": {
         "login": "dependabot[bot]",
         "id": 27856297,
@@ -176,7 +176,7 @@
         "diff_url": "https://github.com/alphagov/publisher/pull/187.diff",
         "patch_url": "https://github.com/alphagov/publisher/pull/187.patch"
       },
-      "body": "Bumps [gds-sso](https://github.com/alphagov/gds-sso) from 13.0.0 to 13.5.1.\n- [Changelog](https://github.com/alphagov/gds-sso/blob/master/CHANGELOG.md)\n- [Commits](https://github.com/alphagov/gds-sso/compare/v13.0.0...v13.5.1)\n\n[![Dependabot compatibility score](https://api.dependabot.com/badges/ci_status?dependency-name=gds-sso&package-manager=bundler&previous-version=13.0.0&new-version=13.5.1)](https://dependabot.com/compatibility-score.html?dependency-name=gds-sso&package-manager=bundler&previous-version=13.0.0&new-version=13.5.1)\n\nDependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`.\n\nIf you'd like to skip this version, you can just close this PR. If you have any feedback just mention @dependabot in the comments below.",
+      "body": "Bumps [gds-api-adapters](https://github.com/alphagov/gds-api-adapters) from 13.0.0 to 13.5.1.\n- [Changelog](https://github.com/alphagov/gds-api-adapters/blob/master/CHANGELOG.md)\n- [Commits](https://github.com/alphagov/gds-api-adapters/compare/v13.0.0...v13.5.1)\n\n[![Dependabot compatibility score](https://api.dependabot.com/badges/ci_status?dependency-name=gds-api-adapters&package-manager=bundler&previous-version=13.0.0&new-version=13.5.1)](https://dependabot.com/compatibility-score.html?dependency-name=gds-api-adapters&package-manager=bundler&previous-version=13.0.0&new-version=13.5.1)\n\nDependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`.\n\nIf you'd like to skip this version, you can just close this PR. If you have any feedback just mention @dependabot in the comments below.",
       "score": 1.0
     }
   ]
