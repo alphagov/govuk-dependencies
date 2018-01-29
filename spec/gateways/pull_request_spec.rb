@@ -1,7 +1,7 @@
 describe Gateways::PullRequest do
   context 'No open pull requests from Dependabot' do
     before do
-      stub_request(:get, 'https://api.github.com/search/issues?q=is:pr+user:alphagov+state:open+author:app/dependabot')
+      stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot')
         .with(headers: { 'Authorization' => 'token some_token' })
         .to_return(
           body: '{ "total_count": 0, "incomplete_results": false, "items": [] }',
@@ -17,7 +17,7 @@ describe Gateways::PullRequest do
 
   context 'There are open pull requests from Dependabot' do
     before do
-      stub_request(:get, 'https://api.github.com/search/issues?q=is:pr+user:alphagov+state:open+author:app/dependabot')
+      stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot')
         .with(headers: { 'Authorization' => 'token some_token' })
         .to_return(
           body: File.read('spec/fixtures/pull_requests.json'),

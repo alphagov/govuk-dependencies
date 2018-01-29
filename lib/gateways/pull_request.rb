@@ -3,7 +3,7 @@ require 'octokit'
 module Gateways
   class PullRequest
     def initialize
-      @octokit = Octokit::Client.new(access_token: ENV['GITHUB_TOKEN'])
+      @octokit = Octokit::Client.new(access_token: ENV['GITHUB_TOKEN'], auto_traversal: true, per_page: 100)
     end
 
     def execute
