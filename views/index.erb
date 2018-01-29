@@ -3,26 +3,30 @@
     <link href="assets/application.css" type="text/css" rel="stylesheet">
   </head>
   <body>
-    <ul class="apps">
-      <% @pull_requests_by_application.each do |application| %>
-        <li class="app">
-          <h2>
-            <a href="<%= application.fetch(:application_url) %>">
-              <%= application.fetch(:application_name) %> (<%= application.fetch(:pull_requests).count %>)
-            </a>
-          </h2>
-          <ul class="pulls">
-            <% application.fetch(:pull_requests).each do |pull_request| %>
-              <li class="pull">
-                <a href="<%= pull_request.url %>">
-                  <%= pull_request.title %>
-                </a>
-                <span class="time-elapsed">Opened <%= pull_request.open_since %></span>
-              </li>
-            <% end %>
-          </ul>
-        </li>
-      <% end %>
-    </ul>
+    <% if @pull_requests_by_application.empty? %>
+      <h2>No open pull requests found</h2>
+    <% else %>
+      <ul class="apps">
+        <% @pull_requests_by_application.each do |application| %>
+          <li class="app">
+            <h2>
+              <a href="<%= application.fetch(:application_url) %>">
+                <%= application.fetch(:application_name) %> (<%= application.fetch(:pull_requests).count %>)
+              </a>
+            </h2>
+            <ul class="pulls">
+              <% application.fetch(:pull_requests).each do |pull_request| %>
+                <li class="pull">
+                  <a href="<%= pull_request.url %>">
+                    <%= pull_request.title %>
+                  </a>
+                  <span class="time-elapsed">Opened <%= pull_request.open_since %></span>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
   </body>
 </html>
