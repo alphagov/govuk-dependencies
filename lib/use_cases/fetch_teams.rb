@@ -1,6 +1,6 @@
 module UseCases
   class FetchTeams
-    def initialize(teams_gateway:)
+    def initialize(teams_gateway: Gateways::Team.new)
       @teams_gateway = teams_gateway
     end
 

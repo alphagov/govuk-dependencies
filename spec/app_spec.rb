@@ -43,8 +43,10 @@ describe GovukDependencies do
     it 'should show both teams with the number applications with pull requests' do
       get '/team'
       expect(last_response).to be_ok
-      expect(last_response.body).to include('#asset-management (2)')
-      expect(last_response.body).to include('#email (1)')
+      expect(last_response.body).to include('#modelling-services')
+      expect(last_response.body).to include('publisher (2)')
+      expect(last_response.body).to include('#start-pages')
+      expect(last_response.body).to include('frontend (1)')
     end
   end
 end

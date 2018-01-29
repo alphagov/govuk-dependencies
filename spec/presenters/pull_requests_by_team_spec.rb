@@ -44,6 +44,30 @@ describe Presenters::PullRequestsByTeam do
         ])
       end
     end
+
+    context 'and no teams that the pull request belongs to' do
+      it 'group the pull request with the "no team" team name' do
+        pull_request = Domain::PullRequest.new(
+          application_name: 'signon',
+          title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
+          url: 'https://www.github.com/alphagov/signon/pull/456',
+          opened_at: Date.parse('2018-01-01 08:00:00')
+        )
+
+        expect(described_class.new.execute(teams: [], ungrouped_pull_requests: [pull_request])).to eq([
+          {
+            team_name: 'no team',
+            applications: [
+              {
+                application_name: 'signon',
+                application_url: 'https://github.com/alphagov/signon/pulls/app/dependabot',
+                pull_request_count: 1
+              }
+            ]
+          }
+        ])
+      end
+    end
   end
 
   context 'Given multiple pull requests' do

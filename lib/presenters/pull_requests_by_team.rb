@@ -6,7 +6,7 @@ module Presenters
         pull_requests_by_application = pull_requests.group_by(&:application_name)
 
         {
-          team_name: team.team_name,
+          team_name: team&.team_name || 'no team',
           applications: pull_requests_by_application.map do |application_name, pull_request_for_app|
             {
               application_name: application_name,
