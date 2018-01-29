@@ -65,7 +65,7 @@ describe GovukDependencies do
       it 'should display the "no open pull requests" message' do
         get '/'
         expect(last_response).to be_ok
-        expect(last_response.body).to include('No open pull requests found')
+        expect(last_response.body).to include('No open pull requests 🎂')
       end
     end
 
@@ -73,7 +73,7 @@ describe GovukDependencies do
       it 'should display the "no open pull requests" message' do
         get '/gem'
         expect(last_response).to be_ok
-        expect(last_response.body).to include('No open pull requests found')
+        expect(last_response.body).to include('No open pull requests 🎂')
       end
     end
 
@@ -89,7 +89,7 @@ describe GovukDependencies do
       it 'should display the "no open pull requests" message' do
         get '/team'
         expect(last_response).to be_ok
-        expect(last_response.body).to include('No open pull requests found')
+        expect(last_response.body).to include('No open pull requests 🎂')
       end
     end
   end
