@@ -60,11 +60,11 @@ describe Gateways::Team do
       result = described_class.new.execute
 
       expect(result.count).to eq(2)
-      expect(result.first.team_name).to eq('#asset-management')
-      expect(result.first.applications).to eq(['asset-manager', 'asset-uploader'])
+      expect(result.first.team_name).to eq('#modelling-services')
+      expect(result.first.applications).to eq(['publisher'])
 
-      expect(result.last.team_name).to eq('#email')
-      expect(result.last.applications).to eq(['whitehall'])
+      expect(result.last.team_name).to eq('#start-pages')
+      expect(result.last.applications).to eq(['frontend', 'government-frontend'])
     end
   end
 end

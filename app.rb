@@ -13,4 +13,14 @@ class GovukDependencies < Sinatra::Base
     @pull_requests_by_gem = Presenters::PullRequestsByGem.new.execute(ungrouped_pull_requests)
     erb :gem
   end
+
+  get '/team' do
+    ungrouped_pull_requests = UseCases::FetchPullRequests.new.execute
+    teams = UseCases::FetchTeams.new.execute
+    @pull_requests_by_team = Presenters::PullRequestsByTeam.new.execute(
+      teams: teams,
+      ungrouped_pull_requests: ungrouped_pull_requests
+    )
+    erb :team
+  end
 end
