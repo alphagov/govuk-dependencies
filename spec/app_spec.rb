@@ -10,7 +10,7 @@ describe GovukDependencies do
 
   context 'given open pull requests' do
     before do
-      stub_request(:get, 'https://api.github.com/search/issues?q=is:pr+user:alphagov+state:open+author:app/dependabot')
+      stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot')
         .to_return(body: File.read('spec/fixtures/pull_requests.json'), headers: { 'Content-Type' => 'application/json' })
     end
 
@@ -54,7 +54,7 @@ describe GovukDependencies do
 
   context 'given no open pull requests' do
     before do
-      stub_request(:get, 'https://api.github.com/search/issues?q=is:pr+user:alphagov+state:open+author:app/dependabot')
+      stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot')
         .to_return(
           body: '{ "total_count": 0, "incomplete_results": false, "items": [] }',
           headers: { 'Content-Type' => 'application/json' }
