@@ -1,6 +1,6 @@
 module UseCases
   class SendSlackMessages
-    def initialize(slack_gateway:, team_gateway:, pull_request_gateway:)
+    def initialize(slack_gateway: Gateways::SlackMessage.new, team_gateway: Gateways::Team.new, pull_request_gateway: Gateways::PullRequest.new)
       @slack_gateway = slack_gateway
       @team_gateway = team_gateway
       @pull_request_gateway = pull_request_gateway
