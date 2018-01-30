@@ -23,7 +23,7 @@ module UseCases
       end
     end
 
-    private
+  private
 
     attr_reader :slack_gateway, :team_gateway, :pull_request_gateway
 
@@ -36,4 +36,3 @@ module UseCases
     end
   end
 end
-

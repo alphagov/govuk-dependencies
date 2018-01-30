@@ -4,7 +4,10 @@ describe Gateways::SlackMessage do
       ENV['SLACK_WEBHOOK_URL'] = 'http://example.com/webhook'
       slack_channel = "#email"
       slack_message = "#email has 12 open pull requests"
-      body = { "payload" => "{\"channel\":\"#{slack_channel}\",\"text\":\"#{slack_message}\"}" }
+      body = {
+        "payload" =>
+          "{\"channel\":\"#email\",\"options\":{\"username\":\"Dependaseal\",\"icon_emoji\":\":happyseal:\"},\"text\":\"#email has 12 open pull requests\"}"
+      }
 
       stub_request(:post, "http://example.com/webhook").
         with(body: body).
