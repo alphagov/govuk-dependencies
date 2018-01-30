@@ -4,6 +4,7 @@ File.read('.ruby-version').chomp
 
 gem 'octokit', '~> 4.3'
 gem 'sinatra'
+gem 'slack-poster', '~> 2.2'
 
 group :production, :staging do
   gem 'unicorn'
