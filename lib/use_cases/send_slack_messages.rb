@@ -25,7 +25,7 @@ module UseCases
 
   private
 
-    FALLBACK_TEAM='#platform_support'
+    FALLBACK_TEAM = '#platform_support'.freeze
 
     attr_reader :slack_gateway, :team_gateway, :pull_request_gateway
 
