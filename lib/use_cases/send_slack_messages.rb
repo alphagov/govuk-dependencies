@@ -25,10 +25,12 @@ module UseCases
 
   private
 
+    FALLBACK_TEAM='#platform_support'
+
     attr_reader :slack_gateway, :team_gateway, :pull_request_gateway
 
     def team_for_application(teams, application_name)
-      teams.find { |team| team.applications.include?(application_name) }
+      teams.find { |team| team.applications.include?(application_name) } || teams.find { |team| team.team_name == FALLBACK_TEAM }
     end
 
     def url_for_team(team_name)
