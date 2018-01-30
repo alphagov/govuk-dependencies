@@ -1,29 +1,22 @@
-<html>
-  <head>
-    <link href="/assets/application.css" type="text/css" rel="stylesheet">
-  </head>
-  <body>
-    <% if pull_requests_by_team.empty? %>
-      <h2>No open pull requests 🎂</h2>
-    <% else %>
-      <ul class="apps">
-        <% pull_requests_by_team.each do |team| %>
-          <li class="app">
-            <h2>
-              <%= team.fetch(:team_name) %>
-            </h2>
-            <ul class="pulls">
-              <% team.fetch(:applications).each do |application| %>
-                <li class="pull">
-                  <a href="<%= application.fetch(:application_url) %>">
-                    <%= application.fetch(:application_name) %> (<%= application.fetch(:pull_request_count) %>)
-                  </a>
-                </li>
-              <% end %>
-            </ul>
-          </li>
-        <% end %>
-      </ul>
+<% if pull_requests_by_team.empty? %>
+  <h2>No open pull requests 🎂</h2>
+<% else %>
+  <ul class="apps">
+    <% pull_requests_by_team.each do |team| %>
+      <li class="app">
+        <h2>
+          <%= team.fetch(:team_name) %>
+        </h2>
+        <ul class="pulls">
+          <% team.fetch(:applications).each do |application| %>
+            <li class="pull">
+              <a href="<%= application.fetch(:application_url) %>">
+                <%= application.fetch(:application_name) %> (<%= application.fetch(:pull_request_count) %>)
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </li>
     <% end %>
-  </body>
-</html>
+  </ul>
+<% end %>

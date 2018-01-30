@@ -5,13 +5,15 @@ class GovukDependencies < Sinatra::Base
   get '/' do
     ungrouped_pull_requests = UseCases::FetchPullRequests.new.execute
     @pull_requests_by_application = Presenters::PullRequestsByApplication.new.execute(ungrouped_pull_requests)
-    erb :index
+
+    erb :index, layout: :layout
   end
 
   get '/gem' do
     ungrouped_pull_requests = UseCases::FetchPullRequests.new.execute
     @pull_requests_by_gem = Presenters::PullRequestsByGem.new.execute(ungrouped_pull_requests)
-    erb :gem
+
+    erb :gem, layout: :layout
   end
 
   get '/team' do
@@ -21,7 +23,8 @@ class GovukDependencies < Sinatra::Base
       teams: teams,
       ungrouped_pull_requests: ungrouped_pull_requests
     )
-    erb :team, locals: { pull_requests_by_team: pull_requests_by_team }
+
+    erb :team, locals: { pull_requests_by_team: pull_requests_by_team }, layout: :layout
   end
 
   get '/team/:team_name' do
@@ -36,6 +39,6 @@ class GovukDependencies < Sinatra::Base
       team.fetch(:team_name) == '#' + params.fetch(:team_name)
     end
 
-    erb :team, locals: { pull_requests_by_team: pull_requests_for_team }
+    erb :team, locals: { pull_requests_by_team: pull_requests_for_team }, layout: :layout
   end
 end
