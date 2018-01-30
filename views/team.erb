@@ -1,13 +1,13 @@
 <html>
   <head>
-    <link href="assets/application.css" type="text/css" rel="stylesheet">
+    <link href="/assets/application.css" type="text/css" rel="stylesheet">
   </head>
   <body>
-    <% if @pull_requests_by_team.empty? %>
+    <% if pull_requests_by_team.empty? %>
       <h2>No open pull requests 🎂</h2>
     <% else %>
       <ul class="apps">
-        <% @pull_requests_by_team.each do |team| %>
+        <% pull_requests_by_team.each do |team| %>
           <li class="app">
             <h2>
               <%= team.fetch(:team_name) %>
