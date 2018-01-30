@@ -5,13 +5,32 @@
 body {
   font-family: ntatabularnumbers, nta, sans-serif;
   background: black;
-  margin: 10px;
+}
+
+nav {
+  color: white;
+  padding: 15px;
+  font-size: 1.5em;
+}
+
+nav a {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+nav a:first-child {
+  margin: 0;
+}
+
+nav a, nav a:visited {
+  color: white;
+  text-decoration: none;
 }
 
 .apps {
-  font-size: 1.5em;
+  font-size: 1.2em;
   list-style: none;
-  margin: 0;
+  margin: 0 37px;
   padding: 0;
 }
 
@@ -20,7 +39,7 @@ body {
   color: white;
   margin-bottom: 10px;
   min-height: 100px;
-  padding: 10px;
+  padding: 10px 20px;
   position: relative;
 }
 
@@ -28,11 +47,6 @@ body {
   clear: both;
   content: '';
   display: block;
-}
-
-.apps li {
-  padding-right: 20px;
-  padding-left: 20px;
 }
 
 .app h2, .app p {
