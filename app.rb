@@ -4,9 +4,7 @@ require_relative 'lib/loader'
 def cache(name, &block)
   return block.call if ENV['RACK_ENV'] == 'test'
 
-  UseCases::ViewCacher.new(cache_file: name.to_s).execute do
-    block.call
-  end
+  UseCases::ViewCacher.new(cache_file: name.to_s).execute { block.call }
 end
 
 class GovukDependencies < Sinatra::Base
