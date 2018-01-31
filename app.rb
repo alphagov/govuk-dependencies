@@ -1,12 +1,10 @@
 require 'sinatra'
 require_relative 'lib/loader'
 
-def cache(name, &block)
-  return block.call if ENV['RACK_ENV'] == 'test'
+def cache(name)
+  return yield if ENV['RACK_ENV'] == 'test'
 
-  UseCases::ViewCacher.new(
-    cache_file: "/public/cache/#{cache_file.to_s}.html"
-  ).execute { block.call }
+  UseCases::Cache.new(path: "#{Dir.pwd}/public/cache/#{name}.html").execute { yield }
 end
 
 class GovukDependencies < Sinatra::Base

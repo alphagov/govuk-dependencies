@@ -1,29 +1,31 @@
 module UseCases
   class Cache
-    def initialize(name:, file: File)
-      @name = Dir.pwd + "/public/cache/#{name}.html"
+    def initialize(path:, file: File)
+      @path = path
       @file = file
     end
 
-    def execute(&block)
-      if fresh_cache?
-        file.read(name)
-      else
-        html = block.call
-        file.open(name, 'w') { |f| f.write(html) }
+    def execute
+      return cached if fresh_cache?
 
-        html
-      end
+      result = yield
+      file.open(path, 'w') { |f| f.write(result) }
+
+      result
     end
 
-    private
+  private
 
     CACHE_DURATION_SECONDS = 120
 
-    attr_reader :name, :file
+    attr_reader :path, :file
+
+    def cached
+      file.read(path)
+    end
 
     def fresh_cache?
-      file.exists?(name) && file.mtime(name) > (Time.now.utc - CACHE_DURATION_SECONDS)
+      file.exists?(path) && file.mtime(path) > (Time.now.utc - CACHE_DURATION_SECONDS)
     end
   end
 end
