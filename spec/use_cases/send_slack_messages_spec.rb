@@ -44,9 +44,11 @@ describe UseCases::SendSlackMessages do
           )
         ])
         slack_gateway = double
+        slack_message = 'You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email'
+
         expect(slack_gateway).to receive(:execute).with(
-          team: 'email',
-          message: 'You have 1 open Dependabot PR(s)'
+          channel: 'email',
+          message: slack_message
         )
         described_class.new(
           slack_gateway: slack_gateway,
@@ -77,9 +79,10 @@ describe UseCases::SendSlackMessages do
           )
         ])
         slack_gateway = double
+        slack_message = 'You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email'
         expect(slack_gateway).to receive(:execute).with(
-          team: 'email',
-          message: 'You have 2 open Dependabot PR(s)'
+          channel: 'email',
+          message: slack_message
         )
         described_class.new(
           slack_gateway: slack_gateway,
@@ -118,13 +121,15 @@ describe UseCases::SendSlackMessages do
         )
       ])
       slack_gateway = double
+      email_slack_message = 'You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email'
+      platform_slack_message = 'You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/platform_support'
       expect(slack_gateway).to receive(:execute).with(
-        team: 'email',
-        message: 'You have 2 open Dependabot PR(s)'
+        channel: 'email',
+        message: email_slack_message
       )
       expect(slack_gateway).to receive(:execute).with(
-        team: 'platform_support',
-        message: 'You have 1 open Dependabot PR(s)'
+        channel: 'platform_support',
+        message: platform_slack_message
       )
 
       described_class.new(
@@ -132,6 +137,72 @@ describe UseCases::SendSlackMessages do
         team_gateway: team_gateway,
         pull_request_gateway: pull_request_gateway
       ).execute
+    end
+  end
+
+  context 'given pull requests which have no team' do
+    context 'with no other pull requests' do
+      it 'sends a message to platform support' do
+        team_gateway = double(execute: [
+          Domain::Team.new(team_name: '#platform_support', applications: ['travel-advice-publisher'])
+        ])
+        pull_request_gateway = double(execute: [
+          Domain::PullRequest.new(
+            application_name: 'whitehall',
+            title: 'Bump foo 1.2.3 to 4.5.6',
+            opened_at: Date.parse('2018-01-25'),
+            url: 'https://github.com/alphagov/whitehall/123'
+          )
+        ])
+        slack_gateway = double
+        slack_message = 'You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/platform_support'
+
+        expect(slack_gateway).to receive(:execute).with(
+          channel: 'platform_support',
+          message: slack_message
+        )
+
+        described_class.new(
+          slack_gateway: slack_gateway,
+          team_gateway: team_gateway,
+          pull_request_gateway: pull_request_gateway
+        ).execute
+      end
+    end
+
+    context 'with other pull requests for platform support' do
+      it 'sends a message to platform support with the sum of both values' do
+        team_gateway = double(execute: [
+          Domain::Team.new(team_name: '#platform_support', applications: ['travel-advice-publisher'])
+        ])
+        pull_request_gateway = double(execute: [
+          Domain::PullRequest.new(
+            application_name: 'whitehall',
+            title: 'Bump foo 1.2.3 to 4.5.6',
+            opened_at: Date.parse('2018-01-25'),
+            url: 'https://github.com/alphagov/whitehall/123'
+          ),
+          Domain::PullRequest.new(
+            application_name: 'travel-advice-publisher',
+            title: 'Bump foo 1.2.3 to 4.5.6',
+            opened_at: Date.parse('2018-01-25'),
+            url: 'https://github.com/alphagov/travel-advice-publisher/123'
+          )
+        ])
+        slack_gateway = double
+        slack_message = 'You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/platform_support'
+
+        expect(slack_gateway).to receive(:execute).with(
+          channel: 'platform_support',
+          message: slack_message
+        )
+
+        described_class.new(
+          slack_gateway: slack_gateway,
+          team_gateway: team_gateway,
+          pull_request_gateway: pull_request_gateway
+        ).execute
+      end
     end
   end
 end

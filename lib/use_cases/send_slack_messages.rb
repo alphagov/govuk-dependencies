@@ -1,6 +1,6 @@
 module UseCases
   class SendSlackMessages
-    def initialize(slack_gateway:, team_gateway:, pull_request_gateway:)
+    def initialize(slack_gateway: Gateways::SlackMessage.new, team_gateway: Gateways::Team.new, pull_request_gateway: Gateways::PullRequest.new)
       @slack_gateway = slack_gateway
       @team_gateway = team_gateway
       @pull_request_gateway = pull_request_gateway
@@ -15,19 +15,26 @@ module UseCases
       end
 
       pull_requests_by_team.each do |team, pull_requests|
+        team_name = team.team_name.tr('#', '')
         slack_gateway.execute(
-          team: team.team_name.tr('#', ''),
-          message: "You have #{pull_requests.count} open Dependabot PR(s)"
+          channel: team_name,
+          message: "You have #{pull_requests.count} open Dependabot PR(s) - #{url_for_team(team_name)}"
         )
       end
     end
 
   private
 
+    FALLBACK_TEAM = '#platform_support'.freeze
+
     attr_reader :slack_gateway, :team_gateway, :pull_request_gateway
 
     def team_for_application(teams, application_name)
-      teams.find { |team| team.applications.include?(application_name) }
+      teams.find { |team| team.applications.include?(application_name) } || teams.find { |team| team.team_name == FALLBACK_TEAM }
+    end
+
+    def url_for_team(team_name)
+      "https://govuk-dependencies.herokuapp.com/team/#{team_name}"
     end
   end
 end
