@@ -4,12 +4,14 @@ require_relative 'lib/loader'
 def cache(name, &block)
   return block.call if ENV['RACK_ENV'] == 'test'
 
-  UseCases::ViewCacher.new(cache_file: name.to_s).execute { block.call }
+  UseCases::ViewCacher.new(
+    cache_file: "/public/cache/#{cache_file.to_s}.html"
+  ).execute { block.call }
 end
 
 class GovukDependencies < Sinatra::Base
   get '/' do
-    cache 'pull_requests_by_application' do
+    cache :pull_requests_by_application do
       ungrouped_pull_requests = UseCases::FetchPullRequests.new.execute
       @pull_requests_by_application = Presenters::PullRequestsByApplication.new.execute(ungrouped_pull_requests)
       erb :index, layout: :layout
