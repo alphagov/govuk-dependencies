@@ -19,7 +19,7 @@ class GovukDependencies < Sinatra::Base
   end
 
   get '/gem' do
-    cache 'pull_requests_by_gem' do
+    cache :pull_requests_by_gem do
       ungrouped_pull_requests = UseCases::FetchPullRequests.new.execute
       @pull_requests_by_gem = Presenters::PullRequestsByGem.new.execute(ungrouped_pull_requests)
 
@@ -28,7 +28,7 @@ class GovukDependencies < Sinatra::Base
   end
 
   get '/team' do
-    cache 'pull_requests_by_team' do
+    cache :pull_requests_by_team do
       ungrouped_pull_requests = UseCases::FetchPullRequests.new.execute
       teams = UseCases::FetchTeams.new.execute
       pull_requests_by_team = Presenters::PullRequestsByTeam.new.execute(
@@ -41,7 +41,7 @@ class GovukDependencies < Sinatra::Base
   end
 
   get '/team/:team_name' do
-    cache "pull_requests_by_team_#{params.fetch(:team_name)}" do
+    cache :"pull_requests_by_team_#{params.fetch(:team_name)}" do
       ungrouped_pull_requests = UseCases::FetchPullRequests.new.execute
       teams = UseCases::FetchTeams.new.execute
       grouped_pull_requests = Presenters::PullRequestsByTeam.new.execute(

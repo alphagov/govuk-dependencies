@@ -7,6 +7,15 @@ describe UseCases::ViewCacher do
         'some cached result'
       end
     end
+
+    it 'returns the result' do
+      file = double(exists?: false, open: nil)
+      result = described_class.new(cache_file: 'foo.html', file: file).execute do
+        'some cached result'
+      end
+
+      expect(result).to eq('some cached result')
+    end
   end
 
   context 'Given the result has been previously cached' do
