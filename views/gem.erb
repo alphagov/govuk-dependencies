@@ -1,30 +1,23 @@
-<html>
-  <head>
-    <link href="/assets/application.css" type="text/css" rel="stylesheet">
-  </head>
-  <body>
-    <% if @pull_requests_by_gem.empty? %>
-      <h2>No open pull requests 🎂</h2>
-    <% else %>
-      <ul class="apps">
-        <% @pull_requests_by_gem.each do |gem| %>
-          <li class="app">
-            <h2>
-              <%= gem.fetch(:gem_name) %> (<%= gem.fetch(:pull_requests).count %>)
-            </h2>
-            <ul class="pulls">
-              <% gem.fetch(:pull_requests).each do |pull_request| %>
-                <li class="pull">
-                  <a href="<%= pull_request.url %>">
-                    <%= pull_request.application_name %> (<%= pull_request.version %>)
-                  </a>
-                  <span class="time-elapsed">Opened <%= pull_request.open_since %></span>
-                </li>
-              <% end %>
-            </ul>
-          </li>
-        <% end %>
-      </ul>
+<% if @pull_requests_by_gem.empty? %>
+  <h2>No open pull requests 🎂</h2>
+<% else %>
+  <ul class="apps">
+    <% @pull_requests_by_gem.each do |gem| %>
+      <li class="app">
+        <h2>
+          <%= gem.fetch(:gem_name) %> (<%= gem.fetch(:pull_requests).count %>)
+        </h2>
+        <ul class="pulls">
+          <% gem.fetch(:pull_requests).each do |pull_request| %>
+            <li class="pull">
+              <a href="<%= pull_request.url %>">
+                <%= pull_request.application_name %> (<%= pull_request.version %>)
+              </a>
+              <span class="time-elapsed">Opened <%= pull_request.open_since %></span>
+            </li>
+          <% end %>
+        </ul>
+      </li>
     <% end %>
-  </body>
-</html>
+  </ul>
+<% end %>
