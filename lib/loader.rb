@@ -1,6 +1,7 @@
 require_relative './domain/pull_request'
 require_relative './domain/team'
 
+require_relative './use_cases/cache'
 require_relative './use_cases/fetch_pull_requests'
 require_relative './use_cases/fetch_teams'
 require_relative './use_cases/send_slack_messages'
