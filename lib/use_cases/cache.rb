@@ -18,10 +18,12 @@ module UseCases
 
     private
 
+    CACHE_DURATION_SECONDS = 120
+
     attr_reader :name, :file
 
     def fresh_cache?
-      file.exists?(name) && file.mtime(name) > (Time.now.utc - 120)
+      file.exists?(name) && file.mtime(name) > (Time.now.utc - CACHE_DURATION_SECONDS)
     end
   end
 end
