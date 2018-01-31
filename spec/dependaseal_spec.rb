@@ -18,10 +18,10 @@ describe Dependaseal do
 
   it 'sends a message to slack for each team with open pull requests' do
     modelling_services_payload = {
-      'payload' => '{"channel":"modelling-services","username":"Dependaseal","icon_emoji":":happyseal:","text":"You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/modelling-services"}'
+      'payload' => '{"channel":"modelling-services","username":"Dependaseal","icon_emoji":":happyseal:","text":"You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/modelling-services - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"}'
     }
     start_pages_payload = {
-      'payload' => '{"channel":"start-pages","username":"Dependaseal","icon_emoji":":happyseal:","text":"You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/start-pages"}'
+      'payload' => '{"channel":"start-pages","username":"Dependaseal","icon_emoji":":happyseal:","text":"You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/start-pages - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"}'
     }
 
     described_class.new.execute

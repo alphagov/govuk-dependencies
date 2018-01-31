@@ -18,7 +18,7 @@ module UseCases
         team_name = team.team_name.tr('#', '')
         slack_gateway.execute(
           channel: team_name,
-          message: "You have #{pull_requests.count} open Dependabot PR(s) - #{url_for_team(team_name)}"
+          message: "You have #{pull_requests.count} open Dependabot PR(s) - #{url_for_team(team_name)} - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"
         )
       end
     end
