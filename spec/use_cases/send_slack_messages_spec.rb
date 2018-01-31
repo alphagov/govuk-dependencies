@@ -44,7 +44,7 @@ describe UseCases::SendSlackMessages do
           )
         ])
         slack_gateway = double
-        slack_message = 'You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email'
+        slack_message = 'You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback'
 
         expect(slack_gateway).to receive(:execute).with(
           channel: 'email',
@@ -79,7 +79,7 @@ describe UseCases::SendSlackMessages do
           )
         ])
         slack_gateway = double
-        slack_message = 'You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email'
+        slack_message = 'You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback'
         expect(slack_gateway).to receive(:execute).with(
           channel: 'email',
           message: slack_message
@@ -121,8 +121,8 @@ describe UseCases::SendSlackMessages do
         )
       ])
       slack_gateway = double
-      email_slack_message = 'You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email'
-      platform_slack_message = 'You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/platform_support'
+      email_slack_message = 'You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback'
+      platform_slack_message = 'You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/platform_support - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback'
       expect(slack_gateway).to receive(:execute).with(
         channel: 'email',
         message: email_slack_message
@@ -155,7 +155,7 @@ describe UseCases::SendSlackMessages do
           )
         ])
         slack_gateway = double
-        slack_message = 'You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/platform_support'
+        slack_message = 'You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/platform_support - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback'
 
         expect(slack_gateway).to receive(:execute).with(
           channel: 'platform_support',
@@ -190,7 +190,7 @@ describe UseCases::SendSlackMessages do
           )
         ])
         slack_gateway = double
-        slack_message = 'You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/platform_support'
+        slack_message = 'You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/platform_support - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback'
 
         expect(slack_gateway).to receive(:execute).with(
           channel: 'platform_support',
