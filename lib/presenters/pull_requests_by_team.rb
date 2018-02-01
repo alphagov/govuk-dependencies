@@ -1,9 +1,9 @@
 module Presenters
   class PullRequestsByTeam
     def execute(teams:, ungrouped_pull_requests:)
-      pull_requests_by_team = ungrouped_pull_requests.group_by { |pr| team_for_application(teams, pr.application_name) }
+      pull_requests_by_team = ungrouped_pull_requests.group_by { |pr| team_for_application(teams, pr.fetch(:application_name)) }
       pull_requests_by_team.map do |team, pull_requests|
-        pull_requests_by_application = pull_requests.group_by(&:application_name)
+        pull_requests_by_application = pull_requests.group_by { |pr| pr.fetch(:application_name) }
 
         {
           team_name: team&.team_name || 'no team',

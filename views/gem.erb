@@ -10,10 +10,10 @@
         <ul class="pulls">
           <% gem.fetch(:pull_requests).each do |pull_request| %>
             <li class="pull">
-              <a href="<%= pull_request.url %>">
-                <%= pull_request.application_name %> (<%= pull_request.version %>)
+              <a href="<%= pull_request.fetch(:url) %>">
+                <%= pull_request.fetch(:application_name) %>
               </a>
-              <span class="time-elapsed">Opened <%= pull_request.open_since %></span>
+              <span class="time-elapsed">Opened <%= pull_request.fetch(:open_since) %></span>
             </li>
           <% end %>
         </ul>

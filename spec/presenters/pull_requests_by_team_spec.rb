@@ -21,12 +21,13 @@ describe Presenters::PullRequestsByTeam do
     context 'and one team that the pull request belongs to' do
       it 'returns an array of applications grouped by team' do
         team = Domain::Team.new(team_name: '#email', applications: ['signon'])
-        pull_request = Domain::PullRequest.new(
+        pull_request = {
           application_name: 'signon',
           title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
           url: 'https://www.github.com/alphagov/signon/pull/456',
           opened_at: Date.parse('2018-01-01 08:00:00')
-        )
+        }
+
         expect(described_class.new.execute(
                  teams: [team],
                  ungrouped_pull_requests: [pull_request]
@@ -47,12 +48,12 @@ describe Presenters::PullRequestsByTeam do
 
     context 'and no teams that the pull request belongs to' do
       it 'group the pull request with the "no team" team name' do
-        pull_request = Domain::PullRequest.new(
+        pull_request = {
           application_name: 'signon',
           title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
           url: 'https://www.github.com/alphagov/signon/pull/456',
           opened_at: Date.parse('2018-01-01 08:00:00')
-        )
+        }
 
         expect(described_class.new.execute(teams: [], ungrouped_pull_requests: [pull_request])).to eq([
           {
@@ -75,19 +76,19 @@ describe Presenters::PullRequestsByTeam do
       it 'returns an array of applications grouped by team' do
         team = Domain::Team.new(team_name: '#email', applications: ['signon', 'email-alert-api'])
         pull_requests = [
-          Domain::PullRequest.new(
+          {
             application_name: 'signon',
             title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
             url: 'https://www.github.com/alphagov/signon/pull/456',
             opened_at: Date.parse('2018-01-01 08:00:00')
-          ),
-          Domain::PullRequest.new(
+          }, {
             application_name: 'email-alert-api',
             title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
             url: 'https://www.github.com/alphagov/email-alert-api/pull/456',
             opened_at: Date.parse('2018-01-01 08:00:00')
-        )
-]
+          }
+        ]
+
         expect(described_class.new.execute(
                  teams: [team],
                  ungrouped_pull_requests: pull_requests
@@ -111,18 +112,19 @@ describe Presenters::PullRequestsByTeam do
 
       it 'counts the number of pull requests' do
         team = Domain::Team.new(team_name: '#email', applications: ['signon', 'email-alert-api'])
-        pull_request = Domain::PullRequest.new(
+        pull_request = {
           application_name: 'signon',
           title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
           url: 'https://www.github.com/alphagov/signon/pull/456',
           opened_at: Date.parse('2018-01-01 08:00:00')
-        )
-        pull_request2 = Domain::PullRequest.new(
+        }
+
+        pull_request2 = {
           application_name: 'signon',
           title: 'Bump Rails from 4.2.1 to 5.1.2',
           url: 'https://www.github.com/alphagov/signon/pull/457',
           opened_at: Date.parse('2018-01-01 08:00:00')
-        )
+        }
         expect(described_class.new.execute(
                  teams: [team],
                  ungrouped_pull_requests: [pull_request, pull_request2]
@@ -147,25 +149,23 @@ describe Presenters::PullRequestsByTeam do
                  Domain::Team.new(team_name: '#asset-management', applications: ['asset-manager'])]
 
         pull_requests = [
-          Domain::PullRequest.new(
+          {
             application_name: 'signon',
             title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
             url: 'https://www.github.com/alphagov/signon/pull/456',
             opened_at: Date.parse('2018-01-01 08:00:00')
-          ),
-          Domain::PullRequest.new(
+          }, {
             application_name: 'email-alert-api',
             title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
             url: 'https://www.github.com/alphagov/email-alert-api/pull/456',
             opened_at: Date.parse('2018-01-01 08:00:00')
-          ),
-          Domain::PullRequest.new(
+          }, {
             application_name: 'asset-manager',
             title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
             url: 'https://www.github.com/alphagov/email-alert-api/pull/456',
             opened_at: Date.parse('2018-01-01 08:00:00')
-        )
-]
+          }
+        ]
 
         expect(described_class.new.execute(
                  teams: teams,
