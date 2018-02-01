@@ -19,25 +19,24 @@ module UseCases
 
   private
 
-    SUMMARISED_PR_TITLE_MATCH = 'Bump (\S+) and (\S+)'.freeze
+    SINGLE_GEM_TITLE_MATCH = 'Bump \S+ from \S+ to \S+'.freeze
 
     def split_summarised_pull_requests(pull_requests)
       pull_requests.map { |pr| split_pull_request(pr) }.flatten
     end
 
     def split_pull_request(pr)
-      return pr unless two_gems_bumped?(pr)
+      return pr if one_gem_bumped?(pr)
 
-      gems = pr[:title].match(SUMMARISED_PR_TITLE_MATCH)
-
-      [
-        pr.merge(title: "Bump #{gems[1]}"),
-        pr.merge(title: "Bump #{gems[2]}")
-      ]
+      gems_from_title(pr[:title]).map { |gem| pr.merge(title: "Bump #{gem.strip}") }
     end
 
-    def two_gems_bumped?(pr)
-      pr[:title].match?(SUMMARISED_PR_TITLE_MATCH)
+    def one_gem_bumped?(pr)
+      pr[:title].match?(SINGLE_GEM_TITLE_MATCH)
+    end
+
+    def gems_from_title(title)
+      title.sub('Bump ', '').sub('and', ',').split(',')
     end
 
     attr_reader :gateway

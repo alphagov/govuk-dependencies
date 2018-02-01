@@ -52,6 +52,38 @@ describe UseCases::FetchPullRequests do
         }])
       end
     end
+
+    context 'with a pull request which bumps three gems' do
+      it 'returns three pull request hashes' do
+        pull_request_gateway = double(execute: [
+          Domain::PullRequest.new(
+            application_name: 'frontend',
+            title: 'Bump Rails, Rspec and gds-api-adapters',
+            opened_at: Date.today,
+            url: 'https://github.com/alphagov/frontend/pulls/123'
+          )
+        ])
+
+        result = described_class.new(gateway: pull_request_gateway).execute
+
+        expect(result).to eq([{
+          application_name: 'frontend',
+          title: 'Bump Rails',
+          url: 'https://github.com/alphagov/frontend/pulls/123',
+          open_since: 'today'
+        }, {
+          application_name: 'frontend',
+          title: 'Bump Rspec',
+          url: 'https://github.com/alphagov/frontend/pulls/123',
+          open_since: 'today'
+        }, {
+          application_name: 'frontend',
+          title: 'Bump gds-api-adapters',
+          url: 'https://github.com/alphagov/frontend/pulls/123',
+          open_since: 'today'
+        }])
+      end
+    end
   end
 
   context 'Given multiple pull requests' do
