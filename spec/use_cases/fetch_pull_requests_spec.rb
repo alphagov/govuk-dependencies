@@ -22,9 +22,35 @@ describe UseCases::FetchPullRequests do
         application_name: 'frontend',
         title: 'Bump Rails from 4.2 to 5.0',
         url: 'https://github.com/alphagov/frontend/pulls/123',
-        open_since: 'today',
-        version: '5.0'
+        open_since: 'today'
       }])
+    end
+
+    context 'with a pull request which bumps two gems' do
+      it 'returns two pull request hashes' do
+        pull_request_gateway = double(execute: [
+          Domain::PullRequest.new(
+            application_name: 'frontend',
+            title: 'Bump Rails and gds-api-adapters',
+            opened_at: Date.today,
+            url: 'https://github.com/alphagov/frontend/pulls/123'
+          )
+        ])
+
+        result = described_class.new(gateway: pull_request_gateway).execute
+
+        expect(result).to eq([{
+          application_name: 'frontend',
+          title: 'Bump Rails',
+          url: 'https://github.com/alphagov/frontend/pulls/123',
+          open_since: 'today'
+        }, {
+          application_name: 'frontend',
+          title: 'Bump gds-api-adapters',
+          url: 'https://github.com/alphagov/frontend/pulls/123',
+          open_since: 'today'
+        }])
+      end
     end
   end
 
@@ -52,14 +78,12 @@ describe UseCases::FetchPullRequests do
           application_name: 'frontend',
           title: 'Bump Rails from 4.2 to 5.0',
           url: 'https://github.com/alphagov/frontend/pulls/123',
-          open_since: 'today',
-          version: '5.0'
+          open_since: 'today'
         }, {
           application_name: 'publisher',
           title: 'Bump Rails from 3.2 to 4.0',
           url: 'https://github.com/alphagov/publisher/pulls/123',
-          open_since: 'today',
-          version: '4.0'
+          open_since: 'today'
         },
       ])
     end

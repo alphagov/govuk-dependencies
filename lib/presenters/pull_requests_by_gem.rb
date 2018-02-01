@@ -13,7 +13,7 @@ module Presenters
   private
 
     def gem_name(pull_request_title)
-      pull_request_title.match('Bump (\S+) from')[1]
+      pull_request_title.match('Bump (\S+)')[1]
     end
   end
 end

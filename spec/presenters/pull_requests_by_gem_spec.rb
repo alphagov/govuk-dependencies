@@ -24,6 +24,34 @@ describe Presenters::PullRequestsByGem do
     end
   end
 
+  context 'Given a split commit' do
+    it 'Groups them correctly' do
+      gds_api_adapter_pull_request = {
+        application_name: 'frontend',
+        title: 'Bump gds-api-adapters',
+        url: 'https://www.github.com/alphagov/frontend/pull/123',
+        opened_at: Date.parse('2018-01-01 08:00:00')
+      }
+      rspec_pull_request = {
+        application_name: 'frontend',
+        title: 'Bump Rspec',
+        url: 'https://www.github.com/alphagov/frontend/pull/123',
+        opened_at: Date.parse('2018-01-01 08:00:00')
+      }
+
+      result = described_class.new.execute([gds_api_adapter_pull_request, rspec_pull_request])
+      expect(result).to eq([
+        {
+          gem_name: 'gds-api-adapters',
+          pull_requests: [gds_api_adapter_pull_request]
+        }, {
+          gem_name: 'Rspec',
+          pull_requests: [rspec_pull_request]
+        }
+      ])
+    end
+  end
+
   context 'Given multiple pull requests for a single gem' do
     it 'groups the pull requests by the gem name' do
       pull_requests = [
