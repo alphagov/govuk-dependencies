@@ -1,7 +1,7 @@
 module Presenters
   class PullRequestsByGem
     def execute(ungrouped_pull_requests)
-      grouped_pull_requests = ungrouped_pull_requests.group_by { |pr| gem_name(pr.title) }
+      grouped_pull_requests = ungrouped_pull_requests.group_by { |pr| gem_name(pr.fetch(:title)) }
       grouped_pull_requests.map do |gem_name, pull_requests|
         {
           gem_name: gem_name,

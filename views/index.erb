@@ -12,10 +12,10 @@
         <ul class="pulls">
           <% application.fetch(:pull_requests).each do |pull_request| %>
             <li class="pull">
-              <a href="<%= pull_request.url %>">
-                <%= pull_request.title %>
+              <a href="<%= pull_request.fetch(:url) %>">
+                <%= pull_request.fetch(:title) %>
               </a>
-              <span class="time-elapsed">Opened <%= pull_request.open_since %></span>
+              <span class="time-elapsed">Opened <%= pull_request.fetch(:open_since) %></span>
             </li>
           <% end %>
         </ul>
