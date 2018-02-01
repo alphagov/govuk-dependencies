@@ -97,12 +97,12 @@ describe Presenters::PullRequestsByTeam do
             team_name: '#email',
             applications: [
               {
-                application_name: 'signon',
-                application_url: 'https://github.com/alphagov/signon/pulls/app/dependabot',
-                pull_request_count: 1
-              }, {
                 application_name: 'email-alert-api',
                 application_url: 'https://github.com/alphagov/email-alert-api/pulls/app/dependabot',
+                pull_request_count: 1
+              }, {
+                application_name: 'signon',
+                application_url: 'https://github.com/alphagov/signon/pulls/app/dependabot',
                 pull_request_count: 1
               }
             ]
@@ -141,6 +141,45 @@ describe Presenters::PullRequestsByTeam do
           }
         ])
       end
+
+      context 'and there is an equal number of PRs for multiple applications' do
+        it 'orders the applications by name' do
+          team = Domain::Team.new(team_name: '#email', applications: ['signon', 'email-alert-api'])
+          pull_requests = [
+            {
+              application_name: 'signon',
+              title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
+              url: 'https://www.github.com/alphagov/signon/pull/456',
+              opened_at: Date.parse('2018-01-01 08:00:00')
+            }, {
+              application_name: 'email-alert-api',
+              title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
+              url: 'https://www.github.com/alphagov/email-alert-api/pull/456',
+              opened_at: Date.parse('2018-01-01 08:00:00')
+            }
+          ]
+
+          expect(described_class.new.execute(
+                   teams: [team],
+                   ungrouped_pull_requests: pull_requests
+          )).to eq([
+            {
+              team_name: '#email',
+              applications: [
+                {
+                  application_name: 'email-alert-api',
+                  application_url: 'https://github.com/alphagov/email-alert-api/pulls/app/dependabot',
+                  pull_request_count: 1
+                }, {
+                  application_name: 'signon',
+                  application_url: 'https://github.com/alphagov/signon/pulls/app/dependabot',
+                  pull_request_count: 1
+                }
+              ]
+            }
+          ])
+        end
+      end
     end
 
     context 'and multiple teams that the pull requests belongs to' do
@@ -172,24 +211,116 @@ describe Presenters::PullRequestsByTeam do
                  ungrouped_pull_requests: pull_requests
         )).to eq([
           {
+            team_name: '#asset-management',
+            applications: [
+              {
+                application_name: 'asset-manager',
+                application_url: 'https://github.com/alphagov/asset-manager/pulls/app/dependabot',
+                pull_request_count: 1
+              }
+            ]
+          }, {
+            team_name: '#email',
+            applications: [
+              {
+                application_name: 'email-alert-api',
+                application_url: 'https://github.com/alphagov/email-alert-api/pulls/app/dependabot',
+                pull_request_count: 1
+              }, {
+                application_name: 'signon',
+                application_url: 'https://github.com/alphagov/signon/pulls/app/dependabot',
+                pull_request_count: 1
+              }
+            ]
+          }
+        ])
+      end
+
+      it 'Orders the PRs by team name' do
+        teams = [Domain::Team.new(team_name: '#email', applications: ['signon',]),
+                 Domain::Team.new(team_name: '#asset-management', applications: ['asset-manager'])]
+
+        pull_requests = [
+          {
+            application_name: 'signon',
+            title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
+            url: 'https://www.github.com/alphagov/signon/pull/456',
+            opened_at: Date.parse('2018-01-01 08:00:00')
+          }, {
+            application_name: 'asset-manager',
+            title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
+            url: 'https://www.github.com/alphagov/email-alert-api/pull/456',
+            opened_at: Date.parse('2018-01-01 08:00:00')
+          }
+        ]
+
+        expect(described_class.new.execute(
+                 teams: teams,
+                 ungrouped_pull_requests: pull_requests
+        )).to eq([
+          {
+            team_name: '#asset-management',
+            applications: [
+              {
+                application_name: 'asset-manager',
+                application_url: 'https://github.com/alphagov/asset-manager/pulls/app/dependabot',
+                pull_request_count: 1
+              }
+            ]
+          }, {
             team_name: '#email',
             applications: [
               {
                 application_name: 'signon',
                 application_url: 'https://github.com/alphagov/signon/pulls/app/dependabot',
                 pull_request_count: 1
+              }
+            ]
+          }
+        ])
+      end
+
+      it 'Orders the applications by total PR count from most to least' do
+        team = Domain::Team.new(team_name: '#email', applications: ['signon', 'email-alert-api'])
+        email_pull_request = {
+          application_name: 'email-alert-api',
+          title: 'Bump Rails from 4.2.1 to 5.1.2',
+          url: 'https://www.github.com/alphagov/email-alert-api/pull/457',
+          opened_at: Date.parse('2018-01-01 08:00:00')
+        }
+
+        signon_pull_request = {
+          application_name: 'signon',
+          title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
+          url: 'https://www.github.com/alphagov/signon/pull/456',
+          opened_at: Date.parse('2018-01-01 08:00:00')
+        }
+
+        signon_pull_request2 = {
+          application_name: 'signon',
+          title: 'Bump Rails from 4.2.1 to 5.1.2',
+          url: 'https://www.github.com/alphagov/signon/pull/457',
+          opened_at: Date.parse('2018-01-01 08:00:00')
+        }
+
+        expect(described_class.new.execute(
+                 teams: [team],
+                 ungrouped_pull_requests: [
+                   email_pull_request,
+                   signon_pull_request,
+                   signon_pull_request2
+                 ]
+        )).to eq([
+          {
+            team_name: '#email',
+            applications: [
+              {
+                application_name: 'signon',
+                application_url: 'https://github.com/alphagov/signon/pulls/app/dependabot',
+                pull_request_count: 2
               }, {
                 application_name: 'email-alert-api',
                 application_url: 'https://github.com/alphagov/email-alert-api/pulls/app/dependabot',
-                pull_request_count: 1
-              }
-            ]
-          }, {
-            team_name: '#asset-management',
-            applications: [
-              {
-                application_name: 'asset-manager',
-                application_url: 'https://github.com/alphagov/asset-manager/pulls/app/dependabot',
                 pull_request_count: 1
               }
             ]

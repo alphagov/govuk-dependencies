@@ -127,8 +127,8 @@ describe Presenters::PullRequestsByGem do
 
       result = described_class.new.execute(
         [
-          gds_api_adapters_pull_request,
           gds_api_adapters_pull_request2,
+          gds_api_adapters_pull_request,
           uglifier_pull_request
         ]
       )
@@ -172,8 +172,8 @@ describe Presenters::PullRequestsByGem do
       result = described_class.new.execute(
         [
           uglifier_pull_request,
-          gds_api_adapters_pull_request,
-          gds_api_adapters_pull_request2
+          gds_api_adapters_pull_request2,
+          gds_api_adapters_pull_request
         ]
       )
 
