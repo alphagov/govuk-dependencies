@@ -5,7 +5,7 @@
     <% pull_requests_by_team.each do |team| %>
       <li class="app">
         <h2>
-          <%= team.fetch(:team_name) %>
+          #<%= team.fetch(:team_name) %>
         </h2>
         <ul class="pulls">
           <% team.fetch(:applications).each do |application| %>

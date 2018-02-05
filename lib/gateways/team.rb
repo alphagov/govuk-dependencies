@@ -14,7 +14,7 @@ module Gateways
       grouped_teams = teams.group_by { |team| team['team'] }
       grouped_teams.map do |team_name, team_info|
         Domain::Team.new(
-          team_name: team_name,
+          team_name: team_name.tr('#', ''),
           applications: team_info.map { |info| info['app_name'] }
         )
       end

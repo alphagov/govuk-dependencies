@@ -9,8 +9,8 @@ describe Presenters::PullRequestsByTeam do
     context 'and some teams' do
       it 'returns an empty array' do
         teams = [
-          Domain::Team.new(team_name: '#team-one', applications: ['application-one']),
-          Domain::Team.new(team_name: '#team-two', applications: ['application-two'])
+          Domain::Team.new(team_name: 'team-one', applications: ['application-one']),
+          Domain::Team.new(team_name: 'team-two', applications: ['application-two'])
         ]
         expect(described_class.new.execute(teams: teams, ungrouped_pull_requests: [])).to eq([])
       end
@@ -20,7 +20,7 @@ describe Presenters::PullRequestsByTeam do
   context 'Given one pull request' do
     context 'and one team that the pull request belongs to' do
       it 'returns an array of applications grouped by team' do
-        team = Domain::Team.new(team_name: '#email', applications: ['signon'])
+        team = Domain::Team.new(team_name: 'email', applications: ['signon'])
         pull_request = {
           application_name: 'signon',
           title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
@@ -33,7 +33,7 @@ describe Presenters::PullRequestsByTeam do
                  ungrouped_pull_requests: [pull_request]
         )).to eq([
           {
-            team_name: '#email',
+            team_name: 'email',
             applications: [
               {
                 application_name: 'signon',
@@ -47,7 +47,7 @@ describe Presenters::PullRequestsByTeam do
     end
 
     context 'and no teams that the pull request belongs to' do
-      it 'group the pull request with the "no team" team name' do
+      it 'group the pull request with the "govuk-developers" team name' do
         pull_request = {
           application_name: 'signon',
           title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
@@ -57,7 +57,7 @@ describe Presenters::PullRequestsByTeam do
 
         expect(described_class.new.execute(teams: [], ungrouped_pull_requests: [pull_request])).to eq([
           {
-            team_name: 'no team',
+            team_name: 'govuk-developers',
             applications: [
               {
                 application_name: 'signon',
@@ -74,7 +74,7 @@ describe Presenters::PullRequestsByTeam do
   context 'Given multiple pull requests' do
     context 'and one team that the pull requests belongs to' do
       it 'returns an array of applications grouped by team' do
-        team = Domain::Team.new(team_name: '#email', applications: ['signon', 'email-alert-api'])
+        team = Domain::Team.new(team_name: 'email', applications: ['signon', 'email-alert-api'])
         pull_requests = [
           {
             application_name: 'signon',
@@ -94,7 +94,7 @@ describe Presenters::PullRequestsByTeam do
                  ungrouped_pull_requests: pull_requests
         )).to eq([
           {
-            team_name: '#email',
+            team_name: 'email',
             applications: [
               {
                 application_name: 'email-alert-api',
@@ -111,7 +111,7 @@ describe Presenters::PullRequestsByTeam do
       end
 
       it 'counts the number of pull requests' do
-        team = Domain::Team.new(team_name: '#email', applications: ['signon', 'email-alert-api'])
+        team = Domain::Team.new(team_name: 'email', applications: ['signon', 'email-alert-api'])
         pull_request = {
           application_name: 'signon',
           title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
@@ -130,7 +130,7 @@ describe Presenters::PullRequestsByTeam do
                  ungrouped_pull_requests: [pull_request, pull_request2]
         )).to eq([
           {
-            team_name: '#email',
+            team_name: 'email',
             applications: [
               {
                 application_name: 'signon',
@@ -144,7 +144,7 @@ describe Presenters::PullRequestsByTeam do
 
       context 'and there is an equal number of PRs for multiple applications' do
         it 'orders the applications by name' do
-          team = Domain::Team.new(team_name: '#email', applications: ['signon', 'email-alert-api'])
+          team = Domain::Team.new(team_name: 'email', applications: ['signon', 'email-alert-api'])
           pull_requests = [
             {
               application_name: 'signon',
@@ -164,7 +164,7 @@ describe Presenters::PullRequestsByTeam do
                    ungrouped_pull_requests: pull_requests
           )).to eq([
             {
-              team_name: '#email',
+              team_name: 'email',
               applications: [
                 {
                   application_name: 'email-alert-api',
@@ -184,8 +184,8 @@ describe Presenters::PullRequestsByTeam do
 
     context 'and multiple teams that the pull requests belongs to' do
       it 'returns an array of applications grouped by team' do
-        teams = [Domain::Team.new(team_name: '#email', applications: ['signon', 'email-alert-api']),
-                 Domain::Team.new(team_name: '#asset-management', applications: ['asset-manager'])]
+        teams = [Domain::Team.new(team_name: 'email', applications: ['signon', 'email-alert-api']),
+                 Domain::Team.new(team_name: 'asset-management', applications: ['asset-manager'])]
 
         pull_requests = [
           {
@@ -211,7 +211,7 @@ describe Presenters::PullRequestsByTeam do
                  ungrouped_pull_requests: pull_requests
         )).to eq([
           {
-            team_name: '#asset-management',
+            team_name: 'asset-management',
             applications: [
               {
                 application_name: 'asset-manager',
@@ -220,7 +220,7 @@ describe Presenters::PullRequestsByTeam do
               }
             ]
           }, {
-            team_name: '#email',
+            team_name: 'email',
             applications: [
               {
                 application_name: 'email-alert-api',
@@ -237,8 +237,8 @@ describe Presenters::PullRequestsByTeam do
       end
 
       it 'Orders the PRs by team name' do
-        teams = [Domain::Team.new(team_name: '#email', applications: ['signon',]),
-                 Domain::Team.new(team_name: '#asset-management', applications: ['asset-manager'])]
+        teams = [Domain::Team.new(team_name: 'email', applications: ['signon',]),
+                 Domain::Team.new(team_name: 'asset-management', applications: ['asset-manager'])]
 
         pull_requests = [
           {
@@ -259,7 +259,7 @@ describe Presenters::PullRequestsByTeam do
                  ungrouped_pull_requests: pull_requests
         )).to eq([
           {
-            team_name: '#asset-management',
+            team_name: 'asset-management',
             applications: [
               {
                 application_name: 'asset-manager',
@@ -268,7 +268,7 @@ describe Presenters::PullRequestsByTeam do
               }
             ]
           }, {
-            team_name: '#email',
+            team_name: 'email',
             applications: [
               {
                 application_name: 'signon',
@@ -281,7 +281,7 @@ describe Presenters::PullRequestsByTeam do
       end
 
       it 'Orders the applications by total PR count from most to least' do
-        team = Domain::Team.new(team_name: '#email', applications: ['signon', 'email-alert-api'])
+        team = Domain::Team.new(team_name: 'email', applications: ['signon', 'email-alert-api'])
         email_pull_request = {
           application_name: 'email-alert-api',
           title: 'Bump Rails from 4.2.1 to 5.1.2',
@@ -312,7 +312,7 @@ describe Presenters::PullRequestsByTeam do
                  ]
         )).to eq([
           {
-            team_name: '#email',
+            team_name: 'email',
             applications: [
               {
                 application_name: 'signon',

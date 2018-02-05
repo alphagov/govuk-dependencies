@@ -48,7 +48,7 @@ class GovukDependencies < Sinatra::Base
       )
 
       pull_requests_for_team = grouped_pull_requests.select do |team|
-        team.fetch(:team_name) == '#' + params.fetch(:team_name)
+        team.fetch(:team_name) == params.fetch(:team_name)
       end
 
       erb :team, locals: { pull_requests_by_team: pull_requests_for_team }, layout: :layout
