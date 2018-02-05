@@ -4,9 +4,9 @@
   <ul class="apps">
     <% pull_requests_by_team.each do |team| %>
       <li class="app">
-        <h2>
-          #<%= team.fetch(:team_name) %>
-        </h2>
+        <a href="/team/<%= team.fetch(:team_name) %>">
+          <h2>#<%= team.fetch(:team_name) %></h2>
+        </a>
         <ul class="pulls">
           <% team.fetch(:applications).each do |application| %>
             <li class="pull">
