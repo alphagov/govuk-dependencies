@@ -20,7 +20,7 @@ module Presenters
       prs.map do |team, pull_requests|
         applications = application_pull_requests(pull_requests)
         {
-          team_name: team&.team_name || 'no team',
+          team_name: team&.team_name || 'govuk-developers',
           applications: applications.sort_by { |app| [-app[:pull_request_count], app[:application_name]] }
         }
       end

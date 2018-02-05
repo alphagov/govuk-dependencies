@@ -17,7 +17,7 @@ describe UseCases::SendSlackMessages do
     context 'and no pull requests' do
       it 'does not call the slack gateway' do
         team_gateway = double(execute: [
-          Domain::Team.new(team_name: '#email', applications: ['whitehall'])
+          Domain::Team.new(team_name: 'email', applications: ['whitehall'])
         ])
         pull_request_gateway = double(execute: [])
         slack_gateway = double
@@ -33,7 +33,7 @@ describe UseCases::SendSlackMessages do
     context 'and one pull request' do
       it 'sends a single message with one pull request open' do
         team_gateway = double(execute: [
-          Domain::Team.new(team_name: '#email', applications: ['whitehall'])
+          Domain::Team.new(team_name: 'email', applications: ['whitehall'])
         ])
         pull_request_gateway = double(execute: [
           Domain::PullRequest.new(
@@ -61,7 +61,7 @@ describe UseCases::SendSlackMessages do
     context 'multiple pull requests for one team' do
       it 'sends a single message' do
         team_gateway = double(execute: [
-          Domain::Team.new(team_name: '#email', applications: ['whitehall'])
+          Domain::Team.new(team_name: 'email', applications: ['whitehall'])
         ])
         pull_request_gateway = double(execute: [
           Domain::PullRequest.new(
@@ -96,8 +96,8 @@ describe UseCases::SendSlackMessages do
   context 'multiple pull requests for multiple teams' do
     it 'sends one message to each team' do
       team_gateway = double(execute: [
-        Domain::Team.new(team_name: '#email', applications: ['whitehall']),
-        Domain::Team.new(team_name: '#platform_support', applications: ['travel-advice-publisher'])
+        Domain::Team.new(team_name: 'email', applications: ['whitehall']),
+        Domain::Team.new(team_name: 'platform_support', applications: ['travel-advice-publisher'])
       ])
       pull_request_gateway = double(execute: [
         Domain::PullRequest.new(
@@ -142,9 +142,9 @@ describe UseCases::SendSlackMessages do
 
   context 'given pull requests which have no team' do
     context 'with no other pull requests' do
-      it 'sends a message to platform support' do
+      it 'sends a message to govuk-developers' do
         team_gateway = double(execute: [
-          Domain::Team.new(team_name: '#platform_support', applications: ['travel-advice-publisher'])
+          Domain::Team.new(team_name: 'platform_support', applications: ['travel-advice-publisher'])
         ])
         pull_request_gateway = double(execute: [
           Domain::PullRequest.new(
@@ -155,45 +155,10 @@ describe UseCases::SendSlackMessages do
           )
         ])
         slack_gateway = double
-        slack_message = 'You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/platform_support - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback'
+        slack_message = 'You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/govuk-developers - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback'
 
         expect(slack_gateway).to receive(:execute).with(
-          channel: 'platform_support',
-          message: slack_message
-        )
-
-        described_class.new(
-          slack_gateway: slack_gateway,
-          team_gateway: team_gateway,
-          pull_request_gateway: pull_request_gateway
-        ).execute
-      end
-    end
-
-    context 'with other pull requests for platform support' do
-      it 'sends a message to platform support with the sum of both values' do
-        team_gateway = double(execute: [
-          Domain::Team.new(team_name: '#platform_support', applications: ['travel-advice-publisher'])
-        ])
-        pull_request_gateway = double(execute: [
-          Domain::PullRequest.new(
-            application_name: 'whitehall',
-            title: 'Bump foo 1.2.3 to 4.5.6',
-            opened_at: Date.parse('2018-01-25'),
-            url: 'https://github.com/alphagov/whitehall/123'
-          ),
-          Domain::PullRequest.new(
-            application_name: 'travel-advice-publisher',
-            title: 'Bump foo 1.2.3 to 4.5.6',
-            opened_at: Date.parse('2018-01-25'),
-            url: 'https://github.com/alphagov/travel-advice-publisher/123'
-          )
-        ])
-        slack_gateway = double
-        slack_message = 'You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/platform_support - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback'
-
-        expect(slack_gateway).to receive(:execute).with(
-          channel: 'platform_support',
+          channel: 'govuk-developers',
           message: slack_message
         )
 

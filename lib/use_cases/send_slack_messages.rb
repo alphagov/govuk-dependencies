@@ -15,7 +15,7 @@ module UseCases
       end
 
       pull_requests_by_team.each do |team, pull_requests|
-        team_name = team.team_name.tr('#', '')
+        team_name = team&.team_name || FALLBACK_TEAM
         slack_gateway.execute(
           channel: team_name,
           message: "You have #{pull_requests.count} open Dependabot PR(s) - #{url_for_team(team_name)} - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"
@@ -25,7 +25,7 @@ module UseCases
 
   private
 
-    FALLBACK_TEAM = '#platform_support'.freeze
+    FALLBACK_TEAM = 'govuk-developers'.freeze
 
     attr_reader :slack_gateway, :team_gateway, :pull_request_gateway
 
