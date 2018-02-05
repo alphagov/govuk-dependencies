@@ -97,6 +97,7 @@ DEPENDENCIES
   govuk-lint
   octokit (~> 4.3)
   rack-test (~> 0.8.0)
+  rake (~> 12.3.0)
   rspec (~> 3.7.0)
   sinatra
   slack-poster (~> 2.2)
