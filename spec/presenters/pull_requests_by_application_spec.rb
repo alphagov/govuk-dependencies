@@ -52,10 +52,37 @@ describe Presenters::PullRequestsByApplication do
         ]
       )
     end
+
+    it 'orders the pull requests by gem name' do
+      uglifier_pull_request = {
+        application_name: 'frontend',
+        title: 'Bump uglifier from 4.5.6 to 7.8.9',
+        url: 'https://www.github.com/alphagov/frontend/pull/456',
+        opened_at: Date.parse('2018-01-01 08:00:00')
+      }
+
+      gds_api_adapters_pull_request = {
+        application_name: 'frontend',
+        title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
+        url: 'https://www.github.com/alphagov/frontend/pull/123',
+        opened_at: Date.parse('2018-01-01 08:00:00')
+      }
+
+      result = described_class.new.execute([uglifier_pull_request, gds_api_adapters_pull_request])
+      expect(result).to eq(
+        [
+          {
+            application_name: 'frontend',
+            application_url: 'https://github.com/alphagov/frontend/pulls',
+            pull_requests: [gds_api_adapters_pull_request, uglifier_pull_request]
+          }
+        ]
+      )
+    end
   end
 
   context 'Given pull requests for multiple applications' do
-    it 'groups the pull requests by the application name' do
+    it 'groups the pull requests by the application name ' do
       frontend_pull_request = {
         application_name: 'frontend',
         title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
@@ -72,7 +99,7 @@ describe Presenters::PullRequestsByApplication do
 
       publisher_pull_request2 = {
         application_name: 'publisher',
-        title: 'Bump uglifier from 4.5.6 to 7.8.9',
+        title: 'Bump gds-api-adapters from 4.5.6 to 7.8.9',
         url: 'https://www.github.com/alphagov/frontend/pull/456',
         opened_at: Date.parse('2018-01-01 08:00:00')
       }
@@ -94,7 +121,43 @@ describe Presenters::PullRequestsByApplication do
         {
           application_name: 'publisher',
           application_url: 'https://github.com/alphagov/publisher/pulls',
-          pull_requests: [publisher_pull_request, publisher_pull_request2]
+          pull_requests: [publisher_pull_request2, publisher_pull_request]
+        }
+      ])
+    end
+
+    it 'Orders applications by name' do
+      frontend_pull_request = {
+        application_name: 'frontend',
+        title: 'Bump gds-api-adapters from 1.2.3 to 4.5.6',
+        url: 'https://www.github.com/alphagov/frontend/pull/123',
+        opened_at: Date.parse('2018-01-01 08:00:00')
+      }
+
+      publisher_pull_request = {
+        application_name: 'publisher',
+        title: 'Bump uglifier from 4.5.6 to 7.8.9',
+        url: 'https://www.github.com/alphagov/frontend/pull/456',
+        opened_at: Date.parse('2018-01-01 08:00:00')
+      }
+
+      result = described_class.new.execute(
+        [
+          publisher_pull_request,
+          frontend_pull_request
+        ]
+      )
+
+      expect(result).to eq([
+        {
+          application_name: 'frontend',
+          application_url: 'https://github.com/alphagov/frontend/pulls',
+          pull_requests: [frontend_pull_request]
+        },
+        {
+          application_name: 'publisher',
+          application_url: 'https://github.com/alphagov/publisher/pulls',
+          pull_requests: [publisher_pull_request]
         }
       ])
     end
