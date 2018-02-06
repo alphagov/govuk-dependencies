@@ -17,10 +17,11 @@ describe Dependaseal do
   end
 
   context 'Simple Message' do
-    it 'sends a message' do
+    it 'sends a summarised message' do
       modelling_services_payload = {
         'payload' => '{"channel":"modelling-services","username":"Dependaseal","icon_emoji":":happyseal:","text":"You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/modelling-services - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"}'
       }
+
       start_pages_payload = {
         'payload' => '{"channel":"start-pages","username":"Dependaseal","icon_emoji":":happyseal:","text":"You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/start-pages - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"}'
       }
@@ -33,10 +34,11 @@ describe Dependaseal do
   end
 
   context 'Full Message' do
-    it 'sends a message' do
+    it 'sends all the pull requests in the message' do
       modelling_services_payload = {
         'payload' => '{"channel":"modelling-services","username":"Dependaseal","icon_emoji":":happyseal:","text":"#modelling-services\n\npublisher https://github.com/alphagov/publisher/pulls/app/dependabot\npublisher https://github.com/alphagov/publisher/pulls/app/dependabot\n\nFeedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"}'
       }
+
       start_pages_payload = {
         'payload' => '{"channel":"start-pages","username":"Dependaseal","icon_emoji":":happyseal:","text":"#start-pages\n\nfrontend https://github.com/alphagov/frontend/pulls/app/dependabot\n\nFeedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"}'
       }
