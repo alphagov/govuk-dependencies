@@ -22,6 +22,7 @@ describe UseCases::FetchPullRequests do
         application_name: 'frontend',
         title: 'Bump Rails from 4.2 to 5.0',
         url: 'https://github.com/alphagov/frontend/pulls/123',
+        opened_at: Date.today,
         open_since: 'today'
       }])
     end
@@ -43,11 +44,13 @@ describe UseCases::FetchPullRequests do
           application_name: 'frontend',
           title: 'Bump Rails',
           url: 'https://github.com/alphagov/frontend/pulls/123',
+          opened_at: Date.today,
           open_since: 'today'
         }, {
           application_name: 'frontend',
           title: 'Bump gds-api-adapters',
           url: 'https://github.com/alphagov/frontend/pulls/123',
+          opened_at: Date.today,
           open_since: 'today'
         }])
       end
@@ -70,16 +73,19 @@ describe UseCases::FetchPullRequests do
           application_name: 'frontend',
           title: 'Bump Rails',
           url: 'https://github.com/alphagov/frontend/pulls/123',
+          opened_at: Date.today,
           open_since: 'today'
         }, {
           application_name: 'frontend',
           title: 'Bump Rspec',
           url: 'https://github.com/alphagov/frontend/pulls/123',
+          opened_at: Date.today,
           open_since: 'today'
         }, {
           application_name: 'frontend',
           title: 'Bump gds-api-adapters',
           url: 'https://github.com/alphagov/frontend/pulls/123',
+          opened_at: Date.today,
           open_since: 'today'
         }])
       end
@@ -110,11 +116,13 @@ describe UseCases::FetchPullRequests do
           application_name: 'frontend',
           title: 'Bump Rails from 4.2 to 5.0',
           url: 'https://github.com/alphagov/frontend/pulls/123',
+          opened_at: Date.today,
           open_since: 'today'
         }, {
           application_name: 'publisher',
           title: 'Bump Rails from 3.2 to 4.0',
           url: 'https://github.com/alphagov/publisher/pulls/123',
+          opened_at: Date.today,
           open_since: 'today'
         },
       ])
