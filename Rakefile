@@ -10,5 +10,5 @@ rescue LoadError
 end
 
 task :dependaseal do
-  Dependaseal.new.execute
+  Dependaseal.new.send_simple_message
 end

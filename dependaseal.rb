@@ -1,7 +1,7 @@
 require_relative 'lib/loader'
 
 class Dependaseal
-  def execute
-    UseCases::SendSlackMessages.new.execute
+  def send_simple_message
+    UseCases::SendSlackMessages.new(message_presenter: Presenters::Slack::SimpleMessage.new).execute
   end
 end

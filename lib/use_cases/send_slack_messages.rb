@@ -1,9 +1,15 @@
 module UseCases
   class SendSlackMessages
-    def initialize(slack_gateway: Gateways::SlackMessage.new, team_gateway: Gateways::Team.new, pull_request_gateway: Gateways::PullRequest.new)
+    def initialize(
+      slack_gateway: Gateways::SlackMessage.new,
+      team_gateway: Gateways::Team.new,
+      pull_request_gateway: Gateways::PullRequest.new,
+      message_presenter:
+)
       @slack_gateway = slack_gateway
       @team_gateway = team_gateway
       @pull_request_gateway = pull_request_gateway
+      @message_presenter = message_presenter
     end
 
     def execute
@@ -16,10 +22,9 @@ module UseCases
 
       pull_requests_by_team.each do |team, pull_requests|
         team_name = team&.team_name || FALLBACK_TEAM
-        slack_gateway.execute(
-          channel: team_name,
-          message: "You have #{pull_requests.count} open Dependabot PR(s) - #{url_for_team(team_name)} - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"
-        )
+        message = message_presenter.execute(pull_requests: pull_requests, team_name: team_name)
+
+        slack_gateway.execute(channel: team_name, message: message)
       end
     end
 
@@ -27,14 +32,10 @@ module UseCases
 
     FALLBACK_TEAM = 'govuk-developers'.freeze
 
-    attr_reader :slack_gateway, :team_gateway, :pull_request_gateway
+    attr_reader :slack_gateway, :team_gateway, :pull_request_gateway, :message_presenter
 
     def team_for_application(teams, application_name)
       teams.find { |team| team.applications.include?(application_name) } || teams.find { |team| team.team_name == FALLBACK_TEAM }
-    end
-
-    def url_for_team(team_name)
-      "https://govuk-dependencies.herokuapp.com/team/#{team_name}"
     end
   end
 end
