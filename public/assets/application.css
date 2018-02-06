@@ -58,7 +58,7 @@ nav a, nav a:visited {
   margin: 0;
 }
 
-.app a {
+a {
   color: white;
   text-decoration: none;
 }
@@ -78,6 +78,12 @@ nav a, nav a:visited {
 
 .pull {
   margin: 10px 0;
+  line-height: 1.25em;
+}
+
+.warning {
+  color: red;
+  font-weight: 800;
 }
 
 h2 {

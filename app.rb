@@ -7,6 +7,19 @@ def cache(name)
   UseCases::Cache.new(path: "#{Dir.pwd}/public/cache/#{name}.html").execute { yield }
 end
 
+def old_pull_request?(date)
+  today = Date.today
+  actual_age = (today - date).to_i
+  if today.monday?
+    weekdays_age = actual_age - 2
+  elsif today.tuesday?
+    weekdays_age = actual_age - 1
+  else
+    weekdays_age = actual_age
+  end
+  weekdays_age > 2
+end
+
 class GovukDependencies < Sinatra::Base
   get '/' do
     cache :pull_requests_by_application do
