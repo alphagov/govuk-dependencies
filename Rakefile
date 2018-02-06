@@ -12,3 +12,7 @@ end
 task :dependaseal do
   Dependaseal.new.send_simple_message
 end
+
+task :dependaseal_loud do
+  Dependaseal.new.send_full_message
+end

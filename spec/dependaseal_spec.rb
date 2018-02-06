@@ -36,11 +36,11 @@ describe Dependaseal do
   context 'Full Message' do
     it 'sends all the pull requests in the message' do
       modelling_services_payload = {
-        'payload' => '{"channel":"modelling-services","username":"Dependaseal","icon_emoji":":happyseal:","text":"#modelling-services\n\npublisher https://github.com/alphagov/publisher/pulls/app/dependabot\npublisher https://github.com/alphagov/publisher/pulls/app/dependabot\n\nFeedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"}'
+        'payload' => '{"channel":"modelling-services","username":"Dependaseal","icon_emoji":":happyseal:","text":"#modelling-services You have 2 Dependabot PRs open on the following apps:\n\npublisher https://github.com/alphagov/publisher/pulls/app/dependabot\n\nFeedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"}'
       }
 
       start_pages_payload = {
-        'payload' => '{"channel":"start-pages","username":"Dependaseal","icon_emoji":":happyseal:","text":"#start-pages\n\nfrontend https://github.com/alphagov/frontend/pulls/app/dependabot\n\nFeedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"}'
+        'payload' => '{"channel":"start-pages","username":"Dependaseal","icon_emoji":":happyseal:","text":"#start-pages You have 1 Dependabot PRs open on the following apps:\n\nfrontend https://github.com/alphagov/frontend/pulls/app/dependabot\n\nFeedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"}'
       }
 
       described_class.new.send_full_message
