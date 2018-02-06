@@ -4,11 +4,13 @@ describe UseCases::SendSlackMessages do
       team_gateway = double(execute: [])
       pull_request_gateway = double(execute: [])
       slack_gateway = double
+      message_presenter = double
       expect(slack_gateway).not_to receive(:execute)
       described_class.new(
         slack_gateway: slack_gateway,
         team_gateway: team_gateway,
-        pull_request_gateway: pull_request_gateway
+        pull_request_gateway: pull_request_gateway,
+        message_presenter: message_presenter
       ).execute
     end
   end
@@ -21,11 +23,13 @@ describe UseCases::SendSlackMessages do
         ])
         pull_request_gateway = double(execute: [])
         slack_gateway = double
+        message_presenter = double
         expect(slack_gateway).not_to receive(:execute)
         described_class.new(
           slack_gateway: slack_gateway,
           team_gateway: team_gateway,
-          pull_request_gateway: pull_request_gateway
+          pull_request_gateway: pull_request_gateway,
+          message_presenter: message_presenter
         ).execute
       end
     end
@@ -44,16 +48,15 @@ describe UseCases::SendSlackMessages do
           )
         ])
         slack_gateway = double
-        slack_message = 'You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback'
+        message_presenter = double(execute: 'some message')
 
-        expect(slack_gateway).to receive(:execute).with(
-          channel: 'email',
-          message: slack_message
-        )
+        expect(slack_gateway).to receive(:execute).with(channel: 'email', message: 'some message')
+
         described_class.new(
           slack_gateway: slack_gateway,
           team_gateway: team_gateway,
-          pull_request_gateway: pull_request_gateway
+          pull_request_gateway: pull_request_gateway,
+          message_presenter: message_presenter
         ).execute
       end
     end
@@ -79,15 +82,16 @@ describe UseCases::SendSlackMessages do
           )
         ])
         slack_gateway = double
-        slack_message = 'You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback'
+        message_presenter = double(execute: 'some message')
         expect(slack_gateway).to receive(:execute).with(
           channel: 'email',
-          message: slack_message
+          message: 'some message'
         )
         described_class.new(
           slack_gateway: slack_gateway,
           team_gateway: team_gateway,
-          pull_request_gateway: pull_request_gateway
+          pull_request_gateway: pull_request_gateway,
+          message_presenter: message_presenter
         ).execute
       end
     end
@@ -99,6 +103,7 @@ describe UseCases::SendSlackMessages do
         Domain::Team.new(team_name: 'email', applications: ['whitehall']),
         Domain::Team.new(team_name: 'platform_support', applications: ['travel-advice-publisher'])
       ])
+
       pull_request_gateway = double(execute: [
         Domain::PullRequest.new(
           application_name: 'whitehall',
@@ -120,22 +125,25 @@ describe UseCases::SendSlackMessages do
           url: 'https://github.com/alphagov/travel-advice-publisher/123'
         )
       ])
+
       slack_gateway = double
-      email_slack_message = 'You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback'
-      platform_slack_message = 'You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/platform_support - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback'
+      slack_message = 'some message'
+      message_presenter = double(execute: slack_message)
+
       expect(slack_gateway).to receive(:execute).with(
         channel: 'email',
-        message: email_slack_message
+        message: slack_message
       )
       expect(slack_gateway).to receive(:execute).with(
         channel: 'platform_support',
-        message: platform_slack_message
+        message: slack_message
       )
 
       described_class.new(
         slack_gateway: slack_gateway,
         team_gateway: team_gateway,
-        pull_request_gateway: pull_request_gateway
+        pull_request_gateway: pull_request_gateway,
+        message_presenter: message_presenter
       ).execute
     end
   end
@@ -144,7 +152,7 @@ describe UseCases::SendSlackMessages do
     context 'with no other pull requests' do
       it 'sends a message to govuk-developers' do
         team_gateway = double(execute: [
-          Domain::Team.new(team_name: 'platform_support', applications: ['travel-advice-publisher'])
+          Domain::Team.new(team_name: 'non_existent_team', applications: ['travel-advice-publisher'])
         ])
         pull_request_gateway = double(execute: [
           Domain::PullRequest.new(
@@ -155,17 +163,18 @@ describe UseCases::SendSlackMessages do
           )
         ])
         slack_gateway = double
-        slack_message = 'You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/govuk-developers - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback'
+        message_presenter = double(execute: 'some message')
 
         expect(slack_gateway).to receive(:execute).with(
           channel: 'govuk-developers',
-          message: slack_message
+          message: 'some message'
         )
 
         described_class.new(
           slack_gateway: slack_gateway,
           team_gateway: team_gateway,
-          pull_request_gateway: pull_request_gateway
+          pull_request_gateway: pull_request_gateway,
+          message_presenter: message_presenter
         ).execute
       end
     end

@@ -24,7 +24,7 @@ describe Dependaseal do
       'payload' => '{"channel":"start-pages","username":"Dependaseal","icon_emoji":":happyseal:","text":"You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/start-pages - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"}'
     }
 
-    described_class.new.execute
+    described_class.new.send_simple_message
 
     expect(a_request(:post, ENV['SLACK_WEBHOOK_URL']).with(body: modelling_services_payload)).to have_been_made
     expect(a_request(:post, ENV['SLACK_WEBHOOK_URL']).with(body: start_pages_payload)).to have_been_made
