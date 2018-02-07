@@ -2,7 +2,7 @@ require 'sinatra'
 require_relative 'lib/loader'
 
 def cache(name)
-  return yield if ENV['RACK_ENV'] == 'test'
+  return yield unless ENV['RACK_ENV'] == 'production'
 
   UseCases::Cache.new(path: "#{Dir.pwd}/public/cache/#{name}.html").execute { yield }
 end
@@ -10,13 +10,13 @@ end
 def old_pull_request?(date)
   today = Date.today
   actual_age = (today - date).to_i
-  if today.monday?
-    weekdays_age = actual_age - 2
-  elsif today.tuesday?
-    weekdays_age = actual_age - 1
-  else
-    weekdays_age = actual_age
-  end
+  weekdays_age = if today.monday?
+                   actual_age - 2
+                 elsif today.tuesday?
+                   actual_age - 1
+                 else
+                   actual_age
+                 end
   weekdays_age > 2
 end
 
