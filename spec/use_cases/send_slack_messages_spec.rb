@@ -44,6 +44,7 @@ describe UseCases::SendSlackMessages do
             application_name: 'whitehall',
             title: 'Bump foo 1.2.3 to 4.5.6',
             opened_at: Date.parse('2018-01-25'),
+            status: 'approved',
             url: 'https://github.com/alphagov/whitehall/123'
           )
         ])
@@ -71,6 +72,7 @@ describe UseCases::SendSlackMessages do
             application_name: 'whitehall',
             title: 'Bump foo 1.2.3 to 4.5.6',
             opened_at: Date.parse('2018-01-25'),
+            status: 'approved',
             url: 'https://github.com/alphagov/whitehall/123'
           ),
 
@@ -78,6 +80,7 @@ describe UseCases::SendSlackMessages do
             application_name: 'whitehall',
             title: 'Bump Rails from 4.2.1 to 5.1.0',
             opened_at: Date.parse('2018-01-25'),
+            status: 'approved',
             url: 'https://github.com/alphagov/whitehall/123'
           )
         ])
@@ -109,12 +112,14 @@ describe UseCases::SendSlackMessages do
           application_name: 'whitehall',
           title: 'Bump foo 1.2.3 to 4.5.6',
           opened_at: Date.parse('2018-01-25'),
+          status: 'approved',
           url: 'https://github.com/alphagov/whitehall/123'
         ),
         Domain::PullRequest.new(
           application_name: 'whitehall',
           title: 'Bump Rails from 4.2.1 to 5.1.0',
           opened_at: Date.parse('2018-01-25'),
+          status: 'approved',
           url: 'https://github.com/alphagov/whitehall/457'
         ),
 
@@ -122,6 +127,7 @@ describe UseCases::SendSlackMessages do
           application_name: 'travel-advice-publisher',
           title: 'Bump Rails from 1.3.4 to 2.0.0',
           opened_at: Date.parse('2018-01-25'),
+          status: 'approved',
           url: 'https://github.com/alphagov/travel-advice-publisher/123'
         )
       ])
@@ -159,6 +165,7 @@ describe UseCases::SendSlackMessages do
             application_name: 'whitehall',
             title: 'Bump foo 1.2.3 to 4.5.6',
             opened_at: Date.parse('2018-01-25'),
+            status: 'approved',
             url: 'https://github.com/alphagov/whitehall/123'
           )
         ])

@@ -19,6 +19,7 @@ module Gateways
           application_name: get_application_name(pr),
           title: pr.title,
           url: pr.html_url,
+          status: 'approved',
           opened_at: Date.parse(pr.created_at.to_s)
         )
       end
