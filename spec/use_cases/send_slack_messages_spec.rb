@@ -186,4 +186,39 @@ describe UseCases::SendSlackMessages do
       end
     end
   end
+
+  context 'Given a request for only one team' do
+    it 'filters results to just that team' do
+      some_team = Domain::Team.new(team_name: 'some-team', applications: ['some-application'])
+      some_other_team = Domain::Team.new(team_name: 'some-other-team', applications: ['some-other-application'])
+
+      team_gateway = double(execute: [some_team, some_other_team])
+      pull_request_gateway = double(execute: [
+        Domain::PullRequest.new(
+          application_name: 'some-application',
+          title: 'Bump foo 1.2.3 to 4.5.6',
+          opened_at: Date.parse('2018-01-25'),
+          url: 'https://github.com/alphagov/whitehall/123'
+),
+        Domain::PullRequest.new(
+          application_name: 'some-other-application',
+          title: 'Bump foo 1.2.3 to 4.5.6',
+          opened_at: Date.parse('2018-01-25'),
+          url: 'https://github.com/alphagov/whitehall/123'
+        )
+      ])
+      slack_gateway = double
+      message_presenter = double(execute: 'some message')
+
+      expect(slack_gateway).to receive(:execute).with(channel: 'some-team', message: 'some message')
+      expect(slack_gateway).to_not receive(:execute).with(channel: 'some-other-team', message: 'some message')
+
+      described_class.new(
+        slack_gateway: slack_gateway,
+        team_gateway: team_gateway,
+        pull_request_gateway: pull_request_gateway,
+        message_presenter: message_presenter
+      ).execute(team: 'some-team')
+    end
+  end
 end

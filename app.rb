@@ -67,4 +67,10 @@ class GovukDependencies < Sinatra::Base
       erb :team, locals: { pull_requests_by_team: pull_requests_for_team }, layout: :layout
     end
   end
+
+  post '/slack/notify/:team' do
+    message_presenter = Presenters::Slack::FullMessage.new
+    UseCases::SendSlackMessages.new(message_presenter: message_presenter).execute(team: params.fetch(:team))
+    '[ok]'
+  end
 end
