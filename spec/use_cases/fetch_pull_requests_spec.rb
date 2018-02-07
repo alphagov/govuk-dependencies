@@ -12,6 +12,7 @@ describe UseCases::FetchPullRequests do
           application_name: 'frontend',
           title: 'Bump Rails from 4.2 to 5.0',
           opened_at: Date.today,
+          status: 'approved',
           url: 'https://github.com/alphagov/frontend/pulls/123'
         )
       ])
@@ -23,6 +24,7 @@ describe UseCases::FetchPullRequests do
         title: 'Bump Rails from 4.2 to 5.0',
         url: 'https://github.com/alphagov/frontend/pulls/123',
         opened_at: Date.today,
+        status: 'approved',
         open_since: 'today'
       }])
     end
@@ -34,6 +36,7 @@ describe UseCases::FetchPullRequests do
             application_name: 'frontend',
             title: 'Bump Rails and gds-api-adapters',
             opened_at: Date.today,
+            status: 'approved',
             url: 'https://github.com/alphagov/frontend/pulls/123'
           )
         ])
@@ -45,12 +48,14 @@ describe UseCases::FetchPullRequests do
           title: 'Bump Rails',
           url: 'https://github.com/alphagov/frontend/pulls/123',
           opened_at: Date.today,
+          status: 'approved',
           open_since: 'today'
         }, {
           application_name: 'frontend',
           title: 'Bump gds-api-adapters',
           url: 'https://github.com/alphagov/frontend/pulls/123',
           opened_at: Date.today,
+          status: 'approved',
           open_since: 'today'
         }])
       end
@@ -63,6 +68,7 @@ describe UseCases::FetchPullRequests do
             application_name: 'frontend',
             title: 'Bump Rails, Rspec and gds-api-adapters',
             opened_at: Date.today,
+            status: 'approved',
             url: 'https://github.com/alphagov/frontend/pulls/123'
           )
         ])
@@ -73,18 +79,21 @@ describe UseCases::FetchPullRequests do
           application_name: 'frontend',
           title: 'Bump Rails',
           url: 'https://github.com/alphagov/frontend/pulls/123',
+          status: 'approved',
           opened_at: Date.today,
           open_since: 'today'
         }, {
           application_name: 'frontend',
           title: 'Bump Rspec',
           url: 'https://github.com/alphagov/frontend/pulls/123',
+          status: 'approved',
           opened_at: Date.today,
           open_since: 'today'
         }, {
           application_name: 'frontend',
           title: 'Bump gds-api-adapters',
           url: 'https://github.com/alphagov/frontend/pulls/123',
+          status: 'approved',
           opened_at: Date.today,
           open_since: 'today'
         }])
@@ -99,12 +108,14 @@ describe UseCases::FetchPullRequests do
           application_name: 'frontend',
           title: 'Bump Rails from 4.2 to 5.0',
           opened_at: Date.today,
+          status: 'approved',
           url: 'https://github.com/alphagov/frontend/pulls/123'
         ),
         Domain::PullRequest.new(
           application_name: 'publisher',
           title: 'Bump Rails from 3.2 to 4.0',
           opened_at: Date.today,
+          status: 'changes requested',
           url: 'https://github.com/alphagov/publisher/pulls/123'
         )
       ])
@@ -116,12 +127,14 @@ describe UseCases::FetchPullRequests do
           application_name: 'frontend',
           title: 'Bump Rails from 4.2 to 5.0',
           url: 'https://github.com/alphagov/frontend/pulls/123',
+          status: 'approved',
           opened_at: Date.today,
           open_since: 'today'
         }, {
           application_name: 'publisher',
           title: 'Bump Rails from 3.2 to 4.0',
           url: 'https://github.com/alphagov/publisher/pulls/123',
+          status: 'changes requested',
           opened_at: Date.today,
           open_since: 'today'
         },

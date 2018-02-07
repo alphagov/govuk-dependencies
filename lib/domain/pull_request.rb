@@ -1,12 +1,13 @@
 module Domain
   class PullRequest
-    attr_reader :application_name, :title, :opened_at, :open_since, :url
+    attr_reader :application_name, :title, :opened_at, :open_since, :status, :url
 
-    def initialize(application_name:, title:, opened_at:, url:)
+    def initialize(application_name:, title:, opened_at:, url:, status:)
       @application_name = application_name
       @title = title
       @opened_at = opened_at
       @open_since = days_open(opened_at)
+      @status = status
       @url = url
     end
 
