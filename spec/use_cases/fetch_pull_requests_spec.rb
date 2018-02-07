@@ -115,7 +115,7 @@ describe UseCases::FetchPullRequests do
           application_name: 'publisher',
           title: 'Bump Rails from 3.2 to 4.0',
           opened_at: Date.today,
-          status: 'approved',
+          status: 'changes requested',
           url: 'https://github.com/alphagov/publisher/pulls/123'
         )
       ])
@@ -134,7 +134,7 @@ describe UseCases::FetchPullRequests do
           application_name: 'publisher',
           title: 'Bump Rails from 3.2 to 4.0',
           url: 'https://github.com/alphagov/publisher/pulls/123',
-          status: 'approved',
+          status: 'changes requested',
           opened_at: Date.today,
           open_since: 'today'
         },

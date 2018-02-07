@@ -7,19 +7,33 @@ module Gateways
     end
 
     def execute
-      response = @octokit.search_issues('is:pr user:alphagov state:open author:app/dependabot').items
-      build_pull_requests(response)
+      approved_pull_requests + review_required_pull_requests + changes_requested_pull_requests
     end
 
   private
 
-    def build_pull_requests(api_response)
+    def approved_pull_requests
+      approved_pull_requests = @octokit.search_issues('is:pr user:alphagov state:open author:app/dependabot review:approved').items
+      build_pull_requests(approved_pull_requests, 'approved')
+    end
+
+    def review_required_pull_requests
+      review_required_pull_requests = @octokit.search_issues('is:pr user:alphagov state:open author:app/dependabot review:required').items
+      build_pull_requests(review_required_pull_requests, 'review required')
+    end
+
+    def changes_requested_pull_requests
+      changes_requested_pull_requests = @octokit.search_issues('is:pr user:alphagov state:open author:app/dependabot review:changes_requested').items
+      build_pull_requests(changes_requested_pull_requests, 'changes requested')
+    end
+
+    def build_pull_requests(api_response, status)
       api_response.map do |pr|
         Domain::PullRequest.new(
           application_name: get_application_name(pr),
           title: pr.title,
           url: pr.html_url,
-          status: 'approved',
+          status: status,
           opened_at: Date.parse(pr.created_at.to_s)
         )
       end
