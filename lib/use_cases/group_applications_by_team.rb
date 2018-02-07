@@ -1,12 +1,16 @@
-module Presenters
-  class PullRequestsByTeam
-    def execute(teams:, ungrouped_pull_requests:)
-      pull_requests = pull_requests_by_team(ungrouped_pull_requests, teams)
-
-      sort_by_team_name(applications_by_team(pull_requests))
+module UseCases
+  class GroupApplicationsByTeam
+    def execute(pull_requests:, teams:)
+      sort_by_team_name(
+        applications_by_team(
+          pull_requests_by_team(pull_requests, teams)
+        )
+      )
     end
 
   private
+
+    FALLBACK_TEAM = 'govuk-developers'.freeze
 
     def sort_by_team_name(prs)
       prs.sort_by { |team| team[:team_name] }
@@ -20,7 +24,7 @@ module Presenters
       prs.map do |team, pull_requests|
         applications = application_pull_requests(pull_requests)
         {
-          team_name: team&.team_name || 'govuk-developers',
+          team_name: team.nil? ? FALLBACK_TEAM : team[:team_name],
           applications: applications.sort_by { |app| [-app[:pull_request_count], app[:application_name]] }
         }
       end
@@ -38,7 +42,7 @@ module Presenters
     end
 
     def team_for_application(teams, application_name)
-      teams.find { |team| team.applications.include?(application_name) }
+      teams.find { |team| team.fetch(:applications).include?(application_name) }
     end
   end
 end

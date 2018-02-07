@@ -1,9 +1,17 @@
 describe Presenters::Slack::SimpleMessage do
   context 'Given a single pull request and a team' do
     it 'formats the message' do
-      team_name = 'email'
-
-      result = described_class.new.execute(pull_requests: [double], team_name: team_name)
+      applications_by_team = {
+        team_name: 'email',
+        applications: [
+          {
+            application_name: 'content-tagger',
+            application_url: 'https://github.com/alphagov/content-tagger/app/dependabot',
+            pull_request_count: 1
+          }
+        ]
+      }
+      result = described_class.new.execute(applications_by_team: applications_by_team)
 
       expect(result).to eq('You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback')
     end

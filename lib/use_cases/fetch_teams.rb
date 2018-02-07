@@ -5,7 +5,14 @@ module UseCases
     end
 
     def execute
-      teams_gateway.execute
+      teams = teams_gateway.execute
+
+      teams.map do |team|
+        {
+          team_name: team.team_name,
+          applications: team.applications
+        }
+      end
     end
 
   private

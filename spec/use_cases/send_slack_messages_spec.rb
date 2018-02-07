@@ -19,7 +19,10 @@ describe UseCases::SendSlackMessages do
     context 'and no pull requests' do
       it 'does not call the slack gateway' do
         team_usecase = double(execute: [
-          Domain::Team.new(team_name: 'email', applications: ['whitehall'])
+          {
+            team_name: 'email',
+            applications: ['whitehall']
+          }
         ])
         pull_request_usecase = double(execute: [])
         slack_gateway = double
@@ -37,7 +40,10 @@ describe UseCases::SendSlackMessages do
     context 'and one pull request' do
       it 'sends a single message with one pull request open' do
         team_usecase = double(execute: [
-          Domain::Team.new(team_name: 'email', applications: ['whitehall'])
+          {
+            team_name: 'email',
+            applications: ['whitehall']
+          }
         ])
         pull_request_usecase = double(execute: [
           {
@@ -65,7 +71,10 @@ describe UseCases::SendSlackMessages do
     context 'multiple pull requests for one team' do
       it 'sends a single message' do
         team_usecase = double(execute: [
-          Domain::Team.new(team_name: 'email', applications: ['whitehall'])
+          {
+            team_name: 'email',
+            applications: ['whitehall']
+          }
         ])
         pull_request_usecase = double(execute: [
           {
@@ -101,8 +110,13 @@ describe UseCases::SendSlackMessages do
   context 'multiple pull requests for multiple teams' do
     it 'sends one message to each team' do
       team_usecase = double(execute: [
-        Domain::Team.new(team_name: 'email', applications: ['whitehall']),
-        Domain::Team.new(team_name: 'platform_support', applications: ['travel-advice-publisher'])
+        {
+          team_name: 'email',
+          applications: ['whitehall']
+        }, {
+          team_name: 'platform_support',
+          applications: ['travel-advice-publisher']
+        }
       ])
 
       pull_request_usecase = double(execute: [
@@ -153,7 +167,10 @@ describe UseCases::SendSlackMessages do
     context 'with no other pull requests' do
       it 'sends a message to govuk-developers' do
         team_usecase = double(execute: [
-          Domain::Team.new(team_name: 'non_existent_team', applications: ['travel-advice-publisher'])
+          {
+            team_name: 'non_existent_team',
+            applications: ['travel-advice-publisher']
+          }
         ])
         pull_request_usecase = double(execute: [
           {
@@ -184,8 +201,14 @@ describe UseCases::SendSlackMessages do
 
   context 'Given a request for only one team' do
     it 'filters results to just that team' do
-      some_team = Domain::Team.new(team_name: 'some-team', applications: ['some-application'])
-      some_other_team = Domain::Team.new(team_name: 'some-other-team', applications: ['some-other-application'])
+      some_team = {
+        team_name: 'some-team',
+        applications: ['some-application']
+      }
+      some_other_team = {
+        team_name: 'some-other-team',
+        applications: ['some-other-application']
+      }
 
       team_usecase = double(execute: [some_team, some_other_team])
       pull_request_usecase = double(execute: [
