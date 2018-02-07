@@ -108,24 +108,6 @@ describe GovukDependencies do
     end
   end
 
-  context 'given open approved pull requests' do
-    before do
-      stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:approved')
-        .to_return(body: File.read('spec/fixtures/pull_requests.json'), headers: { 'Content-Type' => 'application/json' })
-      stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:required')
-        .to_return(body: '{ "total_count": 0, "incomplete_results": false, "items": [] }', headers: { 'Content-Type' => 'application/json' })
-      stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:changes_requested')
-        .to_return(body: '{ "total_count": 0, "incomplete_results": false, "items": [] }', headers: { 'Content-Type' => 'application/json' })
-    end
-
-    it 'should display a check mark next to the pull request title' do
-      get '/'
-      expect(last_response).to be_ok
-      expect(last_response.body).to include('(approved)')
-      expect(last_response.body).not_to include('(changes requested)')
-    end
-  end
-
   context 'given pull requests that require review' do
     before do
       stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:approved')
@@ -136,11 +118,51 @@ describe GovukDependencies do
         .to_return(body: '{ "total_count": 0, "incomplete_results": false, "items": [] }', headers: { 'Content-Type' => 'application/json' })
     end
 
-    it 'should not display anything next to the pull request title' do
-      get '/'
-      expect(last_response).to be_ok
-      expect(last_response.body).not_to include('(approved)')
-      expect(last_response.body).not_to include('(changes requested)')
+    context 'application view' do
+      it 'should not display anything next to the pull request title' do
+        get '/'
+        expect(last_response).to be_ok
+        expect(last_response.body).not_to include('(approved)')
+        expect(last_response.body).not_to include('(changes requested)')
+      end
+    end
+
+    context 'gem view' do
+      it 'should not display anything next to the pull request title' do
+        get '/gem'
+        expect(last_response).to be_ok
+        expect(last_response.body).not_to include('(approved)')
+        expect(last_response.body).not_to include('(changes requested)')
+      end
+    end
+  end
+
+  context 'given open approved pull requests' do
+    before do
+      stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:approved')
+        .to_return(body: File.read('spec/fixtures/pull_requests.json'), headers: { 'Content-Type' => 'application/json' })
+      stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:required')
+        .to_return(body: '{ "total_count": 0, "incomplete_results": false, "items": [] }', headers: { 'Content-Type' => 'application/json' })
+      stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:changes_requested')
+        .to_return(body: '{ "total_count": 0, "incomplete_results": false, "items": [] }', headers: { 'Content-Type' => 'application/json' })
+    end
+
+    context 'application view' do
+      it 'should display a check mark next to the pull request title' do
+        get '/'
+        expect(last_response).to be_ok
+        expect(last_response.body).to include('(approved)')
+        expect(last_response.body).not_to include('(changes requested)')
+      end
+    end
+
+    context 'gem view' do
+      it 'should display a check mark next to the pull request title' do
+        get '/gem'
+        expect(last_response).to be_ok
+        expect(last_response.body).to include('(approved)')
+        expect(last_response.body).not_to include('(changes requested)')
+      end
     end
   end
 
@@ -154,11 +176,22 @@ describe GovukDependencies do
         .to_return(body: File.read('spec/fixtures/pull_requests.json'), headers: { 'Content-Type' => 'application/json' })
     end
 
-    it 'should display a cross next to the pull request title' do
-      get '/'
-      expect(last_response).to be_ok
-      expect(last_response.body).not_to include('(approved)')
-      expect(last_response.body).to include('(changes requested)')
+    context 'application view' do
+      it 'should display the status next to the pull request title' do
+        get '/'
+        expect(last_response).to be_ok
+        expect(last_response.body).not_to include('(approved)')
+        expect(last_response.body).to include('(changes requested)')
+      end
+    end
+
+    context 'gem view' do
+      it 'should display the status to the pull request title' do
+        get '/gem'
+        expect(last_response).to be_ok
+        expect(last_response.body).not_to include('(approved)')
+        expect(last_response.body).to include('(changes requested)')
+      end
     end
   end
 end
