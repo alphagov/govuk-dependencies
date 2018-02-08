@@ -62,7 +62,9 @@ class GovukDependencies < Sinatra::Base
     end
   end
 
-  post '/slack/notify/:team' do
+  post '/slack/notify/:team/:secret' do
+    return '[unauthorised]' unless params[:secret] == ENV['DEPENDAPANDA_SECRET']
+
     message_presenter = Presenters::Slack::FullMessage.new
     UseCases::SendSlackMessages.new(message_presenter: message_presenter).execute(team: params.fetch(:team))
     '[ok]'
