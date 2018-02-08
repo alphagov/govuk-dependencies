@@ -8,22 +8,14 @@ body {
 }
 
 nav {
-  color: white;
+  margin: 0 40px 0 40px;
   padding: 15px;
   font-size: 1.5em;
-}
-
-nav a {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-nav a:first-child {
-  margin: 0;
+  font-weight: bold;
 }
 
 nav a, nav a:visited {
-  color: white;
+  color: #ccc;
   text-decoration: none;
 }
 
@@ -66,13 +58,13 @@ a {
 .time-elapsed {
   float: right;
   font-size: 0.75em;
-  font-weight: 700;
   margin-left: 30px;
   white-space: nowrap;
 }
 
 .pulls {
   list-style: none;
+  margin-bottom: 10px;
   padding: 0;
 }
 
@@ -83,10 +75,14 @@ a {
 
 .warning {
   color: red;
-  font-weight: 800;
 }
 
 h2 {
   color: white;
-  line-height: 110%;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+.pull-request-status {
+  color: #777;
 }
