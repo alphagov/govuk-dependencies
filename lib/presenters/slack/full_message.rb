@@ -2,7 +2,7 @@ module Presenters
   module Slack
     class FullMessage
       def execute(applications_by_team:)
-        "##{team_name(applications_by_team)} You have #{pull_requests_count(applications_by_team)} Dependabot PRs open on the following apps:
+        "You have #{pull_requests_count(applications_by_team)} Dependabot PRs open on the following apps:
 
 #{body(applications_by_team).join("\n")}
 
@@ -14,7 +14,7 @@ Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"
       def body(applications_by_team)
         applications_by_team.fetch(:applications).map do |application|
           application_name = application.fetch(:application_name)
-          application_name + ' ' + url(application_name)
+          "<#{url(application_name)}|#{application_name}>"
         end
       end
 
