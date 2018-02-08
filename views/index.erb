@@ -11,15 +11,17 @@
         </h2>
         <ul class="pulls">
           <% application.fetch(:pull_requests).each do |pull_request| %>
-            <li class="pull <%= old_pull_request?(pull_request.fetch(:opened_at))? 'warning' : '' %>">
+            <li class="pull">
               <a class="<%= old_pull_request?(pull_request.fetch(:opened_at))? 'warning' : '' %>" href="<%= pull_request.fetch(:url) %>">
                 <%= pull_request.fetch(:title) %>
-                <% if pull_request.fetch(:status) == 'approved' %>
-                  (approved)
-                <% elsif pull_request.fetch(:status) == 'changes requested' %>
-                  (changes requested)
-                <% end %>
              </a>
+             <span class="pull-request-status">
+              <% if pull_request.fetch(:status) == 'approved' %>
+                (approved)
+              <% elsif pull_request.fetch(:status) == 'changes requested' %>
+                (changes requested)
+              <% end %>
+             </span>
               <span class="time-elapsed">Opened <%= pull_request.fetch(:open_since) %></span>
             </li>
           <% end %>
