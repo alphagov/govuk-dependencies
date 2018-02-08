@@ -1,6 +1,10 @@
-module Presenters
+module UseCases
   class PullRequestsByApplication
-    def execute(ungrouped_pull_requests)
+    def initialize(fetch_pull_requests_use_case:)
+      @fetch_pull_requests_use_case = fetch_pull_requests_use_case
+    end
+
+    def execute
       grouped_pull_requests = ungrouped_pull_requests.group_by do |value|
         value.fetch(:application_name)
       end
@@ -9,6 +13,12 @@ module Presenters
     end
 
   private
+
+    attr_reader :fetch_pull_requests_use_case
+
+    def ungrouped_pull_requests
+      fetch_pull_requests_use_case.execute
+    end
 
     def sort_by_application_name(prs)
       prs.sort_by { |app| app[:application_name] }
