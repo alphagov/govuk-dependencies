@@ -1,8 +1,8 @@
-describe UseCases::PullRequestsByApplication do
+describe UseCases::GroupPullRequestsByApplication do
   context 'Given no pull requests' do
     it 'returns an empty array' do
-      fetch_pull_requests_use_case = double(execute: [])
-      expect(described_class.new(fetch_pull_requests_use_case: fetch_pull_requests_use_case).execute).to eq([])
+      fetch_pull_requests = double(execute: [])
+      expect(described_class.new(fetch_pull_requests: fetch_pull_requests).execute).to eq([])
     end
   end
 
@@ -14,9 +14,9 @@ describe UseCases::PullRequestsByApplication do
         url: 'https://www.github.com/alphagov/frontend/pull/123',
         opened_at: Date.parse('2018-01-01 08:00:00')
       }
-      fetch_pull_requests_use_case = double(execute: [pull_request])
+      fetch_pull_requests = double(execute: [pull_request])
 
-      result = described_class.new(fetch_pull_requests_use_case: fetch_pull_requests_use_case).execute
+      result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
       expect(result).to eq([
         {
           application_name: 'frontend',
@@ -43,8 +43,8 @@ describe UseCases::PullRequestsByApplication do
           opened_at: Date.parse('2018-01-01 08:00:00')
         }
       ]
-      fetch_pull_requests_use_case = double(execute: pull_requests)
-      result = described_class.new(fetch_pull_requests_use_case: fetch_pull_requests_use_case).execute
+      fetch_pull_requests = double(execute: pull_requests)
+      result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
 
       expect(result).to eq(
         [
@@ -71,9 +71,9 @@ describe UseCases::PullRequestsByApplication do
         url: 'https://www.github.com/alphagov/frontend/pull/123',
         opened_at: Date.parse('2018-01-01 08:00:00')
       }
-      fetch_pull_requests_use_case = double(execute: [uglifier_pull_request, gds_api_adapters_pull_request])
+      fetch_pull_requests = double(execute: [uglifier_pull_request, gds_api_adapters_pull_request])
 
-      result = described_class.new(fetch_pull_requests_use_case: fetch_pull_requests_use_case).execute
+      result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
       expect(result).to eq(
         [
           {
@@ -108,13 +108,13 @@ describe UseCases::PullRequestsByApplication do
         url: 'https://www.github.com/alphagov/frontend/pull/456',
         opened_at: Date.parse('2018-01-01 08:00:00')
       }
-      fetch_pull_requests_use_case = double(execute: [
+      fetch_pull_requests = double(execute: [
         frontend_pull_request,
         publisher_pull_request,
         publisher_pull_request2
       ])
 
-      result = described_class.new(fetch_pull_requests_use_case: fetch_pull_requests_use_case).execute
+      result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
 
       expect(result).to eq([
         {
@@ -145,8 +145,8 @@ describe UseCases::PullRequestsByApplication do
         opened_at: Date.parse('2018-01-01 08:00:00')
       }
 
-      fetch_pull_requests_use_case = double(execute: [publisher_pull_request, frontend_pull_request])
-      result = described_class.new(fetch_pull_requests_use_case: fetch_pull_requests_use_case).execute
+      fetch_pull_requests = double(execute: [publisher_pull_request, frontend_pull_request])
+      result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
 
       expect(result).to eq([
         {

@@ -1,7 +1,7 @@
 module UseCases
-  class PullRequestsByApplication
-    def initialize(fetch_pull_requests_use_case:)
-      @fetch_pull_requests_use_case = fetch_pull_requests_use_case
+  class GroupPullRequestsByApplication
+    def initialize(fetch_pull_requests:)
+      @fetch_pull_requests = fetch_pull_requests
     end
 
     def execute
@@ -14,10 +14,10 @@ module UseCases
 
   private
 
-    attr_reader :fetch_pull_requests_use_case
+    attr_reader :fetch_pull_requests
 
     def ungrouped_pull_requests
-      fetch_pull_requests_use_case.execute
+      fetch_pull_requests.execute
     end
 
     def sort_by_application_name(prs)
