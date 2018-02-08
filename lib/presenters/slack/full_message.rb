@@ -1,28 +1,33 @@
 module Presenters
   module Slack
     class FullMessage
-      def execute(pull_requests:, team_name:)
-        "##{team_name} You have #{pull_requests.count} Dependabot PRs open on the following apps:
+      def execute(applications_by_team:)
+        "##{team_name(applications_by_team)} You have #{pull_requests_count(applications_by_team)} Dependabot PRs open on the following apps:
 
-#{body(grouped_by_application(pull_requests)).join("\n")}
+#{body(applications_by_team).join("\n")}
 
 Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"
       end
 
     private
 
-      def grouped_by_application(prs)
-        prs.group_by { |pr| pr.fetch(:application_name) }
-      end
-
-      def body(pull_requests)
-        pull_requests.map do |application_name, _|
+      def body(applications_by_team)
+        applications_by_team.fetch(:applications).map do |application|
+          application_name = application.fetch(:application_name)
           application_name + ' ' + url(application_name)
         end
       end
 
+      def team_name(applications_by_team)
+        applications_by_team.fetch(:team_name)
+      end
+
       def url(application_name)
         "https://github.com/alphagov/#{application_name}/pulls/app/dependabot"
+      end
+
+      def pull_requests_count(applications_by_team)
+        applications_by_team.fetch(:applications).reduce(0) { |acc, pr| acc + pr.fetch(:pull_request_count) }
       end
     end
   end
