@@ -213,9 +213,19 @@ describe GovukDependencies do
     end
 
     it 'allows manually requesting a slack message' do
-      post '/slack/notify/platform_support'
+      ENV['DEPENDAPANDA_SECRET'] = 'topsecret'
+
+      post '/slack/notify/platform_support/topsecret'
       expect(last_response).to be_ok
-      expect(last_response.body).to include('[ok]')
+      expect(last_response.body).to eq('[ok]')
+    end
+
+    it 'disallows manually requesting a slack message with the wrong token' do
+      ENV['DEPENDAPANDA_SECRET'] = 'topsecret'
+
+      post '/slack/notify/platform_support/xxx'
+      expect(last_response).to be_ok
+      expect(last_response.body).to eq('[unauthorised]')
     end
   end
 end
