@@ -16,7 +16,7 @@ describe Presenters::Slack::FullMessage do
 
       expect(result).to eq('You have 1 Dependabot PRs open on the following apps:
 
-<https://github.com/alphagov/content-tagger/pulls/app/dependabot|content-tagger>
+<https://github.com/alphagov/content-tagger/pulls/app/dependabot|content-tagger> (1)
 
 Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback')
     end
@@ -43,8 +43,8 @@ Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback')
 
       expect(result).to eq('You have 2 Dependabot PRs open on the following apps:
 
-<https://github.com/alphagov/collections-publisher/pulls/app/dependabot|collections-publisher>
-<https://github.com/alphagov/content-tagger/pulls/app/dependabot|content-tagger>
+<https://github.com/alphagov/collections-publisher/pulls/app/dependabot|collections-publisher> (1)
+<https://github.com/alphagov/content-tagger/pulls/app/dependabot|content-tagger> (1)
 
 Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback')
     end
@@ -69,8 +69,8 @@ Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback')
 
       expect(result).to eq('You have 3 Dependabot PRs open on the following apps:
 
-<https://github.com/alphagov/collections-publisher/pulls/app/dependabot|collections-publisher>
-<https://github.com/alphagov/content-tagger/pulls/app/dependabot|content-tagger>
+<https://github.com/alphagov/collections-publisher/pulls/app/dependabot|collections-publisher> (1)
+<https://github.com/alphagov/content-tagger/pulls/app/dependabot|content-tagger> (2)
 
 Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback')
     end

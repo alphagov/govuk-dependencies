@@ -14,12 +14,8 @@ Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"
       def body(applications_by_team)
         applications_by_team.fetch(:applications).map do |application|
           application_name = application.fetch(:application_name)
-          "<#{url(application_name)}|#{application_name}>"
+          "<#{url(application_name)}|#{application_name}> (#{application.fetch(:pull_request_count)})"
         end
-      end
-
-      def team_name(applications_by_team)
-        applications_by_team.fetch(:team_name)
       end
 
       def url(application_name)
