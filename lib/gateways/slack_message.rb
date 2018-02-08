@@ -11,7 +11,7 @@ module Gateways
       {
         channel: channel,
         username: 'Dependaseal',
-        icon_emoji: ':happyseal:'
+        icon_emoji: ':panda_face:'
       }
     end
   end

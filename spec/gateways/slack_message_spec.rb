@@ -6,7 +6,7 @@ describe Gateways::SlackMessage do
       slack_message = "#email has 12 open pull requests"
       body = {
         "payload" =>
-          '{"channel":"#email","username":"Dependaseal","icon_emoji":":happyseal:","text":"#email has 12 open pull requests"}'
+          '{"channel":"#email","username":"Dependaseal","icon_emoji":":panda_face:","text":"#email has 12 open pull requests"}'
       }
 
       stub_request(:post, "http://example.com/webhook").
