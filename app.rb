@@ -48,6 +48,14 @@ class GovukDependencies < Sinatra::Base
     end
   end
 
+  get '/stats' do
+    cache :stats do
+      pull_request_count = UseCases::FetchPullRequestCount.new.execute
+
+      erb :stats, locals: { pull_request_count: pull_request_count }, layout: :layout
+    end
+  end
+
   get '/team/:team_name' do
     cache :"pull_requests_by_team_#{params.fetch(:team_name)}" do
       pull_requests = UseCases::FetchPullRequests.new.execute

@@ -228,4 +228,17 @@ describe GovukDependencies do
       expect(last_response.body).to eq('[unauthorised]')
     end
   end
+
+  context 'Stats page' do
+    before do
+      stub_request(:get, "https://api.github.com/search/issues?q=is:pr%20user:alphagov%20author:app/dependabot")
+        .to_return(body: File.open('spec/fixtures/pull_requests.json'), headers: { 'Content-Type' => 'application/json' })
+    end
+
+    it 'should display the total PRs opened by dependabot' do
+      get '/stats'
+      expect(last_response).to be_ok
+      expect(last_response.body).to include('Total PRs opened by Dependabot: 3')
+    end
+  end
 end
