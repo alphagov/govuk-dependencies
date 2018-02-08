@@ -6,4 +6,3 @@ describe UseCases::FetchPullRequestCount do
     expect(result).to eq(10)
   end
 end
-

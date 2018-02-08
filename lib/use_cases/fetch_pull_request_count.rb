@@ -1,6 +1,6 @@
 module UseCases
   class FetchPullRequestCount
-    def initialize(pull_request_count_gateway:)
+    def initialize(pull_request_count_gateway: Gateways::PullRequestCount.new)
       @pull_request_count_gateway = pull_request_count_gateway
     end
 
@@ -8,9 +8,8 @@ module UseCases
       pull_request_count_gateway.execute
     end
 
-    private
+  private
 
     attr_reader :pull_request_count_gateway
   end
 end
-

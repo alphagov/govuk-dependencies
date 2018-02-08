@@ -9,4 +9,3 @@ module Gateways
     end
   end
 end
-
