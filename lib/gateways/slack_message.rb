@@ -10,7 +10,7 @@ module Gateways
     def user_options(channel)
       {
         channel: channel,
-        username: 'Dependaseal',
+        username: 'Dependapanda',
         icon_emoji: ':panda_face:'
       }
     end
