@@ -1,7 +1,10 @@
-describe Presenters::PullRequestsByGem do
+describe UseCases::GroupPullRequestsByGem do
   context 'Given no pull requests' do
     it 'returns an empty array' do
-      expect(described_class.new.execute([])).to eq([])
+      fetch_pull_requests = double(execute: [])
+      expect(described_class.new(
+        fetch_pull_requests: fetch_pull_requests
+      ).execute).to eq([])
     end
   end
 
@@ -13,8 +16,9 @@ describe Presenters::PullRequestsByGem do
         url: 'https://www.github.com/alphagov/frontend/pull/123',
         opened_at: Date.parse('2018-01-01 08:00:00')
       }
+      fetch_pull_requests = double(execute: [pull_request])
 
-      result = described_class.new.execute([pull_request])
+      result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
       expect(result).to eq([
         {
           gem_name: 'gds-api-adapters',
@@ -38,8 +42,12 @@ describe Presenters::PullRequestsByGem do
         url: 'https://www.github.com/alphagov/frontend/pull/123',
         opened_at: Date.parse('2018-01-01 08:00:00')
       }
+      fetch_pull_requests = double(execute: [gds_api_adapter_pull_request, rspec_pull_request])
 
-      result = described_class.new.execute([gds_api_adapter_pull_request, rspec_pull_request])
+      result = described_class.new(
+        fetch_pull_requests: fetch_pull_requests
+      ).execute
+
       expect(result).to eq([
         {
           gem_name: 'gds-api-adapters',
@@ -68,7 +76,12 @@ describe Presenters::PullRequestsByGem do
         }
       ]
 
-      result = described_class.new.execute(pull_requests)
+      fetch_pull_requests = double(execute: pull_requests)
+
+      result = described_class.new(
+        fetch_pull_requests: fetch_pull_requests
+      ).execute
+
       expect(result).to eq([
         {
           gem_name: 'gds-api-adapters',
@@ -92,7 +105,9 @@ describe Presenters::PullRequestsByGem do
         opened_at: Date.parse('2018-01-01 08:00:00')
       }
 
-      result = described_class.new.execute([signon_pull_request, frontend_pull_request])
+      fetch_pull_requests = double(execute: [signon_pull_request, frontend_pull_request])
+
+      result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
       expect(result).to eq([
         {
           gem_name: 'gds-api-adapters',
@@ -125,13 +140,13 @@ describe Presenters::PullRequestsByGem do
         opened_at: Date.parse('2018-01-01 08:00:00')
       }
 
-      result = described_class.new.execute(
-        [
+      fetch_pull_requests = double(execute: [
           gds_api_adapters_pull_request2,
           gds_api_adapters_pull_request,
           uglifier_pull_request
-        ]
-      )
+        ])
+
+      result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
 
       expect(result).to eq([
         {
@@ -169,13 +184,14 @@ describe Presenters::PullRequestsByGem do
         opened_at: Date.parse('2018-01-01 08:00:00')
       }
 
-      result = described_class.new.execute(
+      fetch_pull_requests = double(execute:
         [
           uglifier_pull_request,
           gds_api_adapters_pull_request2,
           gds_api_adapters_pull_request
-        ]
-      )
+        ])
+
+      result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
 
       expect(result).to eq([
         {

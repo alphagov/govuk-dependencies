@@ -23,16 +23,18 @@ end
 class GovukDependencies < Sinatra::Base
   get '/' do
     cache :pull_requests_by_application do
-      ungrouped_pull_requests = UseCases::FetchPullRequests.new.execute
-      @pull_requests_by_application = Presenters::PullRequestsByApplication.new.execute(ungrouped_pull_requests)
+      @pull_requests_by_application = UseCases::GroupPullRequestsByApplication.new(
+        fetch_pull_requests: UseCases::FetchPullRequests.new
+      ).execute
       erb :index, layout: :layout
     end
   end
 
   get '/gem' do
     cache :pull_requests_by_gem do
-      ungrouped_pull_requests = UseCases::FetchPullRequests.new.execute
-      @pull_requests_by_gem = Presenters::PullRequestsByGem.new.execute(ungrouped_pull_requests)
+      @pull_requests_by_gem = UseCases::GroupPullRequestsByGem.new(
+        fetch_pull_requests: UseCases::FetchPullRequests.new
+      ).execute
 
       erb :gem, layout: :layout
     end

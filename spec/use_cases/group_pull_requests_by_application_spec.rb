@@ -1,7 +1,8 @@
-describe Presenters::PullRequestsByApplication do
+describe UseCases::GroupPullRequestsByApplication do
   context 'Given no pull requests' do
     it 'returns an empty array' do
-      expect(described_class.new.execute([])).to eq([])
+      fetch_pull_requests = double(execute: [])
+      expect(described_class.new(fetch_pull_requests: fetch_pull_requests).execute).to eq([])
     end
   end
 
@@ -13,8 +14,9 @@ describe Presenters::PullRequestsByApplication do
         url: 'https://www.github.com/alphagov/frontend/pull/123',
         opened_at: Date.parse('2018-01-01 08:00:00')
       }
+      fetch_pull_requests = double(execute: [pull_request])
 
-      result = described_class.new.execute([pull_request])
+      result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
       expect(result).to eq([
         {
           application_name: 'frontend',
@@ -41,7 +43,9 @@ describe Presenters::PullRequestsByApplication do
           opened_at: Date.parse('2018-01-01 08:00:00')
         }
       ]
-      result = described_class.new.execute(pull_requests)
+      fetch_pull_requests = double(execute: pull_requests)
+      result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
+
       expect(result).to eq(
         [
           {
@@ -67,8 +71,9 @@ describe Presenters::PullRequestsByApplication do
         url: 'https://www.github.com/alphagov/frontend/pull/123',
         opened_at: Date.parse('2018-01-01 08:00:00')
       }
+      fetch_pull_requests = double(execute: [uglifier_pull_request, gds_api_adapters_pull_request])
 
-      result = described_class.new.execute([uglifier_pull_request, gds_api_adapters_pull_request])
+      result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
       expect(result).to eq(
         [
           {
@@ -103,14 +108,13 @@ describe Presenters::PullRequestsByApplication do
         url: 'https://www.github.com/alphagov/frontend/pull/456',
         opened_at: Date.parse('2018-01-01 08:00:00')
       }
+      fetch_pull_requests = double(execute: [
+        frontend_pull_request,
+        publisher_pull_request,
+        publisher_pull_request2
+      ])
 
-      result = described_class.new.execute(
-        [
-          frontend_pull_request,
-          publisher_pull_request,
-          publisher_pull_request2
-        ]
-      )
+      result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
 
       expect(result).to eq([
         {
@@ -141,12 +145,8 @@ describe Presenters::PullRequestsByApplication do
         opened_at: Date.parse('2018-01-01 08:00:00')
       }
 
-      result = described_class.new.execute(
-        [
-          publisher_pull_request,
-          frontend_pull_request
-        ]
-      )
+      fetch_pull_requests = double(execute: [publisher_pull_request, frontend_pull_request])
+      result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
 
       expect(result).to eq([
         {

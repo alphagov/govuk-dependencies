@@ -1,12 +1,22 @@
-module Presenters
-  class PullRequestsByGem
-    def execute(ungrouped_pull_requests)
+module UseCases
+  class GroupPullRequestsByGem
+    def initialize(fetch_pull_requests:)
+      @fetch_pull_requests = fetch_pull_requests
+    end
+
+    def execute
       grouped_pull_requests = ungrouped_pull_requests.group_by { |pr| gem_name(pr.fetch(:title)) }
 
       sort_by_gem_name(sort_by_application_name(grouped_pull_requests))
     end
 
   private
+
+    attr_reader :fetch_pull_requests
+
+    def ungrouped_pull_requests
+      fetch_pull_requests.execute
+    end
 
     def sort_by_gem_name(prs)
       prs.sort_by { |gem| gem[:gem_name] }
