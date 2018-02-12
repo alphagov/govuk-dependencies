@@ -7,7 +7,7 @@
   <body>
     <nav>
       <a href="/">Application</a>  |  <a href="/team">Team</a>  |  <a href="/gem">Gem</a>
-      <a class="feedback" href="https://trello.com/b/jQrIfH9A/dependabot-developer-feedback">Feedback</a>
+      <span class="stats">PRs opened: <%= @pull_request_count %></span>
     </nav>
     <%= yield %>
   </body>
