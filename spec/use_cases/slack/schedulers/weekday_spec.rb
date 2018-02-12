@@ -1,4 +1,4 @@
-describe UseCases::SlackMessageScheduler do
+describe UseCases::Slack::Schedulers::Weekday do
   context 'Given it is the weekend' do
     it 'does not send messages on Saturday' do
       date_class = double(
