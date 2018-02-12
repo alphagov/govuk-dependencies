@@ -5,10 +5,12 @@ module UseCases
       team_usecase: UseCases::FetchTeams.new,
       pull_request_usecase: UseCases::FetchPullRequests.new,
       group_applications_by_team_usecase: UseCases::GroupApplicationsByTeam.new,
+      scheduler: UseCases::SlackMessageScheduler.new,
       message_presenter:
     )
 
       @slack_gateway = slack_gateway
+      @scheduler = scheduler
       @team_usecase = team_usecase
       @pull_request_usecase = pull_request_usecase
       @message_presenter = message_presenter
@@ -16,6 +18,8 @@ module UseCases
     end
 
     def execute(team: nil)
+      return unless scheduler.should_send_message?
+
       send_messages(scoped_by_team(pull_requests_by_team, team))
     end
 
@@ -25,6 +29,7 @@ module UseCases
       :team_usecase,
       :pull_request_usecase,
       :message_presenter,
+      :scheduler,
       :group_applications_by_team_usecase
 
     def send_messages(applications_by_teams)

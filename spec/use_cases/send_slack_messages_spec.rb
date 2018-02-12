@@ -5,12 +5,14 @@ describe UseCases::SendSlackMessages do
       pull_request_usecase = double(execute: [])
       slack_gateway = double
       message_presenter = double
+      scheduler = double(should_send_message?: true)
       expect(slack_gateway).not_to receive(:execute)
       described_class.new(
         slack_gateway: slack_gateway,
         team_usecase: team_usecase,
         pull_request_usecase: pull_request_usecase,
-        message_presenter: message_presenter
+        message_presenter: message_presenter,
+        scheduler: scheduler
       ).execute
     end
   end
@@ -236,6 +238,41 @@ describe UseCases::SendSlackMessages do
         pull_request_usecase: pull_request_usecase,
         message_presenter: message_presenter
       ).execute(team: 'some-team')
+    end
+  end
+
+  context 'Given it is out of schedule' do
+    it 'does not send messages' do
+      scheduler = double(should_send_message?: false)
+      message_presenter = double(execute: 'some message')
+      slack_gateway = double
+
+      expect(slack_gateway).to_not receive(:execute)
+
+      described_class.new(
+        scheduler: scheduler,
+        message_presenter: message_presenter
+      ).execute
+    end
+  end
+
+  context 'Given it is in schedule' do
+    it 'sends a messages' do
+      scheduler = double(should_send_message?: true)
+      message_presenter = double(execute: 'some message')
+      slack_gateway = double
+      pull_request_usecase = double(execute: [double.as_null_object])
+      team_usecase = double(execute: [])
+
+      expect(slack_gateway).to receive(:execute)
+
+      described_class.new(
+        scheduler: scheduler,
+        message_presenter: message_presenter,
+        slack_gateway: slack_gateway,
+        pull_request_usecase: pull_request_usecase,
+        team_usecase: team_usecase
+      ).execute
     end
   end
 end
