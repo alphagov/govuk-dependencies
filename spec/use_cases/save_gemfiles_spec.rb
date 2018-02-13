@@ -1,20 +1,11 @@
 describe UseCases::SaveGemfiles do
-  context 'Given FetchGemfiles' do
-    it 'calls execute' do
-      fetch_gemfiles = spy
-      described_class.new(fetch_gemfiles: fetch_gemfiles).execute
-
-      expect(fetch_gemfiles).to have_received(:execute)
-    end
-  end
-
   context 'Given no Gemfiles' do
     it 'does not save them' do
       fetch_gemfiles = double(execute: [])
-      file_gateway = spy
-      described_class.new(fetch_gemfiles: fetch_gemfiles, file: file_gateway).execute
+      file = spy
+      described_class.new(fetch_gemfiles: fetch_gemfiles, file: file).execute
 
-      expect(file_gateway).to_not have_received(:execute)
+      expect(file).to_not have_received(:write)
     end
   end
 
@@ -26,10 +17,10 @@ describe UseCases::SaveGemfiles do
           gemfile_contents: 'some contents'
         }
       ])
-      file_gateway = spy
-      described_class.new(fetch_gemfiles: fetch_gemfiles, file: file_gateway).execute
+      file = spy
+      described_class.new(fetch_gemfiles: fetch_gemfiles, file: file).execute
 
-      expect(file_gateway).to have_received(:open).with('tmp/foo-app_gemfile.lock', 'w')
+      expect(file).to have_received(:write).with('tmp/foo-app_gemfile.lock', 'some contents')
     end
   end
 
@@ -45,12 +36,11 @@ describe UseCases::SaveGemfiles do
         }
       ])
 
-      file_gateway = spy
+      file = spy
+      described_class.new(fetch_gemfiles: fetch_gemfiles, file: file).execute
 
-      described_class.new(fetch_gemfiles: fetch_gemfiles, file: file_gateway).execute
-
-      expect(file_gateway).to have_received(:open).with('tmp/foo-app_gemfile.lock', 'w')
-      expect(file_gateway).to have_received(:open).with('tmp/bar-app_gemfile.lock', 'w')
+      expect(file).to have_received(:write).with('tmp/foo-app_gemfile.lock', 'foo contents')
+      expect(file).to have_received(:write).with('tmp/bar-app_gemfile.lock', 'bar contents')
     end
   end
 end

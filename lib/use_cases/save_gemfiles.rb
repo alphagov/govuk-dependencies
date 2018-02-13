@@ -1,6 +1,6 @@
 module UseCases
   class SaveGemfiles
-    def initialize(fetch_gemfiles:, file: File)
+    def initialize(fetch_gemfiles:, file: Gateways::File)
       @fetch_gemfiles = fetch_gemfiles
       @file = file
     end
@@ -18,7 +18,8 @@ module UseCases
 
     def save_gemfile(application_name, file_contents)
       gemfile_path = "tmp/#{application_name}_gemfile.lock"
-      file.open(gemfile_path, 'w') { |f| f.write(file_contents) }
+
+      file.write(gemfile_path, file_contents)
     end
   end
 end
