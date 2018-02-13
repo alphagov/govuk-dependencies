@@ -1,1 +1,5 @@
 public/cache/*.html
+tmp/*
+!tmp/.keep
+spec/tmp/*
+!spec/tmp/.keep
