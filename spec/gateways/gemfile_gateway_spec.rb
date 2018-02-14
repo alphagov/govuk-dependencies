@@ -17,10 +17,10 @@ describe Gateways::Gemfile do
         .to_return(status: 404)
     end
 
-    it 'suppresses the not found exception' do
+    it 'raises an exception' do
       expect {
         described_class.new.execute(application_name: 'mapit')
-      }.to_not raise_error
+      }.to raise_error(GemfileNotFoundException)
     end
   end
 end

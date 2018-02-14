@@ -63,4 +63,16 @@ describe UseCases::FetchGemfiles do
       ])
     end
   end
+
+  context 'The gateway raised a GemfileNotFoundException' do
+    it 'returns an empty result' do
+      teams_use_case = double(execute: [{ applications: ['foo-app'] }])
+
+      gemfile_gateway = double
+      allow(gemfile_gateway).to receive(:execute).and_raise(GemfileNotFoundException)
+
+      result = described_class.new(gemfile_gateway: gemfile_gateway, teams_use_case: teams_use_case).execute
+      expect(result).to be_empty
+    end
+  end
 end

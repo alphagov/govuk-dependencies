@@ -16,9 +16,12 @@ module UseCases
 
     def gemfiles_for_applications
       application_names.map do |application_name|
-        result = gemfile_gateway.execute(application_name: application_name)
+        begin
+          result = gemfile_gateway.execute(application_name: application_name)
+        rescue GemfileNotFoundException
+          next
+        end
 
-        next if result.nil?
         {
           application_name: application_name,
           gemfile_contents: result.file_contents
