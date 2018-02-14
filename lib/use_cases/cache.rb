@@ -5,7 +5,7 @@ module UseCases
       @file = file
     end
 
-    def execute(cache_duration_seconds: 120)
+    def execute(cache_duration_seconds:)
       return cached if fresh_cache?(cache_duration_seconds)
 
       result = yield
