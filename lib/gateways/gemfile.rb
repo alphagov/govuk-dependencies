@@ -1,10 +1,16 @@
 require 'open-uri'
 
+class GemfileNotFoundException < StandardError; end
+
 module Gateways
   class Gemfile
     def execute(application_name:)
-      open(gemfile_url(application_name)) do |gemfile_contents|
-        Domain::Gemfile.new(file_contents: gemfile_contents.read)
+      begin
+        open(gemfile_url(application_name)) do |gemfile_contents|
+          Domain::Gemfile.new(file_contents: gemfile_contents.read)
+        end
+      rescue OpenURI::HTTPError
+        raise GemfileNotFoundException
       end
     end
 

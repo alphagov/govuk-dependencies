@@ -1,6 +1,6 @@
 module UseCases
   class SaveGemfiles
-    def initialize(fetch_gemfiles:, file: Gateways::File)
+    def initialize(fetch_gemfiles:, file: Gateways::File.new)
       @fetch_gemfiles = fetch_gemfiles
       @file = file
     end

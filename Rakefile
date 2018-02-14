@@ -16,3 +16,11 @@ end
 task :dependapanda_loud do
   Dependapanda.new.send_full_message
 end
+
+task :save_application_gemfiles do
+  UseCases::SaveGemfiles.new(
+    fetch_gemfiles: UseCases::FetchGemfiles.new(
+      teams_use_case: UseCases::FetchTeams.new
+    )
+  ).execute
+end
