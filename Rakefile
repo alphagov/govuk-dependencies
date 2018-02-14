@@ -1,4 +1,5 @@
 require_relative 'dependapanda'
+require 'bundler/audit/database'
 
 begin
   require 'rspec/core/rake_task'
@@ -23,4 +24,8 @@ task :save_application_gemfiles do
       teams_use_case: UseCases::Teams::Fetch.new
     )
   ).execute
+end
+
+task :update_advisory_db do
+  Bundler::Audit::Database.update!
 end
