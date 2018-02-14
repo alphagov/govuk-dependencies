@@ -21,7 +21,7 @@ nav a, nav a:visited {
   text-decoration: none;
 }
 
-.feedback {
+.security-alerts-link {
   float: right;
   font-size: 1em;
 }
@@ -103,7 +103,7 @@ h2.security-alert-title {
 }
 
 .security-apps {
-  margin: 0 45px 0 45px;
+  margin: 0 45px;
 }
 
 .security-app {
@@ -111,8 +111,8 @@ h2.security-alert-title {
   border-radius: 10px;
   color: #735c0f;
   list-style-type: none;
+  padding: 20px 10px 10px;
   margin: 10px;
-  padding: 10px;
 }
 
 .pull-request-status {
@@ -133,7 +133,7 @@ h2.security-alert-title {
 
 .alert {
   list-style-type: none;
-  margin: 0 0 15px 27px;
+  margin: 0 0 12px 27px;
 }
 
 .alert-details li {
