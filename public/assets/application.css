@@ -8,6 +8,7 @@ body {
 }
 
 nav {
+  color: #ccc;
   margin: 0 40px;
   padding: 15px;
   font-size: 1.5em;
@@ -19,7 +20,7 @@ nav a, nav a:visited {
   text-decoration: none;
 }
 
-.feedback {
+.stats {
   float: right;
   font-size: 1em;
 }

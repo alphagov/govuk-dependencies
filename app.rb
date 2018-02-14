@@ -26,6 +26,8 @@ class GovukDependencies < Sinatra::Base
       @pull_requests_by_application = UseCases::GroupPullRequestsByApplication.new(
         fetch_pull_requests: UseCases::FetchPullRequests.new
       ).execute
+      @pull_request_count = UseCases::FetchPullRequestCount.new.execute
+
       erb :index, layout: :layout
     end
   end
@@ -35,6 +37,7 @@ class GovukDependencies < Sinatra::Base
       @pull_requests_by_gem = UseCases::GroupPullRequestsByGem.new(
         fetch_pull_requests: UseCases::FetchPullRequests.new
       ).execute
+      @pull_request_count = UseCases::FetchPullRequestCount.new.execute
 
       erb :gem, layout: :layout
     end
@@ -42,6 +45,7 @@ class GovukDependencies < Sinatra::Base
 
   get '/team' do
     cache :pull_requests_by_team do
+      @pull_request_count = UseCases::FetchPullRequestCount.new.execute
       pull_requests = UseCases::FetchPullRequests.new.execute
       teams = UseCases::FetchTeams.new.execute
       applications_by_team = UseCases::GroupApplicationsByTeam.new.execute(pull_requests: pull_requests, teams: teams)

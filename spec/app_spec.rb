@@ -11,6 +11,8 @@ describe GovukDependencies do
   context 'Dashboard' do
     context 'given open pull requests' do
       before do
+        stub_request(:get, "https://api.github.com/search/issues?q=is:pr%20user:alphagov%20author:app/dependabot")
+          .to_return(body: File.open('spec/fixtures/pull_requests.json'), headers: { 'Content-Type' => 'application/json' })
         stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:approved')
           .to_return(body: '{ "total_count": 0, "incomplete_results": false, "items": [] }', headers: { 'Content-Type' => 'application/json' })
         stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:required')
@@ -68,6 +70,8 @@ describe GovukDependencies do
 
     context 'given no open pull requests' do
       before do
+        stub_request(:get, "https://api.github.com/search/issues?q=is:pr%20user:alphagov%20author:app/dependabot")
+          .to_return(body: '{ "total_count": 0, "incomplete_results": false, "items": [] }', headers: { 'Content-Type' => 'application/json' })
         stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:approved')
           .to_return(body: '{ "total_count": 0, "incomplete_results": false, "items": [] }', headers: { 'Content-Type' => 'application/json' })
         stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:required')
@@ -111,6 +115,8 @@ describe GovukDependencies do
 
     context 'given pull requests that require review' do
       before do
+        stub_request(:get, "https://api.github.com/search/issues?q=is:pr%20user:alphagov%20author:app/dependabot")
+          .to_return(body: File.read('spec/fixtures/pull_requests.json'), headers: { 'Content-Type' => 'application/json' })
         stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:approved')
           .to_return(body: '{ "total_count": 0, "incomplete_results": false, "items": [] }', headers: { 'Content-Type' => 'application/json' })
         stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:required')
@@ -140,6 +146,8 @@ describe GovukDependencies do
 
     context 'given open approved pull requests' do
       before do
+        stub_request(:get, "https://api.github.com/search/issues?q=is:pr%20user:alphagov%20author:app/dependabot")
+          .to_return(body: File.read('spec/fixtures/pull_requests.json'), headers: { 'Content-Type' => 'application/json' })
         stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:approved')
           .to_return(body: File.read('spec/fixtures/pull_requests.json'), headers: { 'Content-Type' => 'application/json' })
         stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:required')
@@ -169,6 +177,8 @@ describe GovukDependencies do
 
     context 'given pull requests that have changes requested' do
       before do
+        stub_request(:get, "https://api.github.com/search/issues?q=is:pr%20user:alphagov%20author:app/dependabot")
+          .to_return(body: File.read('spec/fixtures/pull_requests.json'), headers: { 'Content-Type' => 'application/json' })
         stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:approved')
           .to_return(body: '{ "total_count": 0, "incomplete_results": false, "items": [] }', headers: { 'Content-Type' => 'application/json' })
         stub_request(:get, 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:required')
