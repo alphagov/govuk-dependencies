@@ -1,10 +1,12 @@
 require 'sinatra'
 require_relative 'lib/loader'
 
-def cache(name)
+def cache(name, cache_duration_seconds = 120)
   return yield unless ENV['RACK_ENV'] == 'production'
 
-  UseCases::Cache.new(path: "#{Dir.pwd}/public/cache/#{name}.html").execute { yield }
+  UseCases::Cache.new(
+    path: "#{Dir.pwd}/public/cache/#{name}.html"
+  ).execute(cache_duration_seconds: cache_duration_seconds) { yield }
 end
 
 def old_pull_request?(date)
@@ -81,7 +83,7 @@ class GovukDependencies < Sinatra::Base
   end
 
   get '/security-alerts' do
-    cache :security_alerts do
+    cache :security_alerts, 43200 do
       UseCases::Gemfiles::Save.new(
         fetch_gemfiles: UseCases::Gemfiles::Fetch.new(
           teams_use_case: UseCases::Teams::Fetch.new
