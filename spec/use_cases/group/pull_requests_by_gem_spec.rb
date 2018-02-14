@@ -1,4 +1,4 @@
-describe UseCases::GroupPullRequestsByGem do
+describe UseCases::Group::PullRequestsByGem do
   context 'Given no pull requests' do
     it 'returns an empty array' do
       fetch_pull_requests = double(execute: [])

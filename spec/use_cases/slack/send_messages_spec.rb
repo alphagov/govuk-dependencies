@@ -1,4 +1,4 @@
-describe UseCases::SendSlackMessages do
+describe UseCases::Slack::SendMessages do
   context 'given no teams or pull requests' do
     it 'does not call the slack gateway' do
       team_usecase = double(execute: [])

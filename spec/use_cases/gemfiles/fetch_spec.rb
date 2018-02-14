@@ -1,4 +1,4 @@
-describe UseCases::FetchGemfiles do
+describe UseCases::Gemfiles::Fetch do
   context 'given no applications' do
     it 'does not fetch any gemfiles' do
       teams_use_case = double(execute: [])

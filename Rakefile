@@ -18,9 +18,9 @@ task :dependapanda_loud do
 end
 
 task :save_application_gemfiles do
-  UseCases::SaveGemfiles.new(
-    fetch_gemfiles: UseCases::FetchGemfiles.new(
-      teams_use_case: UseCases::FetchTeams.new
+  UseCases::Gemfiles::Save.new(
+    fetch_gemfiles: UseCases::Gemfiles::Fetch.new(
+      teams_use_case: UseCases::Teams::Fetch.new
     )
   ).execute
 end

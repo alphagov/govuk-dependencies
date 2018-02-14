@@ -23,8 +23,8 @@ end
 class GovukDependencies < Sinatra::Base
   get '/' do
     cache :pull_requests_by_application do
-      @pull_requests_by_application = UseCases::GroupPullRequestsByApplication.new(
-        fetch_pull_requests: UseCases::FetchPullRequests.new
+      @pull_requests_by_application = UseCases::Group::PullRequestsByApplication.new(
+        fetch_pull_requests: UseCases::PullRequests::Fetch.new
       ).execute
       erb :index, layout: :layout
     end
@@ -32,8 +32,8 @@ class GovukDependencies < Sinatra::Base
 
   get '/gem' do
     cache :pull_requests_by_gem do
-      @pull_requests_by_gem = UseCases::GroupPullRequestsByGem.new(
-        fetch_pull_requests: UseCases::FetchPullRequests.new
+      @pull_requests_by_gem = UseCases::Group::PullRequestsByGem.new(
+        fetch_pull_requests: UseCases::PullRequests::Fetch.new
       ).execute
 
       erb :gem, layout: :layout
@@ -42,9 +42,9 @@ class GovukDependencies < Sinatra::Base
 
   get '/team' do
     cache :pull_requests_by_team do
-      pull_requests = UseCases::FetchPullRequests.new.execute
-      teams = UseCases::FetchTeams.new.execute
-      applications_by_team = UseCases::GroupApplicationsByTeam.new.execute(pull_requests: pull_requests, teams: teams)
+      pull_requests = UseCases::PullRequests::Fetch.new.execute
+      teams = UseCases::Teams::Fetch.new.execute
+      applications_by_team = UseCases::Group::ApplicationsByTeam.new.execute(pull_requests: pull_requests, teams: teams)
 
       erb :team, locals: { pull_requests_by_team: applications_by_team }, layout: :layout
     end
@@ -52,7 +52,7 @@ class GovukDependencies < Sinatra::Base
 
   get '/stats' do
     cache :stats do
-      pull_request_count = UseCases::FetchPullRequestCount.new.execute
+      pull_request_count = UseCases::PullRequests::FetchCount.new.execute
 
       erb :stats, locals: { pull_request_count: pull_request_count }, layout: :layout
     end
@@ -60,9 +60,9 @@ class GovukDependencies < Sinatra::Base
 
   get '/team/:team_name' do
     cache :"pull_requests_by_team_#{params.fetch(:team_name)}" do
-      pull_requests = UseCases::FetchPullRequests.new.execute
-      teams = UseCases::FetchTeams.new.execute
-      applications_by_team = UseCases::GroupApplicationsByTeam.new.execute(pull_requests: pull_requests, teams: teams)
+      pull_requests = UseCases::PullRequests::Fetch.new.execute
+      teams = UseCases::Teams::Fetch.new.execute
+      applications_by_team = UseCases::Group::ApplicationsByTeam.new.execute(pull_requests: pull_requests, teams: teams)
 
       applications_for_team = applications_by_team.select do |team|
         team.fetch(:team_name) == params.fetch(:team_name)
@@ -76,7 +76,7 @@ class GovukDependencies < Sinatra::Base
     return '[unauthorised]' unless params[:secret] == ENV['DEPENDAPANDA_SECRET']
 
     message_presenter = Presenters::Slack::FullMessage.new
-    UseCases::SendSlackMessages.new(message_presenter: message_presenter).execute(team: params.fetch(:team))
+    UseCases::Slack::SendMessages.new(message_presenter: message_presenter).execute(team: params.fetch(:team))
     '[ok]'
   end
 end

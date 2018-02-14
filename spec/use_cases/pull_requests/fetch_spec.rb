@@ -1,4 +1,4 @@
-describe UseCases::FetchPullRequests do
+describe UseCases::PullRequests::Fetch do
   it 'Calls execute on the gateway' do
     pull_request_gateway = double(execute: [])
     result = described_class.new(gateway: pull_request_gateway).execute

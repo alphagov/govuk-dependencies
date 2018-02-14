@@ -1,4 +1,4 @@
-describe UseCases::SaveGemfiles do
+describe UseCases::Gemfiles::Save do
   context 'Given no Gemfiles' do
     it 'does not save them' do
       fetch_gemfiles = double(execute: [])
