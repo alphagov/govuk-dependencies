@@ -52,7 +52,7 @@ class GovukDependencies < Sinatra::Base
 
   get '/stats' do
     cache :stats do
-      pull_request_count = UseCases::FetchPullRequestCount.new.execute
+      pull_request_count = UseCases::PullRequests::FetchCount.new.execute
 
       erb :stats, locals: { pull_request_count: pull_request_count }, layout: :layout
     end
