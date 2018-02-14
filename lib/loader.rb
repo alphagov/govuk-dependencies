@@ -4,7 +4,7 @@ require_relative './domain/gemfile'
 require_relative './domain/security_alert'
 
 require_relative './use_cases/cache'
-require_relative './use_cases/fetch_pull_requests'
+require_relative './use_cases/pull_requests/fetch'
 require_relative './use_cases/pull_requests/fetch_count'
 require_relative './use_cases/fetch_teams'
 require_relative './use_cases/group/pull_requests_by_application'
