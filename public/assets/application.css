@@ -1,5 +1,7 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -19,7 +21,7 @@ nav a, nav a:visited {
   text-decoration: none;
 }
 
-.feedback {
+.security-alerts-link {
   float: right;
   font-size: 1em;
 }
@@ -88,6 +90,61 @@ h2 {
   margin-bottom: 10px;
 }
 
+h2.security-alert-title {
+  color: #735c0f;
+  display: inline;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.security-alerts {
+  margin-top: 15px;
+  padding: 0;
+}
+
+.security-apps {
+  margin: 0 45px;
+}
+
+.security-app {
+  background-color: #fffbdd;
+  border-radius: 10px;
+  color: #735c0f;
+  list-style-type: none;
+  padding: 20px 10px 10px;
+  margin: 10px;
+}
+
 .pull-request-status {
   color: #777;
+}
+
+.criticality-low {
+  color: green;
+}
+
+.criticality-medium {
+  color: yellow;
+}
+
+.criticality-high {
+  color: red;
+}
+
+.alert {
+  list-style-type: none;
+  margin: 0 0 12px 27px;
+}
+
+.alert-details li {
+  list-style-type: none;
+}
+
+.alert-icon {
+  display: inline-block;
+}
+
+.alert-details-gem h4 {
+  margin-bottom: 4px;
+  text-decoration: underline;
 }

@@ -1,0 +1,41 @@
+<% if application_security_alerts.empty? %>
+  <h2>No open security alerts</h2>
+<% else %>
+  <ul class="security-apps">
+    <% application_security_alerts.each do |application_security_alert| %>
+      <li class="security-app">
+        <div class="alert-icon">
+          <svg aria-hidden="true" class="octicon octicon-alert mr-1" height="18" version="1.1" viewBox="0 0 16 16" width="18">
+            <path fill-rule="evenodd" d="M8.865 1.52c-.18-.31-.51-.5-.87-.5s-.69.19-.87.5L.275 13.5c-.18.31-.18.69 0 1 .19.31.52.5.87.5h13.7c.36 0 .69-.19.86-.5.17-.31.18-.69.01-1L8.865 1.52zM8.995 13h-2v-2h2v2zm0-3h-2V6h2v4z">
+            </path>
+          </svg>
+        </div>
+
+        <h2 class="security-alert-title"><%= application_security_alert.fetch(:application_name) %></h2>
+
+        <ul class="security-alerts">
+          <% application_security_alert.fetch(:alerts).each do |alert| %>
+            <li class="alert">
+              <ul class="alert-details">
+                <li class="alert-details-gem">
+                  <h4><%= alert.fetch(:gem) %></h4>
+                </li>
+                <li>
+                  <em>Criticality:</em>
+                  <span class="criticality-<%= alert.fetch(:criticality) %>">
+                    <strong><%= alert.fetch(:criticality) %></strong>
+                  </span>
+                </li>
+                <li>
+                  <em>Patched versions:</em>
+                  <strong><%= alert.fetch(:patched_versions) %></strong>
+                </li>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+
+      </li>
+    <% end %>
+  </ul>
+<% end %>
