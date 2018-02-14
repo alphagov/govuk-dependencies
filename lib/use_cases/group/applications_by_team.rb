@@ -9,7 +9,7 @@ module UseCases
         )
       end
 
-      private
+    private
 
       FALLBACK_TEAM = 'govuk-developers'.freeze
 

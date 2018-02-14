@@ -20,7 +20,7 @@ module UseCases
         split_summarised_pull_requests(pull_request_hash)
       end
 
-      private
+    private
 
       SINGLE_GEM_TITLE_MATCH = 'Bump \S+ from \S+ to \S+'.freeze
 

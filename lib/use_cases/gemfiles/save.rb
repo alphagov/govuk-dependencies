@@ -13,7 +13,7 @@ module UseCases
         end
       end
 
-      private
+    private
 
       attr_reader :fetch_gemfiles, :file
 

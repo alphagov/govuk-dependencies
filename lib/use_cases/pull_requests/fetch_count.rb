@@ -9,7 +9,7 @@ module UseCases
         pull_request_count_gateway.execute
       end
 
-      private
+    private
 
       attr_reader :pull_request_count_gateway
     end

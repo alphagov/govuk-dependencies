@@ -16,7 +16,7 @@ module UseCases
         end
       end
 
-      private
+    private
 
       attr_reader :teams_gateway
     end

@@ -13,7 +13,7 @@ module UseCases
         sort_by_application_name(sort_by_pull_request_title(grouped_pull_requests))
       end
 
-      private
+    private
 
       attr_reader :fetch_pull_requests
 

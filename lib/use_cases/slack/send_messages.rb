@@ -24,7 +24,7 @@ module UseCases
         send_messages(scoped_by_team(pull_requests_by_team, team))
       end
 
-      private
+    private
 
       attr_reader :slack_gateway,
         :team_usecase,

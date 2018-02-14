@@ -11,7 +11,7 @@ module UseCases
         gemfiles_for_applications.compact
       end
 
-      private
+    private
 
       attr_reader :gemfile_gateway, :teams_use_case
 
