@@ -241,4 +241,28 @@ describe GovukDependencies do
       expect(last_response.body).to include('Total PRs opened by Dependabot: 3')
     end
   end
+
+  context 'Security Alerts Page' do
+    before do
+      stub_request(:get, "https://docs.publishing.service.gov.uk/apps.json")
+        .to_return(
+          body: File.read('spec/fixtures/team_with_a_single_application.json'),
+          headers: { 'Content-Type' => 'application/json' }
+        )
+
+      stub_request(:get, 'https://raw.githubusercontent.com/alphagov/publisher/master/Gemfile.lock')
+      .to_return(
+        body: File.read('spec/fixtures/Gemfile.lock'),
+        headers: { 'Content-Type' => 'application/json' }
+      )
+    end
+
+    it 'should display the total PRs opened by dependabot' do
+      get '/security-alerts'
+      expect(last_response).to be_ok
+      expect(last_response.body).to include('rubocop')
+      expect(last_response.body).to include('Criticality')
+      expect(last_response.body).to include('low')
+    end
+  end
 end
