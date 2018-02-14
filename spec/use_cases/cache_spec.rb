@@ -30,7 +30,7 @@ describe UseCases::Cache do
     it 'populates the cache' do
       file = double(exists?: true, mtime: Time.now - 121, open: nil)
       expect(file).to receive(:open)
-      described_class.new(path: 'foo', file: file).execute {}
+      described_class.new(path: 'foo', file: file).execute(cache_duration_seconds: 120) {}
     end
   end
 end
