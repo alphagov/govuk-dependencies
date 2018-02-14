@@ -1,21 +1,28 @@
 describe UseCases::FetchGemfiles do
   context 'given no applications' do
     it 'does not fetch any gemfiles' do
-      application_names = []
-      result = described_class.new.execute(application_names: application_names)
+      teams_use_case = double(execute: [])
+      result = described_class.new(teams_use_case: teams_use_case).execute
       expect(result).to be_empty
     end
   end
 
   context 'given one application' do
     it 'fetches that Gemfile' do
-      application_names = %w(foo-app)
+      teams_use_case = double(execute: [
+        {
+          applications: ['foo-app']
+        }
+      ])
+
       gemfile_gateway = double(
         execute: Domain::Gemfile.new(file_contents: 'some contents')
       )
 
-      result = described_class.new(gemfile_gateway: gemfile_gateway)
-        .execute(application_names: application_names)
+      result = described_class.new(
+        gemfile_gateway: gemfile_gateway,
+        teams_use_case: teams_use_case
+      ).execute
 
       expect(result).to eq([
         {
@@ -28,7 +35,12 @@ describe UseCases::FetchGemfiles do
 
   context 'given multiple application' do
     it 'fetches all the Gemfile' do
-      application_names = %w(foo-app bar-app)
+      teams_use_case = double(execute: [
+        {
+          applications: ['foo-app', 'bar-app']
+        }
+      ])
+
       gemfile_gateway = double
       allow(gemfile_gateway).to receive(:execute).with(application_name: 'foo-app').and_return(
         Domain::Gemfile.new(file_contents: 'foo app contents')
@@ -38,8 +50,7 @@ describe UseCases::FetchGemfiles do
         Domain::Gemfile.new(file_contents: 'bar app contents')
       )
 
-      result = described_class.new(gemfile_gateway: gemfile_gateway)
-        .execute(application_names: application_names)
+      result = described_class.new(gemfile_gateway: gemfile_gateway, teams_use_case: teams_use_case).execute
 
       expect(result).to eq([
         {

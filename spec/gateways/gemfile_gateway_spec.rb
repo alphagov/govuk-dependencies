@@ -10,4 +10,17 @@ describe Gateways::Gemfile do
       expect(result.file_contents).to include('remote: https://rubygems.org/')
     end
   end
+
+  context 'An application has no Gemfile' do
+    before do
+      stub_request(:get, 'https://raw.githubusercontent.com/alphagov/mapit/master/Gemfile.lock')
+        .to_return(status: 404)
+    end
+
+    it 'suppresses the not found exception' do
+      expect {
+        described_class.new.execute(application_name: 'mapit')
+      }.to_not raise_error
+    end
+  end
 end
