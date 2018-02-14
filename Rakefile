@@ -20,7 +20,7 @@ end
 task :save_application_gemfiles do
   UseCases::Gemfiles::Save.new(
     fetch_gemfiles: UseCases::Gemfiles::Fetch.new(
-      teams_use_case: UseCases::FetchTeams.new
+      teams_use_case: UseCases::Teams::Fetch.new
     )
   ).execute
 end

@@ -43,7 +43,7 @@ class GovukDependencies < Sinatra::Base
   get '/team' do
     cache :pull_requests_by_team do
       pull_requests = UseCases::PullRequests::Fetch.new.execute
-      teams = UseCases::FetchTeams.new.execute
+      teams = UseCases::Teams::Fetch.new.execute
       applications_by_team = UseCases::Group::ApplicationsByTeam.new.execute(pull_requests: pull_requests, teams: teams)
 
       erb :team, locals: { pull_requests_by_team: applications_by_team }, layout: :layout
@@ -61,7 +61,7 @@ class GovukDependencies < Sinatra::Base
   get '/team/:team_name' do
     cache :"pull_requests_by_team_#{params.fetch(:team_name)}" do
       pull_requests = UseCases::PullRequests::Fetch.new.execute
-      teams = UseCases::FetchTeams.new.execute
+      teams = UseCases::Teams::Fetch.new.execute
       applications_by_team = UseCases::Group::ApplicationsByTeam.new.execute(pull_requests: pull_requests, teams: teams)
 
       applications_for_team = applications_by_team.select do |team|

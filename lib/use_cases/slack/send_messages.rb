@@ -3,7 +3,7 @@ module UseCases
     class SendMessages
       def initialize(
         slack_gateway: Gateways::SlackMessage.new,
-        team_usecase: UseCases::FetchTeams.new,
+        team_usecase: UseCases::Teams::Fetch.new,
         pull_request_usecase: UseCases::PullRequests::Fetch.new,
         group_applications_by_team_usecase: UseCases::Group::ApplicationsByTeam.new,
         scheduler: UseCases::Slack::Schedulers::EveryDay.new,

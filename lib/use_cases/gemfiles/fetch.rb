@@ -2,7 +2,7 @@ module UseCases
   module Gemfiles
     class Fetch
       def initialize(gemfile_gateway: Gateways::Gemfile.new,
-                     teams_use_case: UseCases::FetchTeams.new)
+                     teams_use_case: UseCases::Teams::Fetch.new)
         @gemfile_gateway = gemfile_gateway
         @teams_use_case = teams_use_case
       end
