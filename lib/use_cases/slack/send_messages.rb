@@ -5,7 +5,7 @@ module UseCases
         slack_gateway: Gateways::SlackMessage.new,
         team_usecase: UseCases::FetchTeams.new,
         pull_request_usecase: UseCases::FetchPullRequests.new,
-        group_applications_by_team_usecase: UseCases::GroupApplicationsByTeam.new,
+        group_applications_by_team_usecase: UseCases::Group::ApplicationsByTeam.new,
         scheduler: UseCases::Slack::Schedulers::EveryDay.new,
         message_presenter:
       )

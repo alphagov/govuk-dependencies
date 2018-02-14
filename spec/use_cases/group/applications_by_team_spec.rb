@@ -1,4 +1,4 @@
-describe UseCases::GroupApplicationsByTeam do
+describe UseCases::Group::ApplicationsByTeam do
   context 'Given no teams or pull request' do
     it 'returns an empty list' do
       expect(

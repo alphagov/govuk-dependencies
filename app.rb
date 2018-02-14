@@ -23,7 +23,7 @@ end
 class GovukDependencies < Sinatra::Base
   get '/' do
     cache :pull_requests_by_application do
-      @pull_requests_by_application = UseCases::GroupPullRequestsByApplication.new(
+      @pull_requests_by_application = UseCases::Group::PullRequestsByApplication.new(
         fetch_pull_requests: UseCases::FetchPullRequests.new
       ).execute
       erb :index, layout: :layout
@@ -32,7 +32,7 @@ class GovukDependencies < Sinatra::Base
 
   get '/gem' do
     cache :pull_requests_by_gem do
-      @pull_requests_by_gem = UseCases::GroupPullRequestsByGem.new(
+      @pull_requests_by_gem = UseCases::Group::PullRequestsByGem.new(
         fetch_pull_requests: UseCases::FetchPullRequests.new
       ).execute
 
@@ -44,7 +44,7 @@ class GovukDependencies < Sinatra::Base
     cache :pull_requests_by_team do
       pull_requests = UseCases::FetchPullRequests.new.execute
       teams = UseCases::FetchTeams.new.execute
-      applications_by_team = UseCases::GroupApplicationsByTeam.new.execute(pull_requests: pull_requests, teams: teams)
+      applications_by_team = UseCases::Group::ApplicationsByTeam.new.execute(pull_requests: pull_requests, teams: teams)
 
       erb :team, locals: { pull_requests_by_team: applications_by_team }, layout: :layout
     end
@@ -62,7 +62,7 @@ class GovukDependencies < Sinatra::Base
     cache :"pull_requests_by_team_#{params.fetch(:team_name)}" do
       pull_requests = UseCases::FetchPullRequests.new.execute
       teams = UseCases::FetchTeams.new.execute
-      applications_by_team = UseCases::GroupApplicationsByTeam.new.execute(pull_requests: pull_requests, teams: teams)
+      applications_by_team = UseCases::Group::ApplicationsByTeam.new.execute(pull_requests: pull_requests, teams: teams)
 
       applications_for_team = applications_by_team.select do |team|
         team.fetch(:team_name) == params.fetch(:team_name)
