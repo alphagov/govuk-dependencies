@@ -47,3 +47,29 @@ Running this will start your application at [localhost:9292](localhost:9292)
 If you find yourself being rate limited by GitHub - you can define the `GITHUB_TOKEN` environment variable.
 This needs to be a token generated from GitHub, however as the repositories are all public it needs no special
 permissions.
+
+### Security Alerts
+
+![screenshot](https://user-images.githubusercontent.com/1215147/36216867-e2141466-11a7-11e8-8511-7a8942b55395.png)
+
+When navigating to the security alerts page (`/security-alerts`) it will update the local advisory-db copy, download, and save the
+gemfiles for every ruby project defined within [apps.json](docs.publishing.service.gov.uk/apps.json).
+
+#### Gemfiles
+
+When downloading gemfiles for each application when checking for security alerts, they can be found within `tmp/{application_name}_gemfile.lock`
+
+#### Advisory DB
+
+The security alerts feature works by using [bundler-audit](https://github.com/rubysec/bundler-audit) which relies on having
+a local copy of the [ruby-advisory-db](https://github.com/rubysec/ruby-advisory-db/). Without this, the security alerts page
+will show that there are no security alerts even if some exist.
+
+To update this database you can run:
+
+`bundle exec rake update_advisory_db`
+
+Additionally, to update this within code you can run:
+
+`Bundler::Audit::Database.update!`
+
