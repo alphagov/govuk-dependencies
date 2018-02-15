@@ -1,8 +1,9 @@
 # govuk-dependencies
 
-A tool for viewing all of the outstanding open pull requests made by Dependabot to GOV.UK repos, as well as for
-sending slack messages to GDS Teams to remind them of what PRs Dependabot has open against their
-applications in order to prevent a large backlog of PRs.
+A tool for:
+- Viewing all of the outstanding open pull requests made by Dependabot to GOV.UK repos
+- Sending Slack messages to GDS Teams reminding them of open Dependabot PRs for their applications
+- Viewing security alerts for old gems found in Gemfile.lock
 
 ## Screenshots
 
@@ -24,6 +25,7 @@ by Dependabot and groups them in various ways:
 ### Dependencies
 
 - [octokit/octokit.rb](https://github.com/octokit/octokit.rb) - Used for interacting with the GitHub API
+- [bundler-audit](https://github.com/rubysec/bundler-audit) - Security scanner for identifying CVEs
 
 ### Running the application
 
