@@ -1,8 +1,8 @@
-<% if @pull_requests_by_application.empty? %>
+<% if pull_requests_by_application.empty? %>
   <h2>No open pull requests 🎂</h2>
 <% else %>
   <ul class="apps">
-    <% @pull_requests_by_application.each do |application| %>
+    <% pull_requests_by_application.each do |application| %>
       <li class="app">
         <h2>
           <a href="<%= application.fetch(:application_url) %>">

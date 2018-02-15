@@ -1,7 +1,7 @@
 module UseCases
   module Group
     class PullRequestsByGem
-      def initialize(fetch_pull_requests:)
+      def initialize(fetch_pull_requests: UseCases::PullRequests::Fetch.new)
         @fetch_pull_requests = fetch_pull_requests
       end
 
