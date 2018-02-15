@@ -84,7 +84,7 @@ class GovukDependencies < Sinatra::Base
 
   get '/security-alerts' do
     cache :security_alerts, 43200 do
-      Bundler::Audit::Database.update!
+      Bundler::Audit::Database.update!(quiet: true)
 
       UseCases::Gemfiles::Save.new(
         fetch_gemfiles: UseCases::Gemfiles::Fetch.new(
