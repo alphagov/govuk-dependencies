@@ -148,3 +148,14 @@ h2.security-alert-title {
   margin-bottom: 4px;
   text-decoration: underline;
 }
+
+.no-security-alerts {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -200px;
+}
+
+.no-security-alerts h1 {
+  color: #777;
+}

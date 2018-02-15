@@ -1,5 +1,7 @@
 <% if application_security_alerts.empty? %>
-  <h2>No open security alerts</h2>
+  <div class="no-security-alerts">
+    <h1>No open security alerts!</h1>
+  </div>
 <% else %>
   <ul class="security-apps">
     <% application_security_alerts.each do |application_security_alert| %>
