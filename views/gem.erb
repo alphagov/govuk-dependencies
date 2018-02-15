@@ -1,8 +1,8 @@
-<% if @pull_requests_by_gem.empty? %>
+<% if pull_requests_by_gem.empty? %>
   <h2>No open pull requests 🎂</h2>
 <% else %>
   <ul class="apps">
-    <% @pull_requests_by_gem.each do |gem| %>
+    <% pull_requests_by_gem.each do |gem| %>
       <li class="app">
         <h2>
           <%= gem.fetch(:gem_name) %> (<%= gem.fetch(:pull_requests).count %>)

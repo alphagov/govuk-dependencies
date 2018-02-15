@@ -4,20 +4,17 @@ require_relative 'lib/loader'
 class GovukDependencies < Sinatra::Base
   get '/' do
     cache :pull_requests_by_application do
-      @pull_requests_by_application = UseCases::Group::PullRequestsByApplication.new(
-        fetch_pull_requests: UseCases::PullRequests::Fetch.new
-      ).execute
-      erb :index, layout: :layout
+      erb :index, layout: :layout, locals: {
+        pull_requests_by_application: UseCases::Group::PullRequestsByApplication.new.execute
+      }
     end
   end
 
   get '/gem' do
     cache :pull_requests_by_gem do
-      @pull_requests_by_gem = UseCases::Group::PullRequestsByGem.new(
-        fetch_pull_requests: UseCases::PullRequests::Fetch.new
-      ).execute
-
-      erb :gem, layout: :layout
+      erb :gem, layout: :layout, locals: {
+        pull_requests_by_gem: UseCases::Group::PullRequestsByGem.new.execute
+      }
     end
   end
 
@@ -33,9 +30,9 @@ class GovukDependencies < Sinatra::Base
 
   get '/stats' do
     cache :stats do
-      pull_request_count = UseCases::PullRequests::FetchCount.new.execute
-
-      erb :stats, locals: { pull_request_count: pull_request_count }, layout: :layout
+      erb :stats, locals: {
+        pull_request_count: UseCases::PullRequests::FetchCount.new.execute
+      }, layout: :layout
     end
   end
 
@@ -56,8 +53,9 @@ class GovukDependencies < Sinatra::Base
   post '/slack/notify/:team/:secret' do
     return '[unauthorised]' unless params[:secret] == ENV['DEPENDAPANDA_SECRET']
 
-    message_presenter = Presenters::Slack::FullMessage.new
-    UseCases::Slack::SendMessages.new(message_presenter: message_presenter).execute(team: params.fetch(:team))
+    UseCases::Slack::SendMessages.new(
+      message_presenter: Presenters::Slack::FullMessage.new
+    ).execute(team: params.fetch(:team))
     '[ok]'
   end
 
