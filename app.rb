@@ -1,27 +1,6 @@
 require 'sinatra'
 require_relative 'lib/loader'
 
-def cache(name, cache_duration_seconds = 120)
-  return yield unless ENV['RACK_ENV'] == 'production'
-
-  UseCases::Cache.new(
-    path: "#{Dir.pwd}/public/cache/#{name}.html"
-  ).execute(cache_duration_seconds: cache_duration_seconds) { yield }
-end
-
-def old_pull_request?(date)
-  today = Date.today
-  actual_age = (today - date).to_i
-  weekdays_age = if today.monday?
-                   actual_age - 2
-                 elsif today.tuesday?
-                   actual_age - 1
-                 else
-                   actual_age
-                 end
-  weekdays_age > 2
-end
-
 class GovukDependencies < Sinatra::Base
   get '/' do
     cache :pull_requests_by_application do
