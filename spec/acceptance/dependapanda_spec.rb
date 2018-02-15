@@ -1,4 +1,4 @@
-require_relative '../dependapanda'
+require_relative '../../dependapanda'
 
 describe Dependapanda do
   before do
