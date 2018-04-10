@@ -13,7 +13,7 @@ describe Presenters::Slack::SimpleMessage do
       }
       result = described_class.new.execute(applications_by_team: applications_by_team)
 
-      expect(result).to eq('You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback')
+      expect(result).to eq('You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email')
     end
   end
 end
