@@ -43,8 +43,7 @@ Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback')
 
       expect(result).to eq('<https://govuk-dependencies.herokuapp.com/team/taxonomy|taxonomy> have 2 Dependabot PRs open on the following apps:
 
-<https://github.com/alphagov/collections-publisher/pulls/app/dependabot|collections-publisher> (1)
-<https://github.com/alphagov/content-tagger/pulls/app/dependabot|content-tagger> (1)
+<https://github.com/alphagov/collections-publisher/pulls/app/dependabot|collections-publisher> (1) <https://github.com/alphagov/content-tagger/pulls/app/dependabot|content-tagger> (1)
 
 Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback')
     end
@@ -69,8 +68,7 @@ Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback')
 
       expect(result).to eq('<https://govuk-dependencies.herokuapp.com/team/taxonomy|taxonomy> have 3 Dependabot PRs open on the following apps:
 
-<https://github.com/alphagov/collections-publisher/pulls/app/dependabot|collections-publisher> (1)
-<https://github.com/alphagov/content-tagger/pulls/app/dependabot|content-tagger> (2)
+<https://github.com/alphagov/collections-publisher/pulls/app/dependabot|collections-publisher> (1) <https://github.com/alphagov/content-tagger/pulls/app/dependabot|content-tagger> (2)
 
 Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback')
     end
