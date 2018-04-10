@@ -2,22 +2,15 @@ module UseCases
   module Slack
     module Schedulers
       class Weekday
-        def initialize(date_class: Date.new)
-          @date_class = date_class
-        end
-
         def should_send_message?
-          return false if weekend?
-
-          true
+          !weekend?
         end
 
       private
 
-        attr_reader :date_class
-
         def weekend?
-          date_class.saturday? || date_class.sunday?
+          date = Time.now
+          date.saturday? || date.sunday?
         end
       end
     end
