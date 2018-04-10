@@ -2,7 +2,7 @@ module Presenters
   module Slack
     class SimpleMessage
       def execute(applications_by_team:)
-        "You have #{pull_requests_count(applications_by_team)} open Dependabot PR(s) - #{url(applications_by_team)} - Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"
+        "You have #{pull_requests_count(applications_by_team)} open Dependabot PR(s) - #{url(applications_by_team)}"
       end
 
     private

@@ -4,9 +4,7 @@ module Presenters
       def execute(applications_by_team:)
         "#{url_for_team(applications_by_team)} have #{pull_requests_count(applications_by_team)} Dependabot PRs open on the following apps:
 
-#{body(applications_by_team).join("\n")}
-
-Feedback: https://trello.com/b/jQrIfH9A/dependabot-developer-feedback"
+#{body(applications_by_team).join(' ')}"
       end
 
     private
