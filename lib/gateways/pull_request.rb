@@ -13,7 +13,7 @@ module Gateways
   private
 
     def issue_search_common_filters
-      'is:pr user:alphagov state:open author:app/dependabot'
+      'is:pr user:alphagov topic:govuk state:open author:app/dependabot'
     end
 
     def approved_pull_requests
