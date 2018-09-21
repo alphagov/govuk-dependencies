@@ -17,6 +17,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'climate_control', '~> 0.2'
   gem 'pry', '~> 0.11.3'
   gem 'rack-test', '~> 0.8.0'
   gem 'rspec', '~> 3.7.0'
