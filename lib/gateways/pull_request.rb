@@ -28,15 +28,21 @@ module Gateways
     end
 
     def build_pull_requests(api_response, status)
-      api_response.map do |pr|
-        Domain::PullRequest.new(
-          application_name: get_application_name(pr),
-          title: pr.title,
-          url: pr.html_url,
-          status: status,
-          opened_at: Date.parse(pr.created_at.to_s)
-        )
-      end
+      api_response
+        .select { |pr| govuk_repository_urls.include?(pr.repository_url) }
+        .map do |pr|
+          Domain::PullRequest.new(
+            application_name: get_application_name(pr),
+            title: pr.title,
+            url: pr.html_url,
+            status: status,
+            opened_at: Date.parse(pr.created_at.to_s),
+          )
+        end
+    end
+
+    def govuk_repository_urls
+      @govuk_repository_urls ||= Gateways::Repositories.new.execute.map(&:url)
     end
 
     def get_application_name(pull_request)

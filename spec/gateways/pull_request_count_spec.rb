@@ -6,7 +6,7 @@ describe Gateways::PullRequestCount do
     end
     it 'returns the total count' do
       count = described_class.new.execute
-      expect(count).to eq(3)
+      expect(count).to eq(4)
     end
   end
 end

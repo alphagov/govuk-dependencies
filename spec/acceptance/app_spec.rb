@@ -8,6 +8,14 @@ describe GovukDependencies do
   include Rack::Test::Methods
   def app() described_class end
 
+  around do |example|
+    ClimateControl.modify GITHUB_TOKEN: "some_token" do
+      VCR.use_cassette("repositories") do
+        example.run
+      end
+    end
+  end
+
   context 'Dashboard' do
     context 'given open pull requests' do
       before do
@@ -238,7 +246,7 @@ describe GovukDependencies do
     it 'should display the total PRs opened by dependabot' do
       get '/stats'
       expect(last_response).to be_ok
-      expect(last_response.body).to include('Total PRs opened by Dependabot: 3')
+      expect(last_response.body).to include('Total PRs opened by Dependabot: 4')
     end
   end
 
