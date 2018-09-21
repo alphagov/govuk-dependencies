@@ -1,3 +1,4 @@
+require 'climate_control'
 require 'webmock/rspec'
 require 'rspec'
 require 'timecop'
