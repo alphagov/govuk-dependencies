@@ -79,7 +79,7 @@ GEM
       railties (>= 3.0.0)
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.18)
+    ffi (1.9.24)
     gds-api-adapters (50.7.0)
       link_header
       lrucache (~> 0.1.1)

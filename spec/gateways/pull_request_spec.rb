@@ -3,6 +3,15 @@ describe Gateways::PullRequest do
   APPROVED_URL = 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:approved'.freeze
   CHANGES_REQUESTED_URL = 'https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:changes_requested'.freeze
   NO_PULL_REQUESTS_BODY = '{ "total_count": 0, "incomplete_results": false, "items": [] }'.freeze
+
+  around do |example|
+    ClimateControl.modify GITHUB_TOKEN: "some_token" do
+      VCR.use_cassette("repositories") do
+        example.run
+      end
+    end
+  end
+
   def stub_github_request(request_url, body)
     stub_request(:get, request_url)
       .with(headers: { 'Authorization' => 'token some_token' })
@@ -20,7 +29,6 @@ describe Gateways::PullRequest do
     end
 
     it 'Returns an empty array' do
-      ENV['GITHUB_TOKEN'] = 'some_token'
       expect(described_class.new.execute).to be_empty
     end
   end
@@ -34,10 +42,10 @@ describe Gateways::PullRequest do
 
     it 'Returns a list of pull requests' do
       Timecop.freeze(Date.parse('2018-01-25')) do
-        ENV['GITHUB_TOKEN'] = 'some_token'
         result = described_class.new.execute
 
         expect(result.count).to eq(3)
+
         expect(result[0].title).to eq('Bump gds-sso from 13.5.0 to 13.5.1')
         expect(result[0].application_name).to eq('publisher')
         expect(result[0].url).to eq('https://github.com/alphagov/publisher/pull/761')

@@ -1,6 +1,14 @@
 require_relative '../../dependapanda'
 
 describe Dependapanda do
+  around do |example|
+    ClimateControl.modify GITHUB_TOKEN: "some_token" do
+      VCR.use_cassette("repositories") do
+        example.run
+      end
+    end
+  end
+
   before do
     ENV['SLACK_WEBHOOK_URL'] = 'http://example.com/webhook'
 
