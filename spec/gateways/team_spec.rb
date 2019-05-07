@@ -11,6 +11,23 @@ describe Gateways::Team do
     end
   end
 
+  context "with no team set and one application" do
+    before do
+      stub_request(:get, "https://docs.publishing.service.gov.uk/apps.json")
+        .to_return(
+          body: File.read('spec/fixtures/application_with_no_team.json'),
+          headers: { 'Content-Type' => 'application/json' }
+        )
+    end
+
+    it "returns the apps with the default team" do
+      result = described_class.new.execute
+      expect(result.count).to eq(1)
+      expect(result.first.team_name).to eq('govuk-developers')
+      expect(result.first.applications).to eq(['asset-manager'])
+    end
+  end
+
   context 'Given one team' do
     context 'with one application' do
       before do

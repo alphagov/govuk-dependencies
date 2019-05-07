@@ -1,7 +1,6 @@
 [{
   "app_name":"asset-manager",
-  "product_manager":"@danielroseman",
-  "team":"#asset-management",
+  "team": null,
   "puppet_name":"asset_manager",
   "links":{
     "self":"https://docs.publishing.service.gov.uk/apps/asset-manager.json",
