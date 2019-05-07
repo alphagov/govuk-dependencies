@@ -5,23 +5,26 @@ module Gateways
   class Team
     def initialize
       @endpoint = URI('https://docs.publishing.service.gov.uk/apps.json')
+      @default_team_name = "#govuk-developers"
     end
 
     def execute
-      api_response = Net::HTTP.get(endpoint)
-      teams = JSON.parse(api_response)
-
-      grouped_teams = teams.group_by { |team| team['team'] }
-      grouped_teams.map do |team_name, team_info|
+      teams.map do |name, apps|
         Domain::Team.new(
-          team_name: team_name.tr('#', ''),
-          applications: team_info.map { |info| info['app_name'] }
+          team_name: (name || default_team_name).tr('#', ''),
+          applications: apps.map { |app| app["app_name"] }
         )
       end
     end
 
   private
 
-    attr_reader :endpoint
+    attr_reader :endpoint, :default_team_name
+
+    def teams
+      api_response = Net::HTTP.get(endpoint)
+      apps = JSON.parse(api_response)
+      apps.group_by { |app| app["team"] }
+    end
   end
 end
