@@ -29,9 +29,7 @@ describe Gateways::SecurityAlert do
         FileUtils.cp('spec/fixtures/gemfile_with_criticality', 'tmp/signon_gemfile.lock')
         result = described_class.new.execute(application_name: 'signon')
 
-        expect(result.first.gem).to eq(expected.gem)
-        expect(result.first.criticality).to eq(expected.criticality)
-        expect(result.first.patched_versions).to eq(expected.patched_versions)
+        expect(result).to include(expected)
       end
     end
   end
