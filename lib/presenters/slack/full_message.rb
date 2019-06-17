@@ -17,7 +17,7 @@ module Presenters
       end
 
       def url(application_name)
-        "https://github.com/alphagov/#{application_name}/pulls/app/dependabot"
+        "https://github.com/alphagov/#{application_name}/pulls/app/dependabot-preview"
       end
 
       def url_for_team(applications_by_team)

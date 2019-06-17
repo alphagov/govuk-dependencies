@@ -5,7 +5,7 @@ module Gateways
     end
 
     def execute
-      @octokit.search_issues('is:pr user:alphagov author:app/dependabot').total_count
+      @octokit.search_issues('is:pr user:alphagov author:app/dependabot-preview').total_count
     end
   end
 end
