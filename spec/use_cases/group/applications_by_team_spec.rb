@@ -30,7 +30,7 @@ describe UseCases::Group::ApplicationsByTeam do
             {
               application_name: 'some-application',
               application_url:
-              'https://github.com/alphagov/some-application/pulls/app/dependabot',
+              'https://github.com/alphagov/some-application/pulls/app/dependabot-preview',
               pull_request_count: 1
             }
           ]
@@ -76,7 +76,7 @@ describe UseCases::Group::ApplicationsByTeam do
             {
               application_name: 'collections',
               application_url:
-              'https://github.com/alphagov/collections/pulls/app/dependabot',
+              'https://github.com/alphagov/collections/pulls/app/dependabot-preview',
               pull_request_count: 1
             }
           ]
@@ -87,7 +87,7 @@ describe UseCases::Group::ApplicationsByTeam do
             {
               application_name: 'collections-publisher',
               application_url:
-              'https://github.com/alphagov/collections-publisher/pulls/app/dependabot',
+              'https://github.com/alphagov/collections-publisher/pulls/app/dependabot-preview',
               pull_request_count: 1
             }
           ]
@@ -129,7 +129,7 @@ describe UseCases::Group::ApplicationsByTeam do
             {
               application_name: 'collections',
               application_url:
-              'https://github.com/alphagov/collections/pulls/app/dependabot',
+              'https://github.com/alphagov/collections/pulls/app/dependabot-preview',
               pull_request_count: 2
             }
           ]

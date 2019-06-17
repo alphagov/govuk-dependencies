@@ -36,7 +36,7 @@ module UseCases
         pull_requests_by_application.map do |application_name, pull_request_for_app|
           {
             application_name: application_name,
-            application_url: "https://github.com/alphagov/#{application_name}/pulls/app/dependabot",
+            application_url: "https://github.com/alphagov/#{application_name}/pulls/app/dependabot-preview",
             pull_request_count: pull_request_for_app.count
           }
         end

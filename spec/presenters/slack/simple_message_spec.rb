@@ -6,7 +6,7 @@ describe Presenters::Slack::SimpleMessage do
         applications: [
           {
             application_name: 'content-tagger',
-            application_url: 'https://github.com/alphagov/content-tagger/app/dependabot',
+            application_url: 'https://github.com/alphagov/content-tagger/app/dependabot-preview',
             pull_request_count: 1
           }
         ]
