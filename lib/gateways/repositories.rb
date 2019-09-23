@@ -10,7 +10,7 @@ module Gateways
     end
 
     def execute
-      @octokit.search_repos("topic:govuk").items.map do |repo|
+      @octokit.search_repos("org:alphagov topic:govuk").items.map do |repo|
         Domain::Repository.new(name: repo.name, url: repo.url)
       end
     end
