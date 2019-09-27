@@ -78,7 +78,7 @@ describe Gateways::Team do
 
       expect(result.count).to eq(2)
       expect(result.first.team_name).to eq('modelling-services')
-      expect(result.first.applications).to eq(['publisher'])
+      expect(result.first.applications).to eq(%w(publisher))
 
       expect(result.last.team_name).to eq('start-pages')
       expect(result.last.applications).to eq(['frontend', 'government-frontend'])

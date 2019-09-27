@@ -27,11 +27,11 @@ module UseCases
     private
 
       attr_reader :slack_gateway,
-        :team_usecase,
-        :pull_request_usecase,
-        :message_presenter,
-        :scheduler,
-        :group_applications_by_team_usecase
+                  :team_usecase,
+                  :pull_request_usecase,
+                  :message_presenter,
+                  :scheduler,
+                  :group_applications_by_team_usecase
 
       def send_messages(applications_by_teams)
         applications_by_teams.each do |applications_by_team|

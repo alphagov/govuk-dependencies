@@ -37,7 +37,7 @@ task :record_cassette do
   octokit = Octokit::Client.new(auto_paginate: true)
 
   puts "Deleting old cassette"
-  File.delete("spec/fixtures/vcr_cassettes/repositories.yml") if File.exists?("spec/fixtures/vcr_cassettes/repositories.yml")
+  File.delete("spec/fixtures/vcr_cassettes/repositories.yml") if File.exist?("spec/fixtures/vcr_cassettes/repositories.yml")
 
   VCR.configure do |config|
     config.cassette_library_dir = "spec/fixtures/vcr_cassettes"

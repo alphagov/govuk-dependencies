@@ -25,6 +25,7 @@ module UseCases
         applications.map do |application|
           alerts = security_alert_gateway.execute(application_name: application)
           next unless alerts.any?
+
           {
             application_name: application,
             alerts: alerts.map do |alert|
