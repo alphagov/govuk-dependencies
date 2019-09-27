@@ -1,7 +1,10 @@
 describe Gateways::SecurityAlert do
+  let(:scanner) { double }
+
   context 'with no security alerts for application' do
     it 'returns an empty array' do
-      FileUtils.cp('spec/fixtures/gemfile_with_no_security_alerts', 'tmp/signon_gemfile.lock')
+      allow(scanner).to receive(:scan).and_return([])
+      allow(Bundler::Audit::Scanner).to receive(:new).with(any_args).and_return(scanner)
       result = described_class.new.execute(application_name: 'signon')
 
       expect(result).to eq([])
@@ -11,7 +14,8 @@ describe Gateways::SecurityAlert do
   context 'with security alerts for application' do
     context 'with no criticality' do
       it 'returns an empty list' do
-        FileUtils.cp('spec/fixtures/gemfile_with_nil_criticality', 'tmp/signon_gemfile.lock')
+        allow(scanner).to receive(:scan).and_return([])
+        allow(Bundler::Audit::Scanner).to receive(:new).with(any_args).and_return(scanner)
         result = described_class.new.execute(application_name: 'signon')
 
         expect(result).to eq([])
