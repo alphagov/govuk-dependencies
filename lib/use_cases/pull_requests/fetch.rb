@@ -28,14 +28,14 @@ module UseCases
         pull_requests.map { |pr| split_pull_request(pr) }.flatten
       end
 
-      def split_pull_request(pr)
-        return pr if one_gem_bumped?(pr)
+      def split_pull_request(pull_request)
+        return pull_request if one_gem_bumped?(pull_request)
 
-        gems_from_title(pr[:title]).map { |gem| pr.merge(title: "Bump #{gem.strip}") }
+        gems_from_title(pull_request[:title]).map { |gem| pull_request.merge(title: "Bump #{gem.strip}") }
       end
 
-      def one_gem_bumped?(pr)
-        pr[:title].match?(SINGLE_GEM_TITLE_MATCH)
+      def one_gem_bumped?(pull_request)
+        pull_request[:title].match?(SINGLE_GEM_TITLE_MATCH)
       end
 
       def gems_from_title(title)

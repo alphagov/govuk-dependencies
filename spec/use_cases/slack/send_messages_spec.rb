@@ -23,7 +23,7 @@ describe UseCases::Slack::SendMessages do
         team_usecase = double(execute: [
           {
             team_name: 'email',
-            applications: ['whitehall']
+            applications: %w(whitehall)
           }
         ])
         pull_request_usecase = double(execute: [])
@@ -44,7 +44,7 @@ describe UseCases::Slack::SendMessages do
         team_usecase = double(execute: [
           {
             team_name: 'email',
-            applications: ['whitehall']
+            applications: %w(whitehall)
           }
         ])
         pull_request_usecase = double(execute: [
@@ -75,7 +75,7 @@ describe UseCases::Slack::SendMessages do
         team_usecase = double(execute: [
           {
             team_name: 'email',
-            applications: ['whitehall']
+            applications: %w(whitehall)
           }
         ])
         pull_request_usecase = double(execute: [
@@ -114,7 +114,7 @@ describe UseCases::Slack::SendMessages do
       team_usecase = double(execute: [
         {
           team_name: 'email',
-          applications: ['whitehall']
+          applications: %w(whitehall)
         }, {
           team_name: 'platform_support',
           applications: ['travel-advice-publisher']

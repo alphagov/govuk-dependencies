@@ -6,7 +6,7 @@ module Gateways
   class Gemfile
     def execute(application_name:)
       begin
-        open(gemfile_url(application_name)) do |gemfile_contents|
+        URI.open(gemfile_url(application_name)) do |gemfile_contents|
           Domain::Gemfile.new(file_contents: gemfile_contents.read)
         end
       rescue OpenURI::HTTPError
