@@ -52,7 +52,7 @@ describe UseCases::Group::ApplicationsByTeam do
 
       team_frontend = {
         team_name: 'frontend-design',
-        applications: ['collections']
+        applications: %(collections)
       }
 
       pull_request_taxonomy = {
@@ -116,7 +116,7 @@ describe UseCases::Group::ApplicationsByTeam do
 
       team_frontend = {
         team_name: 'frontend-design',
-        applications: ['collections']
+        applications: %(collections)
       }
 
       result = subject.execute(pull_requests: [pull_request_frontend, pull_request_frontend2], teams: [team_frontend])

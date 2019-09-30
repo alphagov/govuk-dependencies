@@ -4,7 +4,9 @@ describe Dependapanda do
   around do |example|
     ClimateControl.modify GITHUB_TOKEN: "some_token" do
       VCR.use_cassette("repositories") do
-        example.run
+        Timecop.freeze("2019-09-27") do
+          example.run
+        end
       end
     end
   end
