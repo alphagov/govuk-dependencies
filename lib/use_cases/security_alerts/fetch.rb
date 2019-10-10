@@ -32,9 +32,9 @@ module UseCases
               {
                 gem: alert.gem,
                 criticality: alert.criticality,
-                patched_versions: alert.patched_versions
+                patched_versions: alert.patched_versions,
               }
-            end
+            end,
           }
         end
       end

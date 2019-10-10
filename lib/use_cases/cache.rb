@@ -9,7 +9,7 @@ module UseCases
       return cached if fresh_cache?(cache_duration_seconds)
 
       result = yield
-      file.open(path, 'w') { |f| f.write(result) }
+      file.open(path, "w") { |f| f.write(result) }
 
       result
     end

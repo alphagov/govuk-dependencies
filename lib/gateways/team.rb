@@ -1,18 +1,18 @@
-require 'net/http'
-require 'json'
+require "net/http"
+require "json"
 
 module Gateways
   class Team
     def initialize
-      @endpoint = URI('https://docs.publishing.service.gov.uk/apps.json')
+      @endpoint = URI("https://docs.publishing.service.gov.uk/apps.json")
       @default_team_name = "#govuk-developers"
     end
 
     def execute
       teams.map do |name, apps|
         Domain::Team.new(
-          team_name: (name || default_team_name).tr('#', ''),
-          applications: apps.map { |app| app["app_name"] }
+          team_name: (name || default_team_name).tr("#", ""),
+          applications: apps.map { |app| app["app_name"] },
         )
       end
     end

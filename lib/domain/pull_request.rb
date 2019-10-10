@@ -17,9 +17,9 @@ module Domain
       days = (Date.today - opened_at).to_i
       case days
       when 0
-        'today'
+        "today"
       when 1
-        'yesterday'
+        "yesterday"
       else
         "#{days} days ago"
       end

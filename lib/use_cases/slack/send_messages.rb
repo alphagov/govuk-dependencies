@@ -37,7 +37,7 @@ module UseCases
         applications_by_teams.each do |applications_by_team|
           slack_gateway.execute(
             channel: applications_by_team.fetch(:team_name),
-            message: message_presenter.execute(applications_by_team: applications_by_team)
+            message: message_presenter.execute(applications_by_team: applications_by_team),
           )
         end
       end
@@ -45,7 +45,7 @@ module UseCases
       def pull_requests_by_team
         group_applications_by_team_usecase.execute(
           pull_requests: pull_request_usecase.execute,
-          teams: team_usecase.execute
+          teams: team_usecase.execute,
         )
       end
 
