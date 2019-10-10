@@ -30,7 +30,7 @@ module UseCases
           {
             application_name: application_name,
             application_url: application_url(application_name),
-            pull_requests: pull_requests.sort_by { |pr| pr[:title] }
+            pull_requests: pull_requests.sort_by { |pr| pr[:title] },
           }
         end
       end

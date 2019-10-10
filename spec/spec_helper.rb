@@ -1,10 +1,10 @@
-require 'climate_control'
-require 'webmock/rspec'
-require 'rspec'
-require 'timecop'
-require 'pry'
-require 'vcr'
-require_relative '../lib/loader'
+require "climate_control"
+require "webmock/rspec"
+require "rspec"
+require "timecop"
+require "pry"
+require "vcr"
+require_relative "../lib/loader"
 
 Bundler::Audit::Database.update!(quiet: true)
 WebMock.disable_net_connect!(allow_localhost: true)

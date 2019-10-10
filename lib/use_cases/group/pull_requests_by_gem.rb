@@ -27,7 +27,7 @@ module UseCases
         prs.map do |gem_name, pull_requests|
           {
             gem_name: gem_name,
-            pull_requests: pull_requests.sort_by { |pr| pr[:application_name] }
+            pull_requests: pull_requests.sort_by { |pr| pr[:application_name] },
           }
         end
       end

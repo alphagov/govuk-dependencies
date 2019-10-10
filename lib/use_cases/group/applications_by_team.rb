@@ -4,14 +4,14 @@ module UseCases
       def execute(pull_requests:, teams:)
         sort_by_team_name(
           applications_by_team(
-            pull_requests_by_team(pull_requests, teams)
-          )
+            pull_requests_by_team(pull_requests, teams),
+          ),
         )
       end
 
     private
 
-      FALLBACK_TEAM = 'govuk-developers'.freeze
+      FALLBACK_TEAM = "govuk-developers".freeze
 
       def sort_by_team_name(prs)
         prs.sort_by { |team| team[:team_name] }
@@ -26,7 +26,7 @@ module UseCases
           applications = application_pull_requests(pull_requests)
           {
             team_name: team.nil? ? FALLBACK_TEAM : team[:team_name],
-            applications: applications.sort_by { |app| [-app[:pull_request_count], app[:application_name]] }
+            applications: applications.sort_by { |app| [-app[:pull_request_count], app[:application_name]] },
           }
         end
       end
@@ -37,7 +37,7 @@ module UseCases
           {
             application_name: application_name,
             application_url: "https://github.com/alphagov/#{application_name}/pulls/app/dependabot-preview",
-            pull_request_count: pull_request_for_app.count
+            pull_request_count: pull_request_for_app.count,
           }
         end
       end

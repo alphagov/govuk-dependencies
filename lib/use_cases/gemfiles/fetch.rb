@@ -25,7 +25,7 @@ module UseCases
 
           {
             application_name: application_name,
-            gemfile_contents: result.file_contents
+            gemfile_contents: result.file_contents,
           }
         end
       end

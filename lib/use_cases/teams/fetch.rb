@@ -11,7 +11,7 @@ module UseCases
         teams.map do |team|
           {
             team_name: team.team_name,
-            applications: team.applications
+            applications: team.applications,
           }
         end
       end

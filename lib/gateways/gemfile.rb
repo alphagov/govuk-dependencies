@@ -1,4 +1,4 @@
-require 'open-uri'
+require "open-uri"
 
 class GemfileNotFoundException < StandardError; end
 
@@ -16,7 +16,7 @@ module Gateways
 
   private
 
-    ORGANIZATION = 'alphagov'.freeze
+    ORGANIZATION = "alphagov".freeze
 
     def gemfile_url(application_name)
       "https://raw.githubusercontent.com/#{ORGANIZATION}/#{application_name}/master/Gemfile.lock"

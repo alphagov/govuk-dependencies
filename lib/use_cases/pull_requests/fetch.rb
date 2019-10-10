@@ -13,7 +13,7 @@ module UseCases
             url: result.url,
             status: result.status,
             opened_at: result.opened_at,
-            open_since: result.open_since
+            open_since: result.open_since,
           }
         end
 
@@ -39,7 +39,7 @@ module UseCases
       end
 
       def gems_from_title(title)
-        title.sub('Bump ', '').sub('and', ',').split(',')
+        title.sub("Bump ", "").sub("and", ",").split(",")
       end
 
       attr_reader :gateway
