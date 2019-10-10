@@ -3,3 +3,4 @@ tmp/*
 !tmp/.keep
 spec/tmp/*
 !spec/tmp/.keep
+/.bundle
