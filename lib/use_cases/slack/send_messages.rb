@@ -7,6 +7,7 @@ module UseCases
         pull_request_usecase: UseCases::PullRequests::Fetch.new,
         group_applications_by_team_usecase: UseCases::Group::ApplicationsByTeam.new,
         scheduler: UseCases::Slack::Schedulers::EveryDay.new,
+        distributor: UseCases::Distribute::OverflowToDevelopersChannel.new,
         message_presenter:
       )
 
@@ -16,6 +17,7 @@ module UseCases
         @pull_request_usecase = pull_request_usecase
         @message_presenter = message_presenter
         @group_applications_by_team_usecase = group_applications_by_team_usecase
+        @distributor = distributor
       end
 
       def execute(team: nil)
@@ -31,7 +33,8 @@ module UseCases
                   :pull_request_usecase,
                   :message_presenter,
                   :scheduler,
-                  :group_applications_by_team_usecase
+                  :group_applications_by_team_usecase,
+                  :distributor
 
       def send_messages(applications_by_teams)
         applications_by_teams.each do |applications_by_team|
@@ -50,7 +53,7 @@ module UseCases
       end
 
       def scoped_by_team(pull_requests, team)
-        return pull_requests if team.nil?
+        return distributor.execute(application_prs_by_team: pull_requests) if team.nil?
 
         pull_requests.select { |pr| pr[:team_name] == team }
       end
