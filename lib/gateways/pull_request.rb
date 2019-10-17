@@ -13,17 +13,17 @@ module Gateways
   private
 
     def approved_pull_requests
-      approved_pull_requests = @octokit.search_issues("is:pr user:alphagov state:open author:app/dependabot-preview review:approved").items
+      approved_pull_requests = @octokit.search_issues("is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:approved").items
       build_pull_requests(approved_pull_requests, "approved")
     end
 
     def review_required_pull_requests
-      review_required_pull_requests = @octokit.search_issues("is:pr user:alphagov state:open author:app/dependabot-preview review:required").items
+      review_required_pull_requests = @octokit.search_issues("is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:required").items
       build_pull_requests(review_required_pull_requests, "review required")
     end
 
     def changes_requested_pull_requests
-      changes_requested_pull_requests = @octokit.search_issues("is:pr user:alphagov state:open author:app/dependabot-preview review:changes_requested").items
+      changes_requested_pull_requests = @octokit.search_issues("is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:changes_requested").items
       build_pull_requests(changes_requested_pull_requests, "changes requested")
     end
 
