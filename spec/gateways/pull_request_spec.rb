@@ -1,7 +1,7 @@
 describe Gateways::PullRequest do
-  REVIEW_REQUIRED_URL = "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot-preview+review:required".freeze
-  APPROVED_URL = "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot-preview+review:approved".freeze
-  CHANGES_REQUESTED_URL = "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot-preview+review:changes_requested".freeze
+  REVIEW_REQUIRED_URL = "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+author:app/dependabot-preview+review:required".freeze
+  APPROVED_URL = "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+author:app/dependabot-preview+review:approved".freeze
+  CHANGES_REQUESTED_URL = "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+author:app/dependabot-preview+review:changes_requested".freeze
   NO_PULL_REQUESTS_BODY = '{ "total_count": 0, "incomplete_results": false, "items": [] }'.freeze
 
   around do |example|
