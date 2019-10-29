@@ -30,7 +30,7 @@ describe UseCases::Group::ApplicationsByTeam do
             {
               application_name: "some-application",
               application_url:
-              "https://github.com/alphagov/some-application/pulls?is:pr+is:open+label:dependencies",
+              "https://github.com/alphagov/some-application/pulls?q=is:pr+is:open+label:dependencies",
               pull_request_count: 1,
             },
           ],
@@ -76,7 +76,7 @@ describe UseCases::Group::ApplicationsByTeam do
             {
               application_name: "collections",
               application_url:
-              "https://github.com/alphagov/collections/pulls?is:pr+is:open+label:dependencies",
+              "https://github.com/alphagov/collections/pulls?q=is:pr+is:open+label:dependencies",
               pull_request_count: 1,
             },
           ],
@@ -87,7 +87,7 @@ describe UseCases::Group::ApplicationsByTeam do
             {
               application_name: "collections-publisher",
               application_url:
-              "https://github.com/alphagov/collections-publisher/pulls?is:pr+is:open+label:dependencies",
+              "https://github.com/alphagov/collections-publisher/pulls?q=is:pr+is:open+label:dependencies",
               pull_request_count: 1,
             },
           ],
@@ -129,7 +129,7 @@ describe UseCases::Group::ApplicationsByTeam do
             {
               application_name: "collections",
               application_url:
-              "https://github.com/alphagov/collections/pulls?is:pr+is:open+label:dependencies",
+              "https://github.com/alphagov/collections/pulls?q=is:pr+is:open+label:dependencies",
               pull_request_count: 2,
             },
           ],
