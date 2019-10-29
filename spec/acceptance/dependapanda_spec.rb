@@ -50,11 +50,11 @@ describe Dependapanda do
   context "Full Message" do
     it "sends all the pull requests in the message" do
       modelling_services_payload = {
-        "payload" => '{"channel":"modelling-services","username":"Dependapanda","icon_emoji":":panda_face:","text":"<https://govuk-dependencies.herokuapp.com/team/modelling-services|modelling-services> have 2 Dependabot PRs open on the following apps:\n\n<https://github.com/alphagov/publisher/pulls/app/dependabot-preview|publisher> (2)"}',
+        "payload" => '{"channel":"modelling-services","username":"Dependapanda","icon_emoji":":panda_face:","text":"<https://govuk-dependencies.herokuapp.com/team/modelling-services|modelling-services> have 2 Dependabot PRs open on the following apps:\n\n<https://github.com/alphagov/publisher/pulls?is:pr+is:open+label:dependencies|publisher> (2)"}',
       }
 
       start_pages_payload = {
-        "payload" => '{"channel":"start-pages","username":"Dependapanda","icon_emoji":":panda_face:","text":"<https://govuk-dependencies.herokuapp.com/team/start-pages|start-pages> have 1 Dependabot PRs open on the following apps:\n\n<https://github.com/alphagov/frontend/pulls/app/dependabot-preview|frontend> (1)"}',
+        "payload" => '{"channel":"start-pages","username":"Dependapanda","icon_emoji":":panda_face:","text":"<https://govuk-dependencies.herokuapp.com/team/start-pages|start-pages> have 1 Dependabot PRs open on the following apps:\n\n<https://github.com/alphagov/frontend/pulls?is:pr+is:open+label:dependencies|frontend> (1)"}',
       }
 
       described_class.new.send_full_message
