@@ -6,7 +6,7 @@ describe Presenters::Slack::FullMessage do
         applications: [
           {
             application_name: "content-tagger",
-            application_url: "https://github.com/alphagov/content-tagger/app/dependabot-preview",
+            application_url: "https://github.com/alphagov/content-tagger?is:pr+is:open+label:dependencies",
             pull_request_count: 1,
           },
         ],
@@ -16,7 +16,7 @@ describe Presenters::Slack::FullMessage do
 
       expect(result).to eq('<https://govuk-dependencies.herokuapp.com/team/email|email> have 1 Dependabot PRs open on the following apps:
 
-<https://github.com/alphagov/content-tagger/pulls/app/dependabot-preview|content-tagger> (1)')
+<https://github.com/alphagov/content-tagger/pulls?is:pr+is:open+label:dependencies|content-tagger> (1)')
     end
   end
 
@@ -27,11 +27,11 @@ describe Presenters::Slack::FullMessage do
         applications: [
           {
             application_name: "collections-publisher",
-            application_url: "https://github.com/alphagov/content-publisher/app/dependabot-preview",
+            application_url: "https://github.com/alphagov/content-publisher?is:pr+is:open+label:dependencies",
             pull_request_count: 1,
           }, {
             application_name: "content-tagger",
-            application_url: "https://github.com/alphagov/content-tagger/app/dependabot-preview",
+            application_url: "https://github.com/alphagov/content-tagger?is:pr+is:open+label:dependencies",
             pull_request_count: 1,
           }
         ],
@@ -41,7 +41,7 @@ describe Presenters::Slack::FullMessage do
 
       expect(result).to eq('<https://govuk-dependencies.herokuapp.com/team/taxonomy|taxonomy> have 2 Dependabot PRs open on the following apps:
 
-<https://github.com/alphagov/collections-publisher/pulls/app/dependabot-preview|collections-publisher> (1) <https://github.com/alphagov/content-tagger/pulls/app/dependabot-preview|content-tagger> (1)')
+<https://github.com/alphagov/collections-publisher/pulls?is:pr+is:open+label:dependencies|collections-publisher> (1) <https://github.com/alphagov/content-tagger/pulls?is:pr+is:open+label:dependencies|content-tagger> (1)')
     end
 
     it "groups by application" do
@@ -50,11 +50,11 @@ describe Presenters::Slack::FullMessage do
         applications: [
           {
             application_name: "collections-publisher",
-            application_url: "https://github.com/alphagov/content-publisher/app/dependabot-preview",
+            application_url: "https://github.com/alphagov/content-publisher?is:pr+is:open+label:dependencies",
             pull_request_count: 1,
           }, {
             application_name: "content-tagger",
-            application_url: "https://github.com/alphagov/content-tagger/app/dependabot-preview",
+            application_url: "https://github.com/alphagov/content-tagger?is:pr+is:open+label:dependencies",
             pull_request_count: 2,
           }
         ],
@@ -64,7 +64,7 @@ describe Presenters::Slack::FullMessage do
 
       expect(result).to eq('<https://govuk-dependencies.herokuapp.com/team/taxonomy|taxonomy> have 3 Dependabot PRs open on the following apps:
 
-<https://github.com/alphagov/collections-publisher/pulls/app/dependabot-preview|collections-publisher> (1) <https://github.com/alphagov/content-tagger/pulls/app/dependabot-preview|content-tagger> (2)')
+<https://github.com/alphagov/collections-publisher/pulls?is:pr+is:open+label:dependencies|collections-publisher> (1) <https://github.com/alphagov/content-tagger/pulls?is:pr+is:open+label:dependencies|content-tagger> (2)')
     end
   end
 end
