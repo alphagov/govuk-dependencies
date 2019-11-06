@@ -2,7 +2,6 @@ source "https://rubygems.org"
 
 ruby File.read(".ruby-version").chomp
 
-gem "bundler-audit", git: "https://github.com/rubysec/bundler-audit", branch: "master"
 gem "octokit", "~> 4.3"
 gem "rake", "~> 12.3.0"
 gem "sinatra"
