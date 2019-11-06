@@ -58,20 +58,4 @@ class GovukDependencies < Sinatra::Base
     ).execute(team: params.fetch(:team))
     "[ok]"
   end
-
-  get "/security-alerts" do
-    cache :security_alerts, 43200 do
-      Bundler::Audit::Database.update!(quiet: true)
-
-      UseCases::Gemfiles::Save.new(
-        fetch_gemfiles: UseCases::Gemfiles::Fetch.new(
-          teams_use_case: UseCases::Teams::Fetch.new,
-        ),
-      ).execute
-
-      application_security_alerts = UseCases::SecurityAlerts::Fetch.new.execute
-
-      erb :security_alerts, locals: { application_security_alerts: application_security_alerts }, layout: :layout
-    end
-  end
 end

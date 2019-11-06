@@ -31,11 +31,6 @@ nav a, nav a:visited {
   text-decoration: none;
 }
 
-.security-alerts-link {
-  float: right;
-  font-size: 1em;
-}
-
 .apps {
   font-size: 1.2em;
   list-style: none;
@@ -100,31 +95,6 @@ h2 {
   margin-bottom: 10px;
 }
 
-h2.security-alert-title {
-  color: #735c0f;
-  display: inline;
-  font-weight: bold;
-  margin-left: 5px;
-}
-
-.security-alerts {
-  margin-top: 15px;
-  padding: 0;
-}
-
-.security-apps {
-  margin: 0 45px;
-}
-
-.security-app {
-  background-color: #fffbdd;
-  border-radius: 10px;
-  color: #735c0f;
-  list-style-type: none;
-  padding: 20px 10px 10px;
-  margin: 10px;
-}
-
 .pull-request-status {
   color: #777;
 }
@@ -157,17 +127,6 @@ h2.security-alert-title {
 .alert-details-gem h4 {
   margin-bottom: 4px;
   text-decoration: underline;
-}
-
-.no-security-alerts {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -100px 0 0 -200px;
-}
-
-.no-security-alerts h1 {
-  color: #777;
 }
 
 .stats {
