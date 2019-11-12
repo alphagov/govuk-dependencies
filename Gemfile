@@ -13,7 +13,7 @@ group :production, :staging do
 end
 
 group :development, :test do
-  gem "govuk-lint"
+  gem "rubocop-govuk"
 end
 
 group :test do
