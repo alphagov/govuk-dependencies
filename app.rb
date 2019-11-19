@@ -28,6 +28,14 @@ class GovukDependencies < Sinatra::Base
     end
   end
 
+  get "/date" do
+    cache :pull_requests_by_date do
+      erb :date, layout: :layout, locals: {
+        pull_requests_by_date: UseCases::Group::PullRequestsByDate.new.execute
+      }
+    end
+  end
+
   get "/stats" do
     cache :stats do
       erb :stats, locals: {

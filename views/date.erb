@@ -1,0 +1,30 @@
+<% if pull_requests_by_date.empty? %>
+  <h2>No open pull requests 🎂</h2>
+<% else %>
+  <ul class="apps">
+    <% pull_requests_by_date.each do |date, pull_requests| %>
+      <li class="app">
+        <h2>
+          <%= date %> (<%= pull_requests[0].fetch(:open_since) %>)
+        </h2>
+        <ul class="pulls">
+          <% pull_requests.each do |pull_request| %>
+            <li class="pull">
+              <a class="<%= old_pull_request?(pull_request.fetch(:opened_at))? 'warning' : '' %>" href="<%= pull_request.fetch(:url) %>">
+                <%= pull_request.fetch(:title) %>
+              </a>
+              <span class="pull-request-review">
+                <% if pull_request.fetch(:review) == "approved" %>
+                  (approved)
+                <% elsif pull_request.fetch(:review) == "changes requested" %>
+                  (changes requested)
+                <% end %>
+              </span>
+              <span class="time-elapsed"><%= pull_request.fetch(:application_name) %></span>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
