@@ -13,10 +13,10 @@
               <a class="<%= old_pull_request?(pull_request.fetch(:opened_at))? 'warning' : '' %>" href="<%= pull_request.fetch(:url) %>">
                 <%= pull_request.fetch(:application_name) %>
               </a>
-              <span class="pull-request-status">
-                <% if pull_request.fetch(:status) == 'approved' %>
+              <span class="pull-request-review">
+                <% if pull_request.fetch(:review) == "approved" %>
                   (approved)
-                <% elsif pull_request.fetch(:status) == 'changes requested' %>
+                <% elsif pull_request.fetch(:review) == "changes requested" %>
                   (changes requested)
                 <% end %>
               </span>

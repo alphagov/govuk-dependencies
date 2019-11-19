@@ -186,7 +186,7 @@ describe GovukDependencies do
       end
 
       context "application view" do
-        it "should display the status next to the pull request title" do
+        it "should display the review next to the pull request title" do
           get "/"
           expect(last_response).to be_ok
           expect(last_response.body).not_to include("(approved)")
@@ -195,7 +195,7 @@ describe GovukDependencies do
       end
 
       context "gem view" do
-        it "should display the status to the pull request title" do
+        it "should display the review to the pull request title" do
           get "/gem"
           expect(last_response).to be_ok
           expect(last_response.body).not_to include("(approved)")

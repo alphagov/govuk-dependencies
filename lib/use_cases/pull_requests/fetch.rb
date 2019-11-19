@@ -11,7 +11,7 @@ module UseCases
             application_name: result.application_name,
             title: result.title,
             url: result.url,
-            status: result.status,
+            review: result.review,
             opened_at: result.opened_at,
             open_since: result.open_since,
           }

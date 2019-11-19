@@ -12,7 +12,7 @@ describe UseCases::PullRequests::Fetch do
           application_name: "frontend",
           title: "Bump Rails from 4.2 to 5.0",
           opened_at: Date.today,
-          status: "approved",
+          review: "approved",
           url: "https://github.com/alphagov/frontend/pulls/123",
         ),
       ])
@@ -24,7 +24,7 @@ describe UseCases::PullRequests::Fetch do
         title: "Bump Rails from 4.2 to 5.0",
         url: "https://github.com/alphagov/frontend/pulls/123",
         opened_at: Date.today,
-        status: "approved",
+        review: "approved",
         open_since: "today",
       }])
     end
@@ -36,7 +36,7 @@ describe UseCases::PullRequests::Fetch do
             application_name: "frontend",
             title: "Bump Rails and gds-api-adapters",
             opened_at: Date.today,
-            status: "approved",
+            review: "approved",
             url: "https://github.com/alphagov/frontend/pulls/123",
           ),
         ])
@@ -48,14 +48,14 @@ describe UseCases::PullRequests::Fetch do
           title: "Bump Rails",
           url: "https://github.com/alphagov/frontend/pulls/123",
           opened_at: Date.today,
-          status: "approved",
+          review: "approved",
           open_since: "today",
         }, {
           application_name: "frontend",
           title: "Bump gds-api-adapters",
           url: "https://github.com/alphagov/frontend/pulls/123",
           opened_at: Date.today,
-          status: "approved",
+          review: "approved",
           open_since: "today",
         }])
       end
@@ -68,7 +68,7 @@ describe UseCases::PullRequests::Fetch do
             application_name: "frontend",
             title: "Bump Rails, Rspec and gds-api-adapters",
             opened_at: Date.today,
-            status: "approved",
+            review: "approved",
             url: "https://github.com/alphagov/frontend/pulls/123",
           ),
         ])
@@ -79,21 +79,21 @@ describe UseCases::PullRequests::Fetch do
           application_name: "frontend",
           title: "Bump Rails",
           url: "https://github.com/alphagov/frontend/pulls/123",
-          status: "approved",
+          review: "approved",
           opened_at: Date.today,
           open_since: "today",
         }, {
           application_name: "frontend",
           title: "Bump Rspec",
           url: "https://github.com/alphagov/frontend/pulls/123",
-          status: "approved",
+          review: "approved",
           opened_at: Date.today,
           open_since: "today",
         }, {
           application_name: "frontend",
           title: "Bump gds-api-adapters",
           url: "https://github.com/alphagov/frontend/pulls/123",
-          status: "approved",
+          review: "approved",
           opened_at: Date.today,
           open_since: "today",
         }])
@@ -108,14 +108,14 @@ describe UseCases::PullRequests::Fetch do
           application_name: "frontend",
           title: "Bump Rails from 4.2 to 5.0",
           opened_at: Date.today,
-          status: "approved",
+          review: "approved",
           url: "https://github.com/alphagov/frontend/pulls/123",
         ),
         Domain::PullRequest.new(
           application_name: "publisher",
           title: "Bump Rails from 3.2 to 4.0",
           opened_at: Date.today,
-          status: "changes requested",
+          review: "changes requested",
           url: "https://github.com/alphagov/publisher/pulls/123",
         ),
       ])
@@ -127,14 +127,14 @@ describe UseCases::PullRequests::Fetch do
           application_name: "frontend",
           title: "Bump Rails from 4.2 to 5.0",
           url: "https://github.com/alphagov/frontend/pulls/123",
-          status: "approved",
+          review: "approved",
           opened_at: Date.today,
           open_since: "today",
         }, {
           application_name: "publisher",
           title: "Bump Rails from 3.2 to 4.0",
           url: "https://github.com/alphagov/publisher/pulls/123",
-          status: "changes requested",
+          review: "changes requested",
           opened_at: Date.today,
           open_since: "today",
         }

@@ -49,14 +49,14 @@ describe Gateways::PullRequest do
         expect(result[0].title).to eq("Bump gds-sso from 13.5.0 to 13.5.1")
         expect(result[0].application_name).to eq("publisher")
         expect(result[0].url).to eq("https://github.com/alphagov/publisher/pull/761")
-        expect(result[0].status).to eq("approved")
+        expect(result[0].review).to eq("approved")
         expect(result[0].opened_at).to eq(Date.parse("2018-01-24"))
         expect(result[0].open_since).to eq("yesterday")
 
         expect(result[1].title).to eq("Bump gds-sso from 13.5.0 to 13.5.1")
         expect(result[1].application_name).to eq("frontend")
         expect(result[1].url).to eq("https://github.com/alphagov/frontend/pull/1146")
-        expect(result[1].status).to eq("approved")
+        expect(result[1].review).to eq("approved")
         expect(result[1].opened_at).to eq(Date.parse("2018-01-24"))
         expect(result[1].open_since).to eq("yesterday")
       end
@@ -70,10 +70,10 @@ describe Gateways::PullRequest do
       stub_github_request(CHANGES_REQUESTED_URL, NO_PULL_REQUESTS_BODY)
     end
 
-    it 'Sets the status on the Pull request to "review required"' do
+    it 'Sets the review on the Pull request to "review required"' do
       result = described_class.new.execute
 
-      expect(result.first.status).to eq("review required")
+      expect(result.first.review).to eq("review required")
     end
   end
 
@@ -84,10 +84,10 @@ describe Gateways::PullRequest do
       stub_github_request(CHANGES_REQUESTED_URL, File.read("spec/fixtures/pull_requests.json"))
     end
 
-    it 'Sets the status on the Pull request to "review required"' do
+    it 'Sets the review on the Pull request to "review required"' do
       result = described_class.new.execute
 
-      expect(result.first.status).to eq("changes requested")
+      expect(result.first.review).to eq("changes requested")
     end
   end
 end

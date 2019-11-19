@@ -27,7 +27,7 @@ module Gateways
       build_pull_requests(changes_requested_pull_requests, "changes requested")
     end
 
-    def build_pull_requests(api_response, status)
+    def build_pull_requests(api_response, review)
       api_response
         .select { |pr| govuk_repository_urls.include?(pr.repository_url) }
         .map do |pr|
@@ -35,7 +35,7 @@ module Gateways
             application_name: get_application_name(pr),
             title: pr.title,
             url: pr.html_url,
-            status: status,
+            review: review,
             opened_at: Date.parse(pr.created_at.to_s),
           )
         end
