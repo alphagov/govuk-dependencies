@@ -1,7 +1,7 @@
 module Gateways
   class PullRequestCount
     def initialize
-      @octokit = Octokit::Client.new(access_token: ENV["GITHUB_TOKEN"])
+      @octokit = Octokit::Client.new(access_token: ENV["DEPENDENCIES_GITHUB_TOKEN"])
     end
 
     def execute

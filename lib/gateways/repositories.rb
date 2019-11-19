@@ -4,7 +4,7 @@ module Gateways
   class Repositories
     def initialize
       @octokit = Octokit::Client.new(
-        access_token: ENV.fetch("GITHUB_TOKEN"),
+        access_token: ENV.fetch("DEPENDENCIES_GITHUB_TOKEN"),
         auto_paginate: true,
       )
     end

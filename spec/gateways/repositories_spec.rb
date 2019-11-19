@@ -1,6 +1,6 @@
 describe Gateways::Repositories do
   around do |example|
-    ClimateControl.modify GITHUB_TOKEN: "some_token" do
+    ClimateControl.modify DEPENDENCIES_GITHUB_TOKEN: "some_token" do
       VCR.use_cassette("repositories") do
         example.run
       end

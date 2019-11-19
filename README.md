@@ -37,14 +37,14 @@ Running this will start your application at [localhost:9292](localhost:9292)
 
 ### Environment variables
 
-- `GITHUB_TOKEN` - OAuth token generated on GitHub which does not require any special permissions
+- `DEPENDENCIES_GITHUB_TOKEN` - OAuth token generated on GitHub which does not require any special permissions
   - Used to interact with the GitHub API, although not required it will help avoid limiting
 - `SLACK_WEBHOOK_URL` - The webhook URL for sending Slack messages to
 - `DEPENDAPANDA_SECRET` - Secret token for manually requesting Slack messages
 
 ### Rate limiting
 
-If you find yourself being rate limited by GitHub - you can define the `GITHUB_TOKEN` environment variable.
+If you find yourself being rate limited by GitHub - you can define the `DEPENDENCIES_GITHUB_TOKEN` environment variable.
 This needs to be a token generated from GitHub, however as the repositories are all public it needs no special
 permissions.
 

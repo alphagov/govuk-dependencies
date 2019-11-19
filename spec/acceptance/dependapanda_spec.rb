@@ -2,7 +2,7 @@ require_relative "../../dependapanda"
 
 describe Dependapanda do
   around do |example|
-    ClimateControl.modify GITHUB_TOKEN: "some_token" do
+    ClimateControl.modify DEPENDENCIES_GITHUB_TOKEN: "some_token" do
       VCR.use_cassette("repositories") do
         Timecop.freeze("2019-09-27") do
           example.run
