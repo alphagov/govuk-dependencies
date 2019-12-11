@@ -24,7 +24,7 @@ module Gateways
     def teams
       api_response = Net::HTTP.get(endpoint)
       apps = JSON.parse(api_response)
-      apps.group_by { |app| app["team"] }
+      apps.group_by { |app| app["dependencies_team"] }
     end
   end
 end
