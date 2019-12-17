@@ -1,4 +1,5 @@
 require_relative "../../dependapanda"
+require "spec_helper"
 
 describe Dependapanda do
   around do |example|
@@ -32,35 +33,25 @@ describe Dependapanda do
 
   context "Simple Message" do
     it "sends a summarised message" do
-      modelling_services_payload = {
-        "payload" => '{"channel":"modelling-services","username":"Dependapanda","icon_emoji":":panda_face:","text":"You have 2 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/modelling-services"}',
-      }
-
-      start_pages_payload = {
-        "payload" => '{"channel":"start-pages","username":"Dependapanda","icon_emoji":":panda_face:","text":"You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/start-pages"}',
+      govuk_platform_health_payload = {
+        "payload" => '{"channel":"govuk-platform-health","username":"Dependapanda","icon_emoji":":panda_face:","text":"You have 3 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/govuk-platform-health"}',
       }
 
       described_class.new.send_simple_message
 
-      expect(a_request(:post, ENV["SLACK_WEBHOOK_URL"]).with(body: modelling_services_payload)).to have_been_made
-      expect(a_request(:post, ENV["SLACK_WEBHOOK_URL"]).with(body: start_pages_payload)).to have_been_made
+      expect(a_request(:post, ENV["SLACK_WEBHOOK_URL"]).with(body: govuk_platform_health_payload)).to have_been_made
     end
   end
 
   context "Full Message" do
     it "sends all the pull requests in the message" do
-      modelling_services_payload = {
-        "payload" => '{"channel":"modelling-services","username":"Dependapanda","icon_emoji":":panda_face:","text":"<https://govuk-dependencies.herokuapp.com/team/modelling-services|modelling-services> have 2 Dependabot PRs open on the following apps:\n\n<https://github.com/alphagov/publisher/pulls?q=is:pr+is:open+label:dependencies|publisher> (2)"}',
-      }
-
-      start_pages_payload = {
-        "payload" => '{"channel":"start-pages","username":"Dependapanda","icon_emoji":":panda_face:","text":"<https://govuk-dependencies.herokuapp.com/team/start-pages|start-pages> have 1 Dependabot PRs open on the following apps:\n\n<https://github.com/alphagov/frontend/pulls?q=is:pr+is:open+label:dependencies|frontend> (1)"}',
+      govuk_platform_health_payload = {
+        "payload" => '{"channel":"govuk-platform-health","username":"Dependapanda","icon_emoji":":panda_face:","text":"<https://govuk-dependencies.herokuapp.com/team/govuk-platform-health|govuk-platform-health> have 3 Dependabot PRs open on the following apps:\n\n<https://github.com/alphagov/publisher/pulls?q=is:pr+is:open+label:dependencies|publisher> (2) <https://github.com/alphagov/frontend/pulls?q=is:pr+is:open+label:dependencies|frontend> (1)"}',
       }
 
       described_class.new.send_full_message
 
-      expect(a_request(:post, ENV["SLACK_WEBHOOK_URL"]).with(body: modelling_services_payload)).to have_been_made
-      expect(a_request(:post, ENV["SLACK_WEBHOOK_URL"]).with(body: start_pages_payload)).to have_been_made
+      expect(a_request(:post, ENV["SLACK_WEBHOOK_URL"]).with(body: govuk_platform_health_payload)).to have_been_made
     end
   end
 end

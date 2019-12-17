@@ -3,6 +3,7 @@
     "app_name":"publisher",
     "product_manager":"@samdub",
     "team":"#modelling-services",
+    "dependencies_team":"#govuk-platform-health",
     "puppet_name":"publisher",
     "links": {
       "self":"https://docs.publishing.service.gov.uk/apps/publisher.json",

@@ -41,7 +41,7 @@ describe Gateways::Team do
       it "Returns a list one team object" do
         result = described_class.new.execute
         expect(result.count).to eq(1)
-        expect(result.first.team_name).to eq("asset-management")
+        expect(result.first.team_name).to eq("govuk-pub-workflow")
         expect(result.first.applications).to eq(%w[asset-manager])
       end
     end
@@ -58,7 +58,7 @@ describe Gateways::Team do
       it "Returns a list of two team objects" do
         result = described_class.new.execute
         expect(result.count).to eq(1)
-        expect(result.first.team_name).to eq("asset-management")
+        expect(result.first.team_name).to eq("govuk-platform-health")
         expect(result.first.applications).to eq(%w[asset-manager asset-uploader])
       end
     end
@@ -77,11 +77,11 @@ describe Gateways::Team do
       result = described_class.new.execute
 
       expect(result.count).to eq(2)
-      expect(result.first.team_name).to eq("modelling-services")
-      expect(result.first.applications).to eq(%w(publisher))
+      expect(result.first.team_name).to eq("govuk-platform-health")
+      expect(result.first.applications).to eq(%w[publisher frontend])
 
-      expect(result.last.team_name).to eq("start-pages")
-      expect(result.last.applications).to eq(%w[frontend government-frontend])
+      expect(result.last.team_name).to eq("govuk-searchandnav")
+      expect(result.last.applications).to eq(%w[government-frontend])
     end
   end
 end

@@ -57,19 +57,17 @@ describe GovukDependencies do
         it "should show both teams with the number applications with pull requests" do
           get "/team"
           expect(last_response).to be_ok
-          expect(last_response.body).to include("#modelling-services")
+          expect(last_response.body).to include("#govuk-platform-health")
           expect(last_response.body).to include("publisher (2)")
-          expect(last_response.body).to include("#start-pages")
           expect(last_response.body).to include("frontend (1)")
         end
 
         it "should filter by team" do
-          get "/team/modelling-services"
+          get "/team/govuk-platform-health"
           expect(last_response).to be_ok
-          expect(last_response.body).to include("#modelling-services")
+          expect(last_response.body).to include("#govuk-platform-health")
           expect(last_response.body).to include("publisher (2)")
-          expect(last_response.body).to_not include("#start-pages")
-          expect(last_response.body).to_not include("frontend (1)")
+          expect(last_response.body).to include("frontend (1)")
         end
       end
     end
