@@ -80,18 +80,19 @@ describe UseCases::Group::ApplicationsByTeam do
               pull_request_count: 1,
             },
           ],
-        }, {
+        },
+        {
           team_name: "taxonomy",
           applications:
-          [
-            {
-              application_name: "collections-publisher",
-              application_url:
-              "https://github.com/alphagov/collections-publisher/pulls?q=is:pr+is:open+label:dependencies",
-              pull_request_count: 1,
-            },
-          ],
-        }
+                  [
+                    {
+                      application_name: "collections-publisher",
+                      application_url:
+                      "https://github.com/alphagov/collections-publisher/pulls?q=is:pr+is:open+label:dependencies",
+                      pull_request_count: 1,
+                    },
+                  ],
+        },
       ]
 
       expect(result).to eq(expected_result)

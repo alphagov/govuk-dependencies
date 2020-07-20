@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe UseCases::Distribute::OverflowToDevelopersChannel do
-  let(:prs_by_team) {
+  let(:prs_by_team) do
     [
       {
         team_name: "govuk-platform-health",
@@ -24,7 +24,7 @@ describe UseCases::Distribute::OverflowToDevelopersChannel do
           ],
       },
     ]
-  }
+  end
 
   RSpec::Matchers.define :have_application_count_for_team do |expected, team_name|
     def number_of_apps(teams, team_name)
@@ -49,9 +49,9 @@ describe UseCases::Distribute::OverflowToDevelopersChannel do
   end
 
   context "when there is no overflow for a team" do
-    let(:no_overflow) {
+    let(:no_overflow) do
       distribute(prs_by_team, 10)
-    }
+    end
 
     it "should not create the govuk-developers team" do
       expect(no_overflow).not_to satisfy("contain a team name govuk-developers") do |v|
@@ -67,9 +67,9 @@ describe UseCases::Distribute::OverflowToDevelopersChannel do
   end
 
   context "when there is overflow for a team" do
-    let(:overflow) {
+    let(:overflow) do
       distribute(prs_by_team, 5)
-    }
+    end
 
     it "should create the govuk-developers team" do
       expect(overflow).to satisfy("contain a team name govuk-developers") do |v|
@@ -87,7 +87,7 @@ describe UseCases::Distribute::OverflowToDevelopersChannel do
   end
 
   context "when govuk-developers team already exists" do
-    let(:extra_team) {
+    let(:extra_team) do
       [
         {
           team_name: "govuk-developers",
@@ -100,11 +100,11 @@ describe UseCases::Distribute::OverflowToDevelopersChannel do
           ],
         },
       ]
-    }
+    end
 
-    let(:overflow_with_dev_team) {
+    let(:overflow_with_dev_team) do
       distribute(prs_by_team + extra_team, 5)
-    }
+    end
 
     it "should not create a second govuk-developers team" do
       number_of_govuk_developers_teams = overflow_with_dev_team.count { |h| h[:team_name] == "govuk-developers" }

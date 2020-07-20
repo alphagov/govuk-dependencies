@@ -29,11 +29,12 @@ describe Presenters::Slack::FullMessage do
             application_name: "collections-publisher",
             application_url: "https://github.com/alphagov/content-publisher?q=is:pr+is:open+label:dependencies",
             pull_request_count: 1,
-          }, {
+          },
+          {
             application_name: "content-tagger",
             application_url: "https://github.com/alphagov/content-tagger?q=is:pr+is:open+label:dependencies",
             pull_request_count: 1,
-          }
+          },
         ],
       }
 
@@ -52,11 +53,12 @@ describe Presenters::Slack::FullMessage do
             application_name: "collections-publisher",
             application_url: "https://github.com/alphagov/content-publisher?q=is:pr+is:open+label:dependencies",
             pull_request_count: 1,
-          }, {
+          },
+          {
             application_name: "content-tagger",
             application_url: "https://github.com/alphagov/content-tagger?q=is:pr+is:open+label:dependencies",
             pull_request_count: 2,
-          }
+          },
         ],
       }
 

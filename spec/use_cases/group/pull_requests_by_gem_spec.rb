@@ -52,10 +52,11 @@ describe UseCases::Group::PullRequestsByGem do
         {
           gem_name: "gds-api-adapters",
           pull_requests: [gds_api_adapter_pull_request],
-        }, {
+        },
+        {
           gem_name: "rspec",
           pull_requests: [rspec_pull_request],
-        }
+        },
       ])
     end
   end
@@ -68,12 +69,13 @@ describe UseCases::Group::PullRequestsByGem do
           title: "Bump gds-api-adapters from 1.2.3 to 4.5.6",
           url: "https://www.github.com/alphagov/frontend/pull/123",
           opened_at: Date.parse("2018-01-01 08:00:00"),
-        }, {
+        },
+        {
           application_name: "signon",
           title: "Bump gds-api-adapters from 1.2.3 to 4.5.6",
           url: "https://www.github.com/alphagov/signon/pull/456",
           opened_at: Date.parse("2018-01-01 08:00:00"),
-        }
+        },
       ]
 
       fetch_pull_requests = double(execute: pull_requests)
@@ -141,10 +143,10 @@ describe UseCases::Group::PullRequestsByGem do
       }
 
       fetch_pull_requests = double(execute: [
-          gds_api_adapters_pull_request2,
-          gds_api_adapters_pull_request,
-          uglifier_pull_request,
-        ])
+        gds_api_adapters_pull_request2,
+        gds_api_adapters_pull_request,
+        uglifier_pull_request,
+      ])
 
       result = described_class.new(fetch_pull_requests: fetch_pull_requests).execute
 
@@ -155,10 +157,11 @@ describe UseCases::Group::PullRequestsByGem do
             gds_api_adapters_pull_request,
             gds_api_adapters_pull_request2,
           ],
-        }, {
+        },
+        {
           gem_name: "uglifier",
           pull_requests: [uglifier_pull_request],
-        }
+        },
       ])
     end
 
@@ -200,10 +203,11 @@ describe UseCases::Group::PullRequestsByGem do
             gds_api_adapters_pull_request,
             gds_api_adapters_pull_request2,
           ],
-        }, {
+        },
+        {
           gem_name: "uglifier",
           pull_requests: [uglifier_pull_request],
-        }
+        },
       ])
     end
   end
