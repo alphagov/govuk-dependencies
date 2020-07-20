@@ -11,10 +11,12 @@ rescue LoadError
   p "Could not load RSpec"
 end
 
+desc "Send short form dependency audit"
 task :dependapanda do
   Dependapanda.new.send_simple_message
 end
 
+desc "Send complete dependency audit"
 task :dependapanda_loud do
   Dependapanda.new.send_full_message
 end
