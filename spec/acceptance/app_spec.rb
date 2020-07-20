@@ -6,7 +6,9 @@ ENV["RACK_ENV"] = "test"
 
 describe GovukDependencies do
   include Rack::Test::Methods
-  def app() described_class end
+  def app
+    described_class
+  end
 
   around do |example|
     ClimateControl.modify GITHUB_TOKEN: "some_token" do
@@ -51,7 +53,7 @@ describe GovukDependencies do
             .to_return(
               body: File.read("spec/fixtures/multiple_teams_with_multiple_applications.json"),
               headers: { "Content-Type" => "application/json" },
-          )
+            )
         end
 
         it "should show both teams with the number applications with pull requests" do
@@ -104,7 +106,7 @@ describe GovukDependencies do
             .to_return(
               body: File.read("spec/fixtures/multiple_teams_with_multiple_applications.json"),
               headers: { "Content-Type" => "application/json" },
-          )
+            )
         end
 
         it 'should display the "no open pull requests" message' do
@@ -215,7 +217,7 @@ describe GovukDependencies do
         .to_return(
           body: File.read("spec/fixtures/multiple_teams_with_multiple_applications.json"),
           headers: { "Content-Type" => "application/json" },
-      )
+        )
     end
 
     it "allows manually requesting a slack message" do

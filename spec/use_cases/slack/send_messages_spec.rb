@@ -23,7 +23,7 @@ describe UseCases::Slack::SendMessages do
         team_usecase = double(execute: [
           {
             team_name: "email",
-            applications: %w(whitehall),
+            applications: %w[whitehall],
           },
         ])
         pull_request_usecase = double(execute: [])
@@ -44,7 +44,7 @@ describe UseCases::Slack::SendMessages do
         team_usecase = double(execute: [
           {
             team_name: "email",
-            applications: %w(whitehall),
+            applications: %w[whitehall],
           },
         ])
         pull_request_usecase = double(execute: [
@@ -75,7 +75,7 @@ describe UseCases::Slack::SendMessages do
         team_usecase = double(execute: [
           {
             team_name: "email",
-            applications: %w(whitehall),
+            applications: %w[whitehall],
           },
         ])
         pull_request_usecase = double(execute: [
@@ -85,13 +85,14 @@ describe UseCases::Slack::SendMessages do
             status: "approved",
             open_since: "yesterday",
             url: "https://github.com/alphagov/whitehall/123",
-          }, {
+          },
+          {
             application_name: "whitehall",
             title: "Bump Rails from 4.2.1 to 5.1.0",
             status: "approved",
             open_since: "today",
             url: "https://github.com/alphagov/whitehall/123",
-          }
+          },
         ])
         slack_gateway = double
         message_presenter = double(execute: "some message")
@@ -114,11 +115,12 @@ describe UseCases::Slack::SendMessages do
       team_usecase = double(execute: [
         {
           team_name: "email",
-          applications: %w(whitehall),
-        }, {
+          applications: %w[whitehall],
+        },
+        {
           team_name: "platform_support",
           applications: %w[travel-advice-publisher],
-        }
+        },
       ])
 
       pull_request_usecase = double(execute: [
@@ -128,19 +130,21 @@ describe UseCases::Slack::SendMessages do
           status: "approved",
           open_since: "yesterday",
           url: "https://github.com/alphagov/whitehall/123",
-        }, {
+        },
+        {
           application_name: "whitehall",
           title: "Bump Rails from 4.2.1 to 5.1.0",
           status: "approved",
           open_since: "yesterday",
           url: "https://github.com/alphagov/whitehall/457",
-        }, {
+        },
+        {
           application_name: "travel-advice-publisher",
           title: "Bump Rails from 1.3.4 to 2.0.0",
           status: "approved",
           open_since: "yesterday",
           url: "https://github.com/alphagov/travel-advice-publisher/123",
-        }
+        },
       ])
 
       slack_gateway = double
@@ -219,12 +223,13 @@ describe UseCases::Slack::SendMessages do
           title: "Bump foo 1.2.3 to 4.5.6",
           opened_at: "yesterday",
           url: "https://github.com/alphagov/whitehall/123",
-        }, {
+        },
+        {
           application_name: "some-other-application",
           title: "Bump foo 1.2.3 to 4.5.6",
           open_since: "yesterday",
           url: "https://github.com/alphagov/whitehall/123",
-        }
+        },
       ])
       slack_gateway = double
       message_presenter = double(execute: "some message")
