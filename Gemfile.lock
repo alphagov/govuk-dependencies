@@ -38,7 +38,7 @@ GEM
     rack (2.2.3)
     rack-protection (2.0.4)
       rack
-    rack-test (0.8.3)
+    rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rainbow (3.0.0)
     raindrops (0.19.0)
@@ -117,7 +117,7 @@ DEPENDENCIES
   climate_control (~> 0.2)
   octokit (~> 4.3)
   pry (~> 0.11.3)
-  rack-test (~> 0.8.0)
+  rack-test (~> 1.1.0)
   rake (~> 12.3.0)
   rspec (~> 3.9.0)
   rubocop-govuk
