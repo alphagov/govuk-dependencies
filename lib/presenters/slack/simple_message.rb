@@ -1,7 +1,9 @@
 module Presenters
   module Slack
     class SimpleMessage
-      def execute(applications_by_team:)
+      # rubocop:disable Lint/UnusedMethodArgument
+      def execute(applications_by_team:, continuously_deployed_apps:)
+        # rubocop:enable Lint/UnusedMethodArgument
         "You have #{pull_requests_count(applications_by_team)} open Dependabot PR(s) - #{url(applications_by_team)}"
       end
 
