@@ -13,6 +13,7 @@ module Gateways
         Domain::Team.new(
           team_name: (name || default_team_name).tr("#", ""),
           applications: apps.map { |app| app["app_name"] },
+          continuously_deployed_apps: apps.filter { |app| app["continuously_deployed"] }.map { |app| app["app_name"] },
         )
       end
     end

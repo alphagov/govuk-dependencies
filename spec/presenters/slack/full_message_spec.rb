@@ -68,5 +68,37 @@ describe Presenters::Slack::FullMessage do
 
 <https://github.com/alphagov/collections-publisher/pulls?q=is:pr+is:open+label:dependencies|collections-publisher> (1) <https://github.com/alphagov/content-tagger/pulls?q=is:pr+is:open+label:dependencies|content-tagger> (2)')
     end
+
+    it "highlights the continuously deployed apps" do
+      applications_by_team = {
+        team_name: "taxonomy",
+        applications: [
+          {
+            application_name: "collections-publisher",
+            application_url: "https://github.com/alphagov/content-publisher?q=is:pr+is:open+label:dependencies",
+            pull_request_count: 1,
+          },
+          {
+            application_name: "content-tagger",
+            application_url: "https://github.com/alphagov/content-tagger?q=is:pr+is:open+label:dependencies",
+            pull_request_count: 2,
+          },
+        ],
+      }
+      continuously_deployed_apps = %w[collections-publisher]
+
+      result = described_class.new.execute(
+        applications_by_team: applications_by_team,
+        continuously_deployed_apps: continuously_deployed_apps,
+      )
+
+      expect(result).to eq('<https://govuk-dependencies.herokuapp.com/team/taxonomy|taxonomy> have 1 Dependabot PRs open on the following Continuously Deployed apps:
+
+<https://github.com/alphagov/collections-publisher/pulls?q=is:pr+is:open+label:dependencies|collections-publisher> (1)
+
+And 2 Dependabot PRs open on other apps:
+
+<https://github.com/alphagov/content-tagger/pulls?q=is:pr+is:open+label:dependencies|content-tagger> (2)')
+    end
   end
 end

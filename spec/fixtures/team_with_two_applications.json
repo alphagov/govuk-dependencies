@@ -5,6 +5,7 @@
     "team":"#asset-management",
     "dependencies_team":"#govuk-platform-health",
     "puppet_name":"asset_manager",
+    "continuously_deployed": true,
     "links":{
       "self":"https://docs.publishing.service.gov.uk/apps/asset-manager.json",
       "html_url":"https://docs.publishing.service.gov.uk/apps/asset-manager.html",

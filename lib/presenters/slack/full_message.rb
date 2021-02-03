@@ -1,16 +1,28 @@
 module Presenters
   module Slack
     class FullMessage
-      def execute(applications_by_team:)
-        "#{url_for_team(applications_by_team)} have #{pull_requests_count(applications_by_team)} Dependabot PRs open on the following apps:
+      def execute(applications_by_team:, continuously_deployed_apps: [])
+        applications = applications_by_team.fetch(:applications)
+        if continuously_deployed_apps.any?
+          cd_apps = applications.filter { |app| continuously_deployed_apps.include?(app.fetch(:application_name)) }
+          "#{url_for_team(applications_by_team)} have #{pull_requests_count(cd_apps)} Dependabot PRs open on the following Continuously Deployed apps:
 
-#{body(applications_by_team).join(' ')}"
+#{body(cd_apps).join(' ')}
+
+And #{pull_requests_count(applications) - pull_requests_count(cd_apps)} Dependabot PRs open on other apps:
+
+#{body(applications - cd_apps).join(' ')}"
+        else
+          "#{url_for_team(applications_by_team)} have #{pull_requests_count(applications)} Dependabot PRs open on the following apps:
+
+#{body(applications).join(' ')}"
+        end
       end
 
     private
 
-      def body(applications_by_team)
-        applications_by_team.fetch(:applications).map do |application|
+      def body(applications)
+        applications.map do |application|
           application_name = application.fetch(:application_name)
           "<#{url(application_name)}|#{application_name}> (#{application.fetch(:pull_request_count)})"
         end
@@ -25,8 +37,8 @@ module Presenters
         "<https://govuk-dependencies.herokuapp.com/team/#{team_name}|#{team_name}>"
       end
 
-      def pull_requests_count(applications_by_team)
-        applications_by_team.fetch(:applications).reduce(0) { |acc, pr| acc + pr.fetch(:pull_request_count) }
+      def pull_requests_count(applications)
+        applications.reduce(0) { |acc, pr| acc + pr.fetch(:pull_request_count) }
       end
     end
   end

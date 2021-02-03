@@ -11,7 +11,7 @@ describe Presenters::Slack::SimpleMessage do
           },
         ],
       }
-      result = described_class.new.execute(applications_by_team: applications_by_team)
+      result = described_class.new.execute(applications_by_team: applications_by_team, continuously_deployed_apps: [])
 
       expect(result).to eq("You have 1 open Dependabot PR(s) - https://govuk-dependencies.herokuapp.com/team/email")
     end

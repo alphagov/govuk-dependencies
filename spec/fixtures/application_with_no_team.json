@@ -2,6 +2,7 @@
   "app_name":"asset-manager",
   "team": null,
   "puppet_name":"asset_manager",
+  "continuously_deployed": true,
   "links":{
     "self":"https://docs.publishing.service.gov.uk/apps/asset-manager.json",
     "html_url":"https://docs.publishing.service.gov.uk/apps/asset-manager.html",
