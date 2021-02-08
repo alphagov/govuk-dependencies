@@ -3,8 +3,8 @@ module Presenters
     class FullMessage
       def execute(applications_by_team:, continuously_deployed_apps: [])
         applications = applications_by_team.fetch(:applications)
-        if continuously_deployed_apps.any?
-          cd_apps = applications.filter { |app| continuously_deployed_apps.include?(app.fetch(:application_name)) }
+        cd_apps = applications.filter { |app| continuously_deployed_apps.include?(app.fetch(:application_name)) }
+        if pull_requests_count(cd_apps).positive?
           "#{url_for_team(applications_by_team)} have #{pull_requests_count(cd_apps)} Dependabot PRs open on the following Continuously Deployed apps:
 
 #{body(cd_apps).join(' ')}
