@@ -116,4 +116,41 @@ describe UseCases::Distribute::OverflowToDevelopersChannel do
       expect(overflow_with_dev_team).to have_application_count_for_team(6, "govuk-developers")
     end
   end
+
+  context "with continuously_deployed_apps" do
+    let(:prs_by_team) do
+      [
+        {
+          team_name: "govuk-platform-health",
+          continuously_deployed_apps: %w[whitehall signon support content-publisher],
+          applications:
+            [
+              { application_name: "whitehall", pull_request_count: 5 },
+              { application_name: "signon", pull_request_count: 4 },
+              { application_name: "ckanext-datagovuk", pull_request_count: 3 },
+              { application_name: "collections-publisher", pull_request_count: 2 },
+              { application_name: "content-data-admin", pull_request_count: 1 },
+              { application_name: "content-publisher", pull_request_count: 1 },
+              { application_name: "support", pull_request_count: 1 },
+            ],
+        },
+        {
+          team_name: "govuk-top-team",
+          applications:
+            [
+              { application_name: "not-another-whitehall", pull_request_count: 1 },
+            ],
+        },
+      ]
+    end
+
+    let(:overflow_with_dev_team) do
+      distribute(prs_by_team, 5)
+    end
+
+    it "should retain the continuously_deployed_apps information" do
+      govuk_developers = overflow_with_dev_team.find { |h| h[:team_name] == "govuk-developers" }
+      expect(govuk_developers[:continuously_deployed_apps]).to eq(%w[content-publisher support])
+    end
+  end
 end
