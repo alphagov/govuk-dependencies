@@ -1,8 +1,8 @@
 describe Gateways::PullRequest do
-  REVIEW_REQUIRED_URL = "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+author:app/dependabot-preview+review:required".freeze
-  APPROVED_URL = "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+author:app/dependabot-preview+review:approved".freeze
-  CHANGES_REQUESTED_URL = "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+author:app/dependabot-preview+review:changes_requested".freeze
-  NO_PULL_REQUESTS_BODY = '{ "total_count": 0, "incomplete_results": false, "items": [] }'.freeze
+  let(:review_required_url) { "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+author:app/dependabot-preview+review:required" }
+  let(:approved_url) { "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+author:app/dependabot-preview+review:approved" }
+  let(:changes_requested_url) { "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+author:app/dependabot-preview+review:changes_requested" }
+  let(:no_pull_requests_body) { '{ "total_count": 0, "incomplete_results": false, "items": [] }' }
 
   around do |example|
     ClimateControl.modify GITHUB_TOKEN: "some_token" do
@@ -23,9 +23,9 @@ describe Gateways::PullRequest do
 
   context "No open pull requests from Dependabot" do
     before do
-      stub_github_request(REVIEW_REQUIRED_URL, NO_PULL_REQUESTS_BODY)
-      stub_github_request(APPROVED_URL, NO_PULL_REQUESTS_BODY)
-      stub_github_request(CHANGES_REQUESTED_URL, NO_PULL_REQUESTS_BODY)
+      stub_github_request(review_required_url, no_pull_requests_body)
+      stub_github_request(approved_url, no_pull_requests_body)
+      stub_github_request(changes_requested_url, no_pull_requests_body)
     end
 
     it "Returns an empty array" do
@@ -35,9 +35,9 @@ describe Gateways::PullRequest do
 
   context "There are open approved pull requests from Dependabot" do
     before do
-      stub_github_request(APPROVED_URL, File.read("spec/fixtures/pull_requests.json"))
-      stub_github_request(REVIEW_REQUIRED_URL, NO_PULL_REQUESTS_BODY)
-      stub_github_request(CHANGES_REQUESTED_URL, NO_PULL_REQUESTS_BODY)
+      stub_github_request(approved_url, File.read("spec/fixtures/pull_requests.json"))
+      stub_github_request(review_required_url, no_pull_requests_body)
+      stub_github_request(changes_requested_url, no_pull_requests_body)
     end
 
     it "Returns a list of pull requests" do
@@ -65,9 +65,9 @@ describe Gateways::PullRequest do
 
   context "There are open pull requests that require review" do
     before do
-      stub_github_request(APPROVED_URL, NO_PULL_REQUESTS_BODY)
-      stub_github_request(REVIEW_REQUIRED_URL, File.read("spec/fixtures/pull_requests.json"))
-      stub_github_request(CHANGES_REQUESTED_URL, NO_PULL_REQUESTS_BODY)
+      stub_github_request(approved_url, no_pull_requests_body)
+      stub_github_request(review_required_url, File.read("spec/fixtures/pull_requests.json"))
+      stub_github_request(changes_requested_url, no_pull_requests_body)
     end
 
     it 'Sets the status on the Pull request to "review required"' do
@@ -79,9 +79,9 @@ describe Gateways::PullRequest do
 
   context "There are open pull requests that require changes" do
     before do
-      stub_github_request(APPROVED_URL, NO_PULL_REQUESTS_BODY)
-      stub_github_request(REVIEW_REQUIRED_URL, NO_PULL_REQUESTS_BODY)
-      stub_github_request(CHANGES_REQUESTED_URL, File.read("spec/fixtures/pull_requests.json"))
+      stub_github_request(approved_url, no_pull_requests_body)
+      stub_github_request(review_required_url, no_pull_requests_body)
+      stub_github_request(changes_requested_url, File.read("spec/fixtures/pull_requests.json"))
     end
 
     it 'Sets the status on the Pull request to "review required"' do

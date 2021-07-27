@@ -2,13 +2,12 @@ module UseCases
   module Slack
     class SendMessages
       def initialize(
-        slack_gateway: Gateways::SlackMessage.new,
+        message_presenter:, slack_gateway: Gateways::SlackMessage.new,
         team_usecase: UseCases::Teams::Fetch.new,
         pull_request_usecase: UseCases::PullRequests::Fetch.new,
         group_applications_by_team_usecase: UseCases::Group::ApplicationsByTeam.new,
         scheduler: UseCases::Slack::Schedulers::EveryDay.new,
-        distributor: UseCases::Distribute::OverflowToDevelopersChannel.new,
-        message_presenter:
+        distributor: UseCases::Distribute::OverflowToDevelopersChannel.new
       )
 
         @slack_gateway = slack_gateway
