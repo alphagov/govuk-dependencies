@@ -18,6 +18,8 @@ GEM
     diff-lcs (1.4.4)
     faraday (0.17.4)
       multipart-post (>= 1.2, < 3)
+    faraday-http-cache (2.2.0)
+      faraday (>= 0.8)
     hashdiff (1.0.0)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
@@ -118,6 +120,7 @@ PLATFORMS
 
 DEPENDENCIES
   climate_control (~> 0.2)
+  faraday-http-cache
   octokit (~> 4.3)
   pry (~> 0.11.3)
   rack-test (~> 1.1.0)

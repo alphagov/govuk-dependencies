@@ -7,6 +7,7 @@ gem "rake", "~> 12.3.0"
 gem "sinatra"
 gem "slack-poster", "~> 2.2"
 gem "vcr"
+gem "faraday-http-cache"
 
 group :production, :staging do
   gem "unicorn"
