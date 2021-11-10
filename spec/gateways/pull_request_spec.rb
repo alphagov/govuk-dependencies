@@ -1,24 +1,11 @@
 describe Gateways::PullRequest do
-  let(:review_required_url) { "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+author:app/dependabot-preview+review:required" }
-  let(:approved_url) { "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+author:app/dependabot-preview+review:approved" }
-  let(:changes_requested_url) { "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+author:app/dependabot-preview+review:changes_requested" }
-  let(:no_pull_requests_body) { '{ "total_count": 0, "incomplete_results": false, "items": [] }' }
-
+  include StubHelpers
   around do |example|
     ClimateControl.modify GITHUB_TOKEN: "some_token" do
       VCR.use_cassette("repositories") do
         example.run
       end
     end
-  end
-
-  def stub_github_request(request_url, body)
-    stub_request(:get, request_url)
-      .with(headers: { "Authorization" => "token some_token" })
-      .to_return(
-        body: body,
-        headers: { "Content-Type" => "application/json" },
-      )
   end
 
   context "No open pull requests from Dependabot" do
@@ -35,7 +22,7 @@ describe Gateways::PullRequest do
 
   context "There are open approved pull requests from Dependabot" do
     before do
-      stub_github_request(approved_url, File.read("spec/fixtures/pull_requests.json"))
+      stub_github_request(approved_url, pull_requests_body)
       stub_github_request(review_required_url, no_pull_requests_body)
       stub_github_request(changes_requested_url, no_pull_requests_body)
     end
@@ -66,7 +53,7 @@ describe Gateways::PullRequest do
   context "There are open pull requests that require review" do
     before do
       stub_github_request(approved_url, no_pull_requests_body)
-      stub_github_request(review_required_url, File.read("spec/fixtures/pull_requests.json"))
+      stub_github_request(review_required_url, pull_requests_body)
       stub_github_request(changes_requested_url, no_pull_requests_body)
     end
 
@@ -81,7 +68,7 @@ describe Gateways::PullRequest do
     before do
       stub_github_request(approved_url, no_pull_requests_body)
       stub_github_request(review_required_url, no_pull_requests_body)
-      stub_github_request(changes_requested_url, File.read("spec/fixtures/pull_requests.json"))
+      stub_github_request(changes_requested_url, pull_requests_body)
     end
 
     it 'Sets the status on the Pull request to "review required"' do
