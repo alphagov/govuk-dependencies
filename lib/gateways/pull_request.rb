@@ -5,7 +5,12 @@ module Gateways
     end
 
     def execute
-      approved_pull_requests + review_required_pull_requests + changes_requested_pull_requests
+      r = review_required_pull_requests
+      sleep 10
+      a = approved_pull_requests
+      sleep 10
+      c = changes_requested_pull_requests
+      a + c + r
     end
 
   private
@@ -16,13 +21,35 @@ module Gateways
     end
 
     def review_required_pull_requests
-      review_required_pull_requests = @client.search_issues("is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:required").items
-      build_pull_requests(review_required_pull_requests, "review required")
+      prs = fetch_review_required_pull_requests
+      build_pull_requests(prs, "review required")
     end
 
     def changes_requested_pull_requests
       changes_requested_pull_requests = @client.search_issues("is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:changes_requested").items
       build_pull_requests(changes_requested_pull_requests, "changes requested")
+    end
+
+    def fetch_review_required_pull_requests
+      @client_without_pagination = GithubClient.new.client(auto_paginate: false)
+      @client_without_pagination.search_issues("is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:required", per_page: 100)
+
+      last_response = @client_without_pagination.last_response
+      return [] if last_response.data.items.empty?
+
+      pulls = []
+      pulls << last_response.data.items
+
+      until last_response.rels[:next].nil?
+        sleep 10 if (current_page(last_response) % 3).zero?
+        last_response = last_response.rels[:next].get
+        pulls << last_response.data.items
+      end
+      pulls.flatten
+    end
+
+    def current_page(response)
+      response.rels[:next].href.match(/(?<!per_)page=(\d+)/)[1].to_i
     end
 
     def build_pull_requests(api_response, status)

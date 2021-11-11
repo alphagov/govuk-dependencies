@@ -51,16 +51,35 @@ describe Gateways::PullRequest do
   end
 
   context "There are open pull requests that require review" do
-    before do
-      stub_github_request(approved_url, no_pull_requests_body)
-      stub_github_request(review_required_url, pull_requests_body)
-      stub_github_request(changes_requested_url, no_pull_requests_body)
+    context "there are less than 100 results" do
+      before do
+        stub_github_request(approved_url, no_pull_requests_body)
+        stub_github_request(review_required_url, pull_requests_body)
+        stub_github_request(changes_requested_url, no_pull_requests_body)
+      end
+
+      it 'Sets the status on the Pull request to "review required"' do
+        result = described_class.new.execute
+        expect(result.first.status).to eq("review required")
+        expect(result.count).to eq(3)
+      end
     end
 
-    it 'Sets the status on the Pull request to "review required"' do
-      result = described_class.new.execute
+    context "there are more than 100 results" do
+      before do
+        stub_github_request(approved_url, no_pull_requests_body)
+        VCR.insert_cassette("review_required_pull_requests")
+        stub_github_request(changes_requested_url, no_pull_requests_body)
+      end
 
-      expect(result.first.status).to eq("review required")
+      it 'Sets the status on the Pull request to "review required"' do
+        result = described_class.new.execute
+        expect(result.first.status).to eq("review required")
+        expect(result.count).to eq(165)
+      end
+      after do
+        VCR.eject_cassette("review_required_pull_requests")
+      end
     end
   end
 
