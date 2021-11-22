@@ -9,9 +9,7 @@ module Gateways
 
     def execute
       a = build_pull_requests(approved_pull_requests, "approved")
-      sleep 10
       c = build_pull_requests(changes_requested_pull_requests, "changes requested")
-      sleep 10
       r = build_pull_requests(review_required_pull_requests, "review required")
       a + c + r
     end
