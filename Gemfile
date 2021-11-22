@@ -2,6 +2,8 @@ source "https://rubygems.org"
 
 ruby File.read(".ruby-version").chomp
 
+gem "dalli"
+gem "memcachier"
 gem "octokit", "~> 4.3"
 gem "rake", "~> 12.3.0"
 gem "sinatra"

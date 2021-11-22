@@ -1,4 +1,5 @@
 require "sinatra"
+require "dalli"
 require_relative "lib/loader"
 
 class GovukDependencies < Sinatra::Base
@@ -59,3 +60,5 @@ class GovukDependencies < Sinatra::Base
     "[ok]"
   end
 end
+
+GovukDependencies.set cache: Dalli::Client.new(ENV["MEMCACHIER_SERVERS"], { username: ENV["MEMCACHIER_USERNAME"], password: ENV["MEMCACHIER_PASSWORD"] })
