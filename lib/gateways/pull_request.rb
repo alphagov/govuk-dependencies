@@ -81,7 +81,7 @@ module Gateways
     end
 
     def govuk_repository_urls
-      @govuk_repository_urls ||= Gateways::Repositories.new.execute.map(&:url)
+      @govuk_repository_urls ||= Gateways::Repositories.new.govuk_repo_urls
     end
 
     def get_application_name(pull_request)
