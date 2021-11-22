@@ -1,3 +1,5 @@
+ENV["RACK_ENV"] = "test"
+
 require "climate_control"
 require "webmock/rspec"
 require "rspec"
@@ -17,4 +19,7 @@ end
 
 RSpec.configure do |config|
   config.include StubHelpers
+  config.before(:each) do
+    GovukDependencies.cache.clear
+  end
 end

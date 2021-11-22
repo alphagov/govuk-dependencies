@@ -2,7 +2,6 @@ require_relative "../../app"
 
 module Gateways
   class Repositories
-    CACHE_EXPIRY = 43_200 # 12 hours
     def initialize
       @client = GithubClient.new.client
     end
@@ -20,7 +19,7 @@ module Gateways
     def raw_govuk_repos
       @raw_govuk_repos ||= GovukDependencies.cache.fetch("govuk-repos") do
         repos = @client.search_repos("org:alphagov topic:govuk").items
-        GovukDependencies.cache.set("govuk-repos", repos, CACHE_EXPIRY)
+        GovukDependencies.cache.write("govuk-repos", repos)
         repos
       end
     end

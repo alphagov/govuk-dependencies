@@ -119,6 +119,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   climate_control (~> 0.2)
   dalli
   memcachier

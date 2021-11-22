@@ -62,7 +62,7 @@ end
 
 desc "Flush all data from the memcache server on production. Consider manually refilling the cache with fetch tasks above."
 task :flush_cache do
-  GovukDependencies.cache.flush_all
+  GovukDependencies.cache.clear
 end
 
 desc "Recreate the vcr cassettes. For example `rake record_cassette[org:alphagov topic:govuk]`"

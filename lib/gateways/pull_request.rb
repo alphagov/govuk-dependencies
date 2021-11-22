@@ -2,7 +2,6 @@ require_relative "../../app"
 
 module Gateways
   class PullRequest
-    CACHE_EXPIRY = 43_200 # 12 hours
     def initialize
       @client = GithubClient.new.client
     end
@@ -18,7 +17,7 @@ module Gateways
       query = "is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:approved"
       @approved_pull_requests ||= GovukDependencies.cache.fetch("approved") do
         approved = @client.search_issues(query).items
-        GovukDependencies.cache.set("approved", approved, CACHE_EXPIRY)
+        GovukDependencies.cache.write("approved", approved)
         approved
       end
     end
@@ -26,7 +25,7 @@ module Gateways
     def review_required_pull_requests
       @review_required_pull_requests ||= GovukDependencies.cache.fetch("review_required") do
         review_required = fetch_review_required_pull_requests
-        GovukDependencies.cache.set("review_required", review_required, CACHE_EXPIRY)
+        GovukDependencies.cache.write("review_required", review_required)
         review_required
       end
     end
@@ -35,7 +34,7 @@ module Gateways
       query = "is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:changes_requested"
       @changes_requested_pull_requests ||= GovukDependencies.cache.fetch("changes_requested") do
         changes_requested = @client.search_issues(query).items
-        GovukDependencies.cache.set("changes_requested", changes_requested, CACHE_EXPIRY)
+        GovukDependencies.cache.write("changes_requested", changes_requested)
         changes_requested
       end
     end

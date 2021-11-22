@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 ruby File.read(".ruby-version").chomp
 
+gem "activesupport"
 gem "dalli"
 gem "memcachier"
 gem "octokit", "~> 4.3"
