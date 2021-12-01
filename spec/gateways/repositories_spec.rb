@@ -8,13 +8,14 @@ describe Gateways::Repositories do
   end
 
   context "with the alphagov organisation" do
-    let(:repos) do
-      subject.execute.map(&:name)
-    end
+    let(:baseurl) { "https://api.github.com/repos/alphagov" }
+    let(:whitehall) { "#{baseurl}/whitehall" }
+    let(:publishing_api) { "#{baseurl}/publishing-api" }
+    let(:govwifi_admin) { "#{baseurl}/govwifi-admin" }
 
     it "returns only those with a govuk topic" do
-      expect(repos).to include("whitehall", "publishing-api")
-      expect(repos).not_to include("govwifi-admin")
+      expect(subject.govuk_repo_urls).to include(whitehall, publishing_api)
+      expect(subject.govuk_repo_urls).not_to include(govwifi_admin)
     end
   end
 end

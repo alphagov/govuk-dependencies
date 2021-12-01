@@ -1,30 +1,66 @@
-require "octokit"
+require_relative "../../app"
 
 module Gateways
   class PullRequest
     def initialize
-      @octokit = Octokit::Client.new(access_token: ENV["GITHUB_TOKEN"], auto_paginate: true)
+      @client = GithubClient.new.client
     end
 
     def execute
-      approved_pull_requests + review_required_pull_requests + changes_requested_pull_requests
+      a = build_pull_requests(approved_pull_requests, "approved")
+      c = build_pull_requests(changes_requested_pull_requests, "changes requested")
+      r = build_pull_requests(review_required_pull_requests, "review required")
+      a + c + r
+    end
+
+    def approved_pull_requests
+      query = "is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:approved"
+      @approved_pull_requests ||= GovukDependencies.cache.fetch("approved") do
+        approved = @client.search_issues(query).items
+        GovukDependencies.cache.write("approved", approved)
+        approved
+      end
+    end
+
+    def review_required_pull_requests
+      @review_required_pull_requests ||= GovukDependencies.cache.fetch("review_required") do
+        review_required = fetch_review_required_pull_requests
+        GovukDependencies.cache.write("review_required", review_required)
+        review_required
+      end
+    end
+
+    def changes_requested_pull_requests
+      query = "is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:changes_requested"
+      @changes_requested_pull_requests ||= GovukDependencies.cache.fetch("changes_requested") do
+        changes_requested = @client.search_issues(query).items
+        GovukDependencies.cache.write("changes_requested", changes_requested)
+        changes_requested
+      end
     end
 
   private
 
-    def approved_pull_requests
-      approved_pull_requests = @octokit.search_issues("is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:approved").items
-      build_pull_requests(approved_pull_requests, "approved")
+    def fetch_review_required_pull_requests
+      @client_without_pagination = GithubClient.new.client(auto_paginate: false)
+      @client_without_pagination.search_issues("is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:required", per_page: 100)
+
+      last_response = @client_without_pagination.last_response
+      return [] if last_response.data.items.empty?
+
+      pulls = []
+      pulls << last_response.data.items
+
+      until last_response.rels[:next].nil?
+        sleep 10 if (current_page(last_response) % 3).zero?
+        last_response = last_response.rels[:next].get
+        pulls << last_response.data.items
+      end
+      pulls.flatten
     end
 
-    def review_required_pull_requests
-      review_required_pull_requests = @octokit.search_issues("is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:required").items
-      build_pull_requests(review_required_pull_requests, "review required")
-    end
-
-    def changes_requested_pull_requests
-      changes_requested_pull_requests = @octokit.search_issues("is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:changes_requested").items
-      build_pull_requests(changes_requested_pull_requests, "changes requested")
+    def current_page(response)
+      response.rels[:next].href.match(/(?<!per_)page=(\d+)/)[1].to_i
     end
 
     def build_pull_requests(api_response, status)
@@ -42,7 +78,7 @@ module Gateways
     end
 
     def govuk_repository_urls
-      @govuk_repository_urls ||= Gateways::Repositories.new.execute.map(&:url)
+      @govuk_repository_urls ||= Gateways::Repositories.new.govuk_repo_urls
     end
 
     def get_application_name(pull_request)

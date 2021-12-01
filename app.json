@@ -16,7 +16,7 @@
     }
   },
   "addons": [
-
+    "memcachier"
   ],
   "buildpacks": [
     {

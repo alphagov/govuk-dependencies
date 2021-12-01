@@ -1,5 +1,8 @@
 require "sinatra"
+require "dalli"
 require_relative "lib/loader"
+require_relative "config/initializers/cache_store"
+require "active_support"
 
 class GovukDependencies < Sinatra::Base
   get "/" do
@@ -59,3 +62,5 @@ class GovukDependencies < Sinatra::Base
     "[ok]"
   end
 end
+
+GovukDependencies.set cache: CacheStore.store
