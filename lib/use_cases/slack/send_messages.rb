@@ -42,7 +42,7 @@ module UseCases
             channel: applications_by_team.fetch(:team_name),
             message: message_presenter.execute(
               applications_by_team: applications_by_team,
-              continuously_deployed_apps: team.nil? ? nil : team[:continuously_deployed_apps],
+              continuously_deployed_apps: team.nil? ? [] : team[:continuously_deployed_apps],
             ),
           )
         end
