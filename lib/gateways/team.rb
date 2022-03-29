@@ -4,7 +4,7 @@ require "json"
 module Gateways
   class Team
     def initialize
-      @endpoint = URI("https://docs.publishing.service.gov.uk/apps.json")
+      @endpoint = URI("https://docs.publishing.service.gov.uk/repos.json")
       @default_team_name = "#govuk-developers"
     end
 

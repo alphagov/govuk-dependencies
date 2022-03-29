@@ -22,7 +22,7 @@ describe Dependapanda do
     stub_request(:get, "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+author:app/dependabot-preview+review:changes_requested")
       .to_return(body: '{ "total_count": 0, "incomplete_results": false, "items": [] }', headers: { "Content-Type" => "application/json" })
 
-    stub_request(:get, "https://docs.publishing.service.gov.uk/apps.json")
+    stub_request(:get, "https://docs.publishing.service.gov.uk/repos.json")
       .to_return(
         body: File.read("spec/fixtures/multiple_teams_with_multiple_applications.json"),
         headers: { "Content-Type" => "application/json" },
