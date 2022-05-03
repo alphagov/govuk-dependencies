@@ -5,7 +5,7 @@ module Gateways
     end
 
     def execute
-      @client.search_issues("is:pr user:alphagov author:app/dependabot").total_count
+      @client.search_issues("is:pr user:alphagov state:open author:app/dependabot archived:false").total_count
     end
   end
 end

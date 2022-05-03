@@ -1,14 +1,14 @@
 module StubHelpers
   def review_required_url
-    "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:required"
+    "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+archived:false+review:required"
   end
 
   def approved_url
-    "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:approved"
+    "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+archived:false+review:approved"
   end
 
   def changes_requested_url
-    "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+review:changes_requested"
+    "https://api.github.com/search/issues?per_page=100&q=is:pr+user:alphagov+state:open+author:app/dependabot+archived:false+review:changes_requested"
   end
 
   def no_pull_requests_body
