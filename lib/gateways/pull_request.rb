@@ -52,7 +52,7 @@ module Gateways
       pulls << last_response.data.items
 
       until last_response.rels[:next].nil?
-        sleep 10 if (current_page(last_response) % 3).zero?
+        sleep 60 if (current_page(last_response) % 3).zero?
         last_response = last_response.rels[:next].get
         pulls << last_response.data.items
       end

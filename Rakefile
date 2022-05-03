@@ -45,19 +45,32 @@ end
 
 desc "Fetch all of the data we need from github in a slow way, and write to the cache"
 task :warm_the_cache do
+  puts "Fetching repos..."
   Rake::Task["fetch_repos"].invoke
-  puts "fetched repos"
-  sleep 10
+  puts "Finished fetching repos."
+
+  puts "Sleeping for 60 seconds to avoid rate-limiting"
+  sleep 60
+
+  puts "Fetching approved PRs..."
   Rake::Task["fetch_approved_pull_requests"].invoke
-  puts "fetched approved PRs"
-  sleep 10
+  puts "Finished fetching approved PRs."
+
+  puts "Sleeping for 60 seconds to avoid rate-limiting"
+  sleep 60
+
+  puts "Fetching changes requested PRs..."
   Rake::Task["fetch_changes_requested_pull_requests"].invoke
-  puts "fetched changes requested PRs"
-  sleep 15
+  puts "Finished fetching changes requested PRs."
+
+  puts "Sleeping for 60 seconds to avoid rate-limiting"
+  sleep 60
+
+  puts "Fetching review required PRs..."
   Rake::Task["fetch_review_required_pull_requests"].invoke
-  puts "fetched review required requested PRs"
+  puts "Finished fetching review required PRs."
 rescue Octokit::Forbidden
-  puts "We've been rate limited. Wait 15 seconds and then hit refresh on the app, or run this task again"
+  puts "We've been rate limited. Wait 60 seconds and then hit refresh on the app, or run this task again"
 end
 
 desc "Flush all data from the memcache server on production. Consider manually refilling the cache with fetch tasks above."
