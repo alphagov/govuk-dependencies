@@ -38,7 +38,6 @@ Running this will start your application at [localhost:9292](localhost:9292)
 ### Environment variables
 
 - `GITHUB_TOKEN` - OAuth token generated on GitHub which does not require any special permissions
-  - Used to interact with the GitHub API, although not required it will help avoid limiting
 - `SLACK_WEBHOOK_URL` - The webhook URL for sending Slack messages to
 - `DEPENDAPANDA_SECRET` - Secret token for manually requesting Slack messages
 

@@ -220,7 +220,7 @@ describe GovukDependencies do
 
   context "Stats page" do
     before do
-      stub_request(:get, "https://api.github.com/search/issues?q=is:pr%20user:alphagov%20author:app/dependabot%20author:app/dependabot-preview")
+      stub_request(:get, "https://api.github.com/search/issues?q=is:pr%20user:alphagov%20state:open%20author:app/dependabot%20archived:false")
         .to_return(body: File.open("spec/fixtures/pull_requests.json"), headers: { "Content-Type" => "application/json" })
     end
 

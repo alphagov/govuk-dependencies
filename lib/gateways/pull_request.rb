@@ -14,7 +14,7 @@ module Gateways
     end
 
     def approved_pull_requests
-      query = "is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:approved"
+      query = "is:pr user:alphagov state:open author:app/dependabot archived:false review:approved"
       @approved_pull_requests ||= GovukDependencies.cache.fetch("approved") do
         approved = @client.search_issues(query).items
         GovukDependencies.cache.write("approved", approved)
@@ -31,7 +31,7 @@ module Gateways
     end
 
     def changes_requested_pull_requests
-      query = "is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:changes_requested"
+      query = "is:pr user:alphagov state:open author:app/dependabot archived:false review:changes_requested"
       @changes_requested_pull_requests ||= GovukDependencies.cache.fetch("changes_requested") do
         changes_requested = @client.search_issues(query).items
         GovukDependencies.cache.write("changes_requested", changes_requested)
@@ -43,7 +43,7 @@ module Gateways
 
     def fetch_review_required_pull_requests
       @client_without_pagination = GithubClient.new.client(auto_paginate: false)
-      @client_without_pagination.search_issues("is:pr user:alphagov state:open author:app/dependabot author:app/dependabot-preview review:required", per_page: 100)
+      @client_without_pagination.search_issues("is:pr user:alphagov state:open author:app/dependabot archived:false review:required", per_page: 100)
 
       last_response = @client_without_pagination.last_response
       return [] if last_response.data.items.empty?
@@ -52,7 +52,7 @@ module Gateways
       pulls << last_response.data.items
 
       until last_response.rels[:next].nil?
-        sleep 10 if (current_page(last_response) % 3).zero?
+        sleep 60 if (current_page(last_response) % 3).zero?
         last_response = last_response.rels[:next].get
         pulls << last_response.data.items
       end
