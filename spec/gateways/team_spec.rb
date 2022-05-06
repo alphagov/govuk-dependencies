@@ -1,7 +1,7 @@
 describe Gateways::Team do
   context "Given no teams" do
     before do
-      stub_request(:get, "https://docs.publishing.service.gov.uk/apps.json")
+      stub_request(:get, "https://docs.publishing.service.gov.uk/repos.json")
         .to_return(body: "[]", headers: { "Content-Type" => "application/json" })
     end
 
@@ -13,7 +13,7 @@ describe Gateways::Team do
 
   context "with no team set and one application" do
     before do
-      stub_request(:get, "https://docs.publishing.service.gov.uk/apps.json")
+      stub_request(:get, "https://docs.publishing.service.gov.uk/repos.json")
         .to_return(
           body: File.read("spec/fixtures/application_with_no_team.json"),
           headers: { "Content-Type" => "application/json" },
@@ -32,7 +32,7 @@ describe Gateways::Team do
   context "Given one team" do
     context "with one application" do
       before do
-        stub_request(:get, "https://docs.publishing.service.gov.uk/apps.json")
+        stub_request(:get, "https://docs.publishing.service.gov.uk/repos.json")
           .to_return(
             body: File.read("spec/fixtures/team_with_one_application.json"),
             headers: { "Content-Type" => "application/json" },
@@ -50,7 +50,7 @@ describe Gateways::Team do
 
     context "with two applications" do
       before do
-        stub_request(:get, "https://docs.publishing.service.gov.uk/apps.json")
+        stub_request(:get, "https://docs.publishing.service.gov.uk/repos.json")
           .to_return(
             body: File.read("spec/fixtures/team_with_two_applications.json"),
             headers: { "Content-Type" => "application/json" },
@@ -69,7 +69,7 @@ describe Gateways::Team do
 
   context "with two teams and multiple applications" do
     before do
-      stub_request(:get, "https://docs.publishing.service.gov.uk/apps.json")
+      stub_request(:get, "https://docs.publishing.service.gov.uk/repos.json")
       .to_return(
         body: File.read("spec/fixtures/multiple_teams_with_multiple_applications.json"),
         headers: { "Content-Type" => "application/json" },

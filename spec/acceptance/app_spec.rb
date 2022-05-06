@@ -45,7 +45,7 @@ describe GovukDependencies do
 
       context "Pull requests by team" do
         before do
-          stub_request(:get, "https://docs.publishing.service.gov.uk/apps.json")
+          stub_request(:get, "https://docs.publishing.service.gov.uk/repos.json")
             .to_return(
               body: File.read("spec/fixtures/multiple_teams_with_multiple_applications.json"),
               headers: { "Content-Type" => "application/json" },
@@ -95,7 +95,7 @@ describe GovukDependencies do
 
       context "Pull requests by team" do
         before do
-          stub_request(:get, "https://docs.publishing.service.gov.uk/apps.json")
+          stub_request(:get, "https://docs.publishing.service.gov.uk/repos.json")
             .to_return(
               body: File.read("spec/fixtures/multiple_teams_with_multiple_applications.json"),
               headers: { "Content-Type" => "application/json" },
@@ -194,7 +194,7 @@ describe GovukDependencies do
       stub_github_request(approved_url, no_pull_requests_body)
       stub_github_request(review_required_url, pull_requests_body)
       stub_github_request(changes_requested_url, no_pull_requests_body)
-      stub_request(:get, "https://docs.publishing.service.gov.uk/apps.json")
+      stub_request(:get, "https://docs.publishing.service.gov.uk/repos.json")
         .to_return(
           body: File.read("spec/fixtures/multiple_teams_with_multiple_applications.json"),
           headers: { "Content-Type" => "application/json" },
