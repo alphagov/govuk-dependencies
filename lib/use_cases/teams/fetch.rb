@@ -12,7 +12,6 @@ module UseCases
           {
             team_name: team.team_name,
             applications: team.applications,
-            continuously_deployed_apps: team.continuously_deployed_apps,
           }
         end
       end
