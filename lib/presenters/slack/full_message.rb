@@ -1,22 +1,11 @@
 module Presenters
   module Slack
     class FullMessage
-      def execute(applications_by_team:, continuously_deployed_apps: [])
+      def execute(applications_by_team:)
         applications = applications_by_team.fetch(:applications)
-        cd_apps = applications.filter { |app| continuously_deployed_apps.include?(app.fetch(:application_name)) }
-        if pull_requests_count(cd_apps).positive?
-          "#{url_for_team(applications_by_team)} have #{pull_requests_count(cd_apps)} Dependabot PRs open on the following Continuously Deployed apps:
-
-#{body(cd_apps).join(' ')}
-
-And #{pull_requests_count(applications) - pull_requests_count(cd_apps)} Dependabot PRs open on other apps:
-
-#{body(applications - cd_apps).join(' ')}"
-        else
-          "#{url_for_team(applications_by_team)} have #{pull_requests_count(applications)} Dependabot PRs open on the following apps:
+        "#{url_for_team(applications_by_team)} have #{pull_requests_count(applications)} Dependabot PRs open on the following apps:
 
 #{body(applications).join(' ')}"
-        end
       end
 
     private

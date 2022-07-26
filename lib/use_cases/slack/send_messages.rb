@@ -37,12 +37,10 @@ module UseCases
 
       def send_messages(applications_by_teams)
         applications_by_teams.each do |applications_by_team|
-          team = team_usecase.execute.find { |app| app[:team_name] == applications_by_team.fetch(:team_name) }
           slack_gateway.execute(
             channel: applications_by_team.fetch(:team_name),
             message: message_presenter.execute(
               applications_by_team: applications_by_team,
-              continuously_deployed_apps: team.nil? ? [] : team[:continuously_deployed_apps],
             ),
           )
         end
