@@ -46,7 +46,7 @@ describe Dependapanda do
   context "Full Message" do
     it "sends all the pull requests in the message" do
       govuk_platform_health_payload = {
-        "payload" => '{"channel":"govuk-platform-health","username":"Dependapanda","icon_emoji":":panda_face:","text":"<https://govuk-dependencies.herokuapp.com/team/govuk-platform-health|govuk-platform-health> have 3 Dependabot PRs open on the following apps:\n\n<https://github.com/alphagov/publisher/pulls?q=is:pr+is:open+label:dependencies|publisher> (2) <https://github.com/alphagov/frontend/pulls?q=is:pr+is:open+label:dependencies|frontend> (1)"}',
+        "payload" => '{"channel":"govuk-platform-health","username":"Dependapanda","icon_emoji":":panda_face:","text":"<https://govuk-dependencies.herokuapp.com/team/govuk-platform-health|govuk-platform-health> have 3 Dependabot PRs open on the following apps:\n\n<https://github.com/alphagov/publisher/pulls?q=is:pr+is:open+label:dependencies|publisher> (2, oldest one opened 611 days ago)\n<https://github.com/alphagov/frontend/pulls?q=is:pr+is:open+label:dependencies|frontend> (1, opened 611 days ago)"}',
       }
 
       described_class.new.send_full_message

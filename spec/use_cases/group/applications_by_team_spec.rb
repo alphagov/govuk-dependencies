@@ -13,6 +13,7 @@ describe UseCases::Group::ApplicationsByTeam do
         application_name: "some-application",
         title: "Some title",
         opened_at: Date.today,
+        open_since: "today",
         url: "http://foo.com",
       }
 
@@ -32,6 +33,7 @@ describe UseCases::Group::ApplicationsByTeam do
               application_url:
               "https://github.com/alphagov/some-application/pulls?q=is:pr+is:open+label:dependencies",
               pull_request_count: 1,
+              oldest_pr: "today",
             },
           ],
         },
@@ -47,6 +49,7 @@ describe UseCases::Group::ApplicationsByTeam do
         application_name: "collections",
         title: "bump x to y",
         opened_at: Date.today,
+        open_since: "today",
         url: "http://foo.com",
       }
 
@@ -59,6 +62,7 @@ describe UseCases::Group::ApplicationsByTeam do
         application_name: "collections-publisher",
         title: "bump x to y",
         opened_at: Date.today,
+        open_since: "today",
         url: "http://foo.com",
       }
 
@@ -78,6 +82,7 @@ describe UseCases::Group::ApplicationsByTeam do
               application_url:
               "https://github.com/alphagov/collections/pulls?q=is:pr+is:open+label:dependencies",
               pull_request_count: 1,
+              oldest_pr: "today",
             },
           ],
         },
@@ -90,6 +95,7 @@ describe UseCases::Group::ApplicationsByTeam do
                       application_url:
                       "https://github.com/alphagov/collections-publisher/pulls?q=is:pr+is:open+label:dependencies",
                       pull_request_count: 1,
+                      oldest_pr: "today",
                     },
                   ],
         },
@@ -105,6 +111,7 @@ describe UseCases::Group::ApplicationsByTeam do
         application_name: "collections",
         title: "bump x to y",
         opened_at: Date.today,
+        open_since: "today",
         url: "http://foo.com",
       }
 
@@ -112,6 +119,7 @@ describe UseCases::Group::ApplicationsByTeam do
         application_name: "collections",
         title: "bump rspec from 1 to 2",
         opened_at: Date.today,
+        open_since: "today",
         url: "http://foo.com",
       }
 
@@ -132,6 +140,7 @@ describe UseCases::Group::ApplicationsByTeam do
               application_url:
               "https://github.com/alphagov/collections/pulls?q=is:pr+is:open+label:dependencies",
               pull_request_count: 2,
+              oldest_pr: "today",
             },
           ],
         },

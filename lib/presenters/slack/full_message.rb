@@ -3,9 +3,11 @@ module Presenters
     class FullMessage
       def execute(applications_by_team:)
         applications = applications_by_team.fetch(:applications)
+        body_applications = body(applications).join("\n")
+
         "#{url_for_team(applications_by_team)} have #{pull_requests_count(applications)} Dependabot PRs open on the following apps:
 
-#{body(applications).join(' ')}"
+#{body_applications}"
       end
 
     private
@@ -13,7 +15,11 @@ module Presenters
       def body(applications)
         applications.map do |application|
           application_name = application.fetch(:application_name)
-          "<#{url(application_name)}|#{application_name}> (#{application.fetch(:pull_request_count)})"
+          if application.fetch(:pull_request_count) > 1
+            "<#{url(application_name)}|#{application_name}> (#{application.fetch(:pull_request_count)}, oldest one opened #{application.fetch(:oldest_pr)})"
+          else
+            "<#{url(application_name)}|#{application_name}> (#{application.fetch(:pull_request_count)}, opened #{application.fetch(:oldest_pr)})"
+          end
         end
       end
 
