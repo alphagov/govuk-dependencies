@@ -37,8 +37,8 @@ describe Gateways::PullRequest do
         expect(result[0].application_name).to eq("publisher")
         expect(result[0].url).to eq("https://github.com/alphagov/publisher/pull/761")
         expect(result[0].status).to eq("approved")
-        expect(result[0].opened_at).to eq(Date.parse("2018-01-24"))
-        expect(result[0].open_since).to eq("yesterday")
+        expect(result[0].opened_at).to eq(Date.parse("2018-01-25"))
+        expect(result[0].open_since).to eq("today")
 
         expect(result[1].title).to eq("Bump gds-sso from 13.5.0 to 13.5.1")
         expect(result[1].application_name).to eq("frontend")

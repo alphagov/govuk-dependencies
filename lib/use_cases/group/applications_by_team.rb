@@ -38,6 +38,7 @@ module UseCases
             application_name: application_name,
             application_url: "https://github.com/alphagov/#{application_name}/pulls?q=is:pr+is:open+label:dependencies",
             pull_request_count: pull_request_for_app.count,
+            oldest_pr: pull_request_for_app.map { |age| age[:open_since] }.max,
           }
         end
       end
