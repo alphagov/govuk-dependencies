@@ -9,11 +9,18 @@ describe UseCases::Group::ApplicationsByTeam do
 
   context "Given a pull request and a team" do
     it "associates one pull request to one team" do
-      pull_request = {
+      pull_request_1 = {
         application_name: "some-application",
         title: "Some title",
         opened_at: Date.today,
         open_since: "today",
+        url: "http://foo.com",
+      }
+      pull_request_2 = {
+        application_name: "some-application",
+        title: "Some title",
+        opened_at: Date.parse("2022-08-15 08:00:00"),
+        open_since: "3 days ago",
         url: "http://foo.com",
       }
 
@@ -22,7 +29,7 @@ describe UseCases::Group::ApplicationsByTeam do
         applications: %w[some-application],
       }
 
-      result = subject.execute(pull_requests: [pull_request], teams: [team])
+      result = subject.execute(pull_requests: [pull_request_1, pull_request_2], teams: [team])
       expected_result = [
         {
           team_name: "Some Team",
@@ -32,8 +39,8 @@ describe UseCases::Group::ApplicationsByTeam do
               application_name: "some-application",
               application_url:
               "https://github.com/alphagov/some-application/pulls?q=is:pr+is:open+label:dependencies",
-              pull_request_count: 1,
-              oldest_pr: "today",
+              pull_request_count: 2,
+              oldest_pr: "3 days ago",
             },
           ],
         },
