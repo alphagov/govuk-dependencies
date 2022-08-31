@@ -101,7 +101,7 @@ GEM
     slack-poster (2.2.1)
       faraday (~> 0.9)
     tilt (2.0.11)
-    timecop (0.9.1)
+    timecop (0.9.5)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.2.0)
@@ -130,7 +130,7 @@ DEPENDENCIES
   rubocop-govuk
   sinatra
   slack-poster (~> 2.2)
-  timecop (~> 0.9.1)
+  timecop (~> 0.9.5)
   unicorn
   vcr
   webmock

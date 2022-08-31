@@ -24,6 +24,6 @@ group :test do
   gem "pry", "~> 0.11.3"
   gem "rack-test", "~> 2.0.2"
   gem "rspec", "~> 3.11.0"
-  gem "timecop", "~> 0.9.1"
+  gem "timecop", "~> 0.9.5"
   gem "webmock"
 end
