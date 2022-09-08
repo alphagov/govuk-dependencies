@@ -26,7 +26,7 @@ module UseCases
           applications = application_pull_requests(pull_requests)
           {
             team_name: team.nil? ? FALLBACK_TEAM : team[:team_name],
-            applications: applications.sort_by { |app| [-app[:pull_request_count], app[:application_name]] },
+            applications: applications.sort_by { |app| [-app[:opened_at], -app[:pull_request_count], app[:application_name]] },
           }
         end
       end
@@ -39,6 +39,7 @@ module UseCases
             application_url: "https://github.com/alphagov/#{application_name}/pulls?q=is:pr+is:open+label:dependencies",
             pull_request_count: pull_request_for_app.count,
             oldest_pr: pull_request_for_app.min_by { |pr| pr[:opened_at] }[:open_since],
+            opened_at: pull_request_for_app.map { |pr| pr[:opened_at] }.min.to_date.to_s,
           }
         end
       end

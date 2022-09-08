@@ -53,6 +53,7 @@ describe UseCases::Slack::SendMessages do
             title: "Bump foo 1.2.3 to 4.5.6",
             status: "approved",
             open_since: "yesterday",
+            opened_at: Date.yesterday,
             url: "https://github.com/alphagov/whitehall/123",
           },
         ])
@@ -84,6 +85,7 @@ describe UseCases::Slack::SendMessages do
             title: "Bump foo 1.2.3 to 4.5.6",
             status: "approved",
             open_since: "yesterday",
+            opened_at: Date.yesterday,
             url: "https://github.com/alphagov/whitehall/123",
           },
           {
@@ -91,6 +93,7 @@ describe UseCases::Slack::SendMessages do
             title: "Bump Rails from 4.2.1 to 5.1.0",
             status: "approved",
             open_since: "today",
+            opened_at: Date.yesterday,
             url: "https://github.com/alphagov/whitehall/123",
           },
         ])
@@ -129,6 +132,7 @@ describe UseCases::Slack::SendMessages do
           title: "Bump foo 1.2.3 to 4.5.6",
           status: "approved",
           open_since: "yesterday",
+          opened_at: Date.yesterday,
           url: "https://github.com/alphagov/whitehall/123",
         },
         {
@@ -136,6 +140,7 @@ describe UseCases::Slack::SendMessages do
           title: "Bump Rails from 4.2.1 to 5.1.0",
           status: "approved",
           open_since: "yesterday",
+          opened_at: Date.yesterday,
           url: "https://github.com/alphagov/whitehall/457",
         },
         {
@@ -143,6 +148,7 @@ describe UseCases::Slack::SendMessages do
           title: "Bump Rails from 1.3.4 to 2.0.0",
           status: "approved",
           open_since: "yesterday",
+          opened_at: Date.yesterday,
           url: "https://github.com/alphagov/travel-advice-publisher/123",
         },
       ])
@@ -183,7 +189,8 @@ describe UseCases::Slack::SendMessages do
             application_name: "whitehall",
             title: "Bump foo 1.2.3 to 4.5.6",
             status: "approved",
-            opened_at: "yesterday",
+            opened_at: Date.yesterday,
+            open_since: "yesterday",
             url: "https://github.com/alphagov/whitehall/123",
           },
         ])
@@ -221,13 +228,15 @@ describe UseCases::Slack::SendMessages do
         {
           application_name: "some-application",
           title: "Bump foo 1.2.3 to 4.5.6",
-          opened_at: "yesterday",
+          opened_at: Date.yesterday,
+          open_since: "yesterday",
           url: "https://github.com/alphagov/whitehall/123",
         },
         {
           application_name: "some-other-application",
           title: "Bump foo 1.2.3 to 4.5.6",
           open_since: "yesterday",
+          opened_at: Date.yesterday,
           url: "https://github.com/alphagov/whitehall/123",
         },
       ])
