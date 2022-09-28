@@ -54,4 +54,23 @@ describe Dependapanda do
       expect(a_request(:post, ENV["SLACK_WEBHOOK_URL"]).with(body: govuk_platform_health_payload)).to have_been_made
     end
   end
+
+  context "When the Slack channel does not exist" do
+    it "sends a notification to the govuk-platform-reliability-team channel" do
+      govuk_platform_health_payload = {
+        "payload" => '{"channel":"govuk-platform-reliability-team","username":"Dependapanda","icon_emoji":":panda_face:","text":"Couldn\'t send message to channel \"govuk-platform-health\" (channel not found)"}',
+      }
+
+      stub_request(:post, ENV["SLACK_WEBHOOK_URL"])
+        .with { |req| req.body !~ /govuk-platform-reliability-team/ }
+        .to_return(
+          status: 404,
+          body: "channel_not_found",
+        )
+
+      described_class.new.send_simple_message
+
+      expect(a_request(:post, ENV["SLACK_WEBHOOK_URL"]).with(body: govuk_platform_health_payload)).to have_been_made
+    end
+  end
 end
