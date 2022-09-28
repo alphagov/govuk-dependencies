@@ -16,7 +16,7 @@ GEM
       rexml
     dalli (3.2.2)
     diff-lcs (1.5.0)
-    faraday (0.17.4)
+    faraday (0.17.5)
       multipart-post (>= 1.2, < 3)
     hashdiff (1.0.1)
     i18n (1.12.0)
@@ -26,10 +26,11 @@ GEM
     memcachier (0.0.2)
     method_source (1.0.0)
     minitest (5.16.3)
-    multipart-post (2.1.1)
+    multipart-post (2.2.3)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
-    octokit (4.12.0)
+    octokit (4.22.0)
+      faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
     parallel (1.22.1)
     parser (3.1.2.1)
@@ -121,7 +122,7 @@ DEPENDENCIES
   climate_control (~> 1.2)
   dalli
   memcachier
-  octokit (~> 4.3)
+  octokit (~> 4.22)
   pry (~> 0.14.1)
   rack-test (~> 2.0.2)
   rake (~> 13.0.6)
