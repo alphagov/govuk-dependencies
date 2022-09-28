@@ -37,12 +37,20 @@ module UseCases
 
       def send_messages(applications_by_teams)
         applications_by_teams.each do |applications_by_team|
-          slack_gateway.execute(
-            channel: applications_by_team.fetch(:team_name),
-            message: message_presenter.execute(
-              applications_by_team: applications_by_team,
-            ),
-          )
+          channel = applications_by_team.fetch(:team_name)
+          begin
+            slack_gateway.execute(
+              channel: channel,
+              message: message_presenter.execute(
+                applications_by_team: applications_by_team,
+              ),
+            )
+          rescue Gateways::SlackMessage::PostError => e
+            slack_gateway.execute(
+              channel: "govuk-platform-reliability-team",
+              message: "Couldn't send message to channel \"#{channel}\" (#{e.message.gsub(/_/, ' ')})",
+            )
+          end
         end
       end
 
