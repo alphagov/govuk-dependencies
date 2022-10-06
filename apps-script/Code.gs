@@ -1,38 +1,42 @@
 function onOpen() {
   var spreadsheet = SpreadsheetApp.getActive();
   var menuItems = [
-    {name: '1. Update repo list from DevDocs', functionName: 'updateReposList'},
-    {name: '2. Update repo versions from Github', functionName: 'updateReposFromGithub_'}
+    {name: 'Refresh Repos tab', functionName: 'updateRepos'},
   ];
   spreadsheet.addMenu('Update Data', menuItems);
 }
 
-//Required because private functions can't be triggered via GUI
-function triggerupdateReposFromGithub() {
-  ScriptApp.newTrigger('updateReposFromGithub_').timeBased().everyDays(2).create();
-}
-
-function updateReposList(){
+function updateRepos(){
   var csvUrl = "https://docs.publishing.service.gov.uk/repos.csv";
   var csvContent = UrlFetchApp.fetch(csvUrl).getContentText();
   var csvData = Utilities.parseCsv(csvContent);
 
-  var sheet = SpreadsheetApp.getActive().getSheetByName('JN Import from appscript');
+  var sheet = SpreadsheetApp.getActive().getSheetByName('Repos');
+  sheet.clear();
   sheet.getRange(1, 1, csvData.length, csvData[0].length).setValues(csvData);
-}
-
-function updateReposFromGithub_() {
-  var spreadsheet = SpreadsheetApp.getActive();
-  
-  updateSheet_(spreadsheet.getSheetByName('Repos'));
+  sheet.deleteColumns(3, (csvData[0].length - 2));
+  updateSheet_(sheet);
 }
 
 function updateSheet_(sheet) {
-  startRow = 2;
+  updateHeaders_(sheet);
   endRow = sheet.getLastRow();
-  for (var r = startRow; r <= endRow; r++) {
+  for (var r = 2; r <= endRow; r++) {
     updateRow_(sheet.getRange(r, 1, 1, 5));
   }
+}
+
+function updateHeaders_(sheet) {
+  sheet.getRange(1, 3).setValue("Ruby");
+  sheet.getRange(1, 4).setValue("Rails");
+  sheet.getRange(1, 5).setValue("Mongoid");
+  sheet.getRange(1, 6).setValue("Sidekiq");
+  sheet.getRange(1, 7).setValue("Schema");
+  sheet.getRange(1, 8).setValue("Slimmer");
+  sheet.getRange(1, 9).setValue("govuk_publishing_components");
+  sheet.getRange(1, 10).setValue("activesupport");
+  sheet.getRange(1, 11).setValue("activerecord");
+  sheet.getRange(1, 12).setValue("Go");
 }
 
 function updateRow_(row) {
