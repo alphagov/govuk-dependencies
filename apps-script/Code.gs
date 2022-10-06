@@ -1,3 +1,7 @@
+/**
+ * @OnlyCurrentDoc
+ */
+
 function onOpen() {
   var spreadsheet = SpreadsheetApp.getActive();
   var menuItems = [
