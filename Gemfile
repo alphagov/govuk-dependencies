@@ -5,7 +5,7 @@ ruby File.read(".ruby-version").chomp
 gem "activesupport"
 gem "dalli"
 gem "memcachier"
-gem "octokit", "~> 4.3"
+gem "octokit", "~> 5.6"
 gem "rake", "~> 13.0.6"
 gem "sinatra"
 gem "slack-poster", "~> 2.2"
