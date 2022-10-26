@@ -41,6 +41,7 @@ function updateHeaders_(sheet) {
   sheet.getRange(1, 10).setValue("activesupport");
   sheet.getRange(1, 11).setValue("activerecord");
   sheet.getRange(1, 12).setValue("Go");
+  sheet.getRange(1, 12).setValue("Gem?");
 }
 
 function updateRow_(row) {
@@ -56,6 +57,7 @@ function updateRow_(row) {
     updateComponentVersion_(repo,    row.offset(0,8,1,1));
     updateActiveSupportVersion_(repo,    row.offset(0,9,1,1));
     updateActiveRecordVersion_(repo,    row.offset(0,10,1,1));
+    updateRepoType(repo,    row.offset(0,11,1,1));
   }
 }
 
@@ -265,6 +267,15 @@ function getVersionFromGemspec_(repo, dependencyName) {
       return "n/a";
     }
   }
+}
+
+function updateRepoType(repo, targetCell) {
+  var gemspec = getFileContents_("https://raw.githubusercontent.com/alphagov/" + repo + "/master/" + repo + ".gemspec");
+  if (gemspec) {
+    targetCell.setValue("Yes");
+  } else {
+    targetCell.setValue("No");
+  }    
 }
 
 function getFileContents_(url) {
