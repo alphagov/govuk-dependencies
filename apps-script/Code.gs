@@ -40,7 +40,7 @@ function updateHeaders_(sheet) {
   sheet.getRange(1, 9).setValue("govuk_publishing_components");
   sheet.getRange(1, 10).setValue("activesupport");
   sheet.getRange(1, 11).setValue("activerecord");
-  sheet.getRange(1, 12).setValue("Go");
+  sheet.getRange(1, 12).setValue("Gem?");
 }
 
 function updateRow_(row) {
@@ -49,13 +49,13 @@ function updateRow_(row) {
     updateRubyVersion_(repo,    row.offset(0,2,1,1));
     updateRailsVersion_(repo,   row.offset(0,3,1,1));
     updateMongoidVersion_(repo, row.offset(0,4,1,1));
-    //updateLintVersion_(repo,    row.offset(0,5,1,1));
     updateSidekiqVersion_(repo,    row.offset(0,5,1,1));
     updateSchemasVersion_(repo,    row.offset(0,6,1,1));
     updateSlimmerVersion_(repo,    row.offset(0,7,1,1));
     updateComponentVersion_(repo,    row.offset(0,8,1,1));
     updateActiveSupportVersion_(repo,    row.offset(0,9,1,1));
     updateActiveRecordVersion_(repo,    row.offset(0,10,1,1));
+    updateRepoType(repo,    row.offset(0,11,1,1));
   }
 }
 
@@ -109,20 +109,6 @@ function updateErrbitRailsVersion_(repo, targetCell) {
     version = '';
   }
   targetCell.setValue(version);
-  
-  /*
-  lockfile = getFileContents_("https://raw.githubusercontent.com/" + repo + "/master/Gemfile.lock");
-  if (!lockfile) {
-    targetCell.setValue("");
-    return;
-  }
-  var matches = lockfile.match(/\n    actionpack\s+\(([\d.]+)\)/)
-  if (matches) {
-    targetCell.setValue(matches[1]);
-  } else {
-    targetCell.setValue("n/a");
-  }
-  */
 }
 
 // Bouncer doesn't depend on Rails, but it does use ActiveRecord so we 
@@ -133,33 +119,7 @@ function updateBouncerRailsVersion_(repo, targetCell) {
     version = '';
   }
   targetCell.setValue(version);
-  
-  /*
-  var lockfile = getFileContents_("https://raw.githubusercontent.com/" + repo + "/master/Gemfile.lock");
-  if (!lockfile) {
-    targetCell.setValue("");
-    return;
-  }
-  var matches = lockfile.match(/\n    activerecord\s+\(([\d.]+)\)/)
-  if (matches) {
-    targetCell.setValue(matches[1]);
-  } else {
-    targetCell.setValue("n/a");
-  }
-  */
 }
-/*govuk-lint archived
-function updateLintVersion_(repo, targetCell) {
-  if (targetCell.getValue() === 'no lint') {
-    return;
-  }
-  var version = getVersionFromGemfileLock_(repo, 'govuk-lint');
-  if (version === undefined) {
-    version = '';
-  }
-  targetCell.setValue(version);
-}
-*/
 
 function updateSidekiqVersion_(repo, targetCell) {
   var version = getVersionFromGemfileLock_(repo, 'sidekiq');
@@ -265,6 +225,15 @@ function getVersionFromGemspec_(repo, dependencyName) {
       return "n/a";
     }
   }
+}
+
+function updateRepoType(repo, targetCell) {
+  var gemspec = getFileContents_("https://raw.githubusercontent.com/alphagov/" + repo + "/master/" + repo + ".gemspec");
+  if (gemspec) {
+    targetCell.setValue("Yes");
+  } else {
+    targetCell.setValue("No");
+  }    
 }
 
 function getFileContents_(url) {
