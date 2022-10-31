@@ -23,7 +23,7 @@ group :test do
   gem "climate_control", "~> 1.2"
   gem "pry", "~> 0.14.1"
   gem "rack-test", "~> 2.0.2"
-  gem "rspec", "~> 3.11.0"
+  gem "rspec", "~> 3.12.0"
   gem "timecop", "~> 0.9.5"
   gem "webmock"
 end
