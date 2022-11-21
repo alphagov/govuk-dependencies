@@ -11,6 +11,7 @@ module CacheStore
           username: ENV["MEMCACHIER_USERNAME"],
           password: ENV["MEMCACHIER_PASSWORD"],
           expires_in: CACHE_EXPIRY,
+          value_max_bytes: 10_485_760,
         }
       )
   end
